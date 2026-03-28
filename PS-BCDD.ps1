@@ -44,3 +44,5 @@ Function Install_PSWriteColor {
         Break
     }
 }
+
+Install_PSWriteColor
