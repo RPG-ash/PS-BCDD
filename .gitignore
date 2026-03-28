@@ -3,6 +3,7 @@
 
 # Allow specific files
 !.gitignore
+!.PS-BCDD.ps1
 # !example.txt
 # !example.json
 
