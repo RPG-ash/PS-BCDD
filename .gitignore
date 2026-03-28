@@ -1,0 +1,10 @@
+# Ignore everything in the repository
+/*
+
+# Allow specific files
+!.gitignore
+# !example.txt
+# !example.json
+
+# Allow a specific folder
+# !my_source_code/
