@@ -45,4 +45,12 @@ Function Install_PSWriteColor {
     }
 }
 
+#
+# import JSON game data
+#
+Function Import_JSON {
+    $Script:Import_JSON = (Get-Content ".\PS-BCDD.json" -Raw | ConvertFrom-Json)
+}
+
+
 Install_PSWriteColor
