@@ -9,6 +9,8 @@ Business Card Dungeon Delve designed by Melv Lee - PowerShell edition
 
 ## How to play Business Card Dungeon Delve
 
+Goal: Your goal is to gain 120 Gold, enough to buy a piece of frmland to retire from the risky Adverturer's life.
+
 - Character Sheet
     - Stats
         - HP (Health)
@@ -28,7 +30,7 @@ start with 1 Attack
 
 start with 12 Health
 
-start with Rations 6 (used when travelling)
+start with 6 Rations (used when travelling)
 
 start with 6 Torches (used in dingeons)
 
@@ -74,6 +76,8 @@ visit shop to buy items
 
 Obtain Quest
 
+roll 1d6 to see which quest you will take on. you need to reach the Settelment to gain the rewards. only one quest can be embarked on at once.
+
 - Quest list (1d6)
   - 1 = Hunt - Return 4 rations (+3 XP & +2 d6 Gold)
   - 2 = Deliver - Pass 3 NPC tests (+3 XP & 10 Gold)
@@ -113,9 +117,7 @@ roll higher than encounter test amount to pass, otherwise fail.
 
 adjust pass/fail values
 
-always an encounter after a Wilderness visit
-
-Enter an Encounter after Wilderness (test)
+after each Wilderness test, roll on an encounter
 
 roll 1d6 for encounter
 
@@ -174,7 +176,7 @@ if NPC, roll on Wilderness NPC list (test)
 
 if Settelment, buy items.
 
--1 Ration per journey
+-1 Ration per journey. if you have zero Rations, -1 HP.
 
 if journeys > 0, repeat Wildernesss encounter
 
@@ -182,7 +184,7 @@ if journeys = 0, visit dungeon
 
 ---
 
-dungeon
+## dungeon
 
 roll 1d6 for dungeon size
 
@@ -269,6 +271,7 @@ if dungeon rooms > 0, repeat dungeon room
 if dungeon rooms = 0, visit settlement?
 
 ---
+
 
 
 
