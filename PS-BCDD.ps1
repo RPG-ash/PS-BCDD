@@ -230,6 +230,15 @@ if (-not(Test-Path -Path .\PS-BCDD.json)) {
     } until ($Ready_To_Play_PSRPG -ieq "y")
 }
 
+# double check module is still installed if JSON file has previously been created, just in case the module has been removed.
+if (Test-Path -Path .\PS-BCDD.json) {
+    $PSWriteColor_Installed = Get-Module -Name "PSWriteColor" -ListAvailable
+    if ($PSWriteColor_Installed) {
+        Import-Module -Name "PSWriteColor"
+    } else {
+        Install_PSWriteColor
+    }
+}
 
 
 
