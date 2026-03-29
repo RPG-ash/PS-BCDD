@@ -45,7 +45,7 @@ start with 6 Torches (used in dingeons)
 
 roll 1 d6 a potion (max 3)
 
-- potions list (1d6)
+- potions list - 1d6
   - 1 = Healing (+3 HP)
   - 2 = Invisability (Sneak pass location)
   - 3 = Accelerate (-3 or +3 journeys or dungeons)
@@ -57,7 +57,7 @@ roll 1 d6 a potion (max 3)
 
 roll 1 d6 for a spell (max 3)
 
-- spells list (1d6)
+- spells list - 1d6
   - 1 = Healing Hands (restore d6 HP)
   - 2 = Fire Ball (damage d3 HP)
   - 3 = Light (add d6 torches)
@@ -91,7 +91,7 @@ Obtain Quest
 
 roll 1d6 to see which quest you will take on. you need to reach the Settelment to gain the rewards. only one quest can be embarked on at once.
 
-- Quest list (1d6)
+- Quest list - 1d6
   - 1 = Hunt - Return 4 rations (+3 XP & +2 d6 Gold)
   - 2 = Deliver - Pass 3 NPC tests (+3 XP & 10 Gold)
   - 3 = Scout - Explore 5 rooms (+3 XP & 15 Gold)
@@ -114,8 +114,8 @@ roll xd6 (3, 4 or 5) for each journey (wilderness encounters)
 
 Wilderness encounters (tests)
 
-- Wilderness list (1d6)
-  - 1 = Plains
+- Wilderness list - 1d6 (test, fail, success)
+  - 1 = Plains (none, Encounter only)
   - 2 = Forest - INT 3, +2 Rations, -1 Rations
   - 3 = River - DEX 3, -1 HP, +1 Gold
   - 4 = Campsite - STR 3, -2 Gold, +2 HP or +2 Torch
@@ -136,7 +136,7 @@ after each Wilderness test, roll on an encounter
 
 roll 1d6 for encounter
 
-- Encounter list (1d6)
+- Encounter list - 1d6
   - 1 = Enemy x1
   - 2 = Enemy x2
   - 3 = Lost (Journey +1)
@@ -150,7 +150,7 @@ roll 1 or 2d6 to determine enemy type
 
 Enemy
 
-- Enemy list (1d6) (attack, HP, reward)
+- Enemy list - 1d6 (attack, HP, reward)
   - 1 = Boar (1, 3, 2 Rations)
   - 2 = Vagabond (2, 2, 1 Gold)
   - 3 = Thug (3, 2, 3 Gold)
@@ -196,7 +196,7 @@ if test, roll for pass/fail
 
 if NPC, roll on Wilderness NPC list (test)
 
-- Wilderness NPC (tests)
+- Wilderness NPC (test, fail, success)
   - 1 = Wizard (INT 3, -5 XP, +1 Spell spell?)
   - 2 = Thief (DEX 3, -5 Gold, +1 XP)
   - 3 = Merchant (INT 3, -10 Gold, +5 Gold)
@@ -219,7 +219,7 @@ Dungeon
 
 roll 1d6 for dungeon size
 
-- Dungeon size (1d6)
+- Dungeon size - 1d6
   - 1-2 = 3 Rooms
   - 3-4 = 4 Rooms
   - 5-6 = 5 Rooms
@@ -230,7 +230,7 @@ roll xd6 (3, 4 or 5) for each dungeon room.
 
 Dungeon room
 
-- Dungeon list (1d6)
+- Dungeon list - 1d6
   - 1 = Passage (Encounter only)
   - 2 = Prison (Enemy x1 ATK +1)
   - 3 = Armory (Treasure +1 potion or spell)
@@ -242,7 +242,7 @@ Dungeon Encounter
 
 if Passage, encounter only, then move onto next room...
 
-- Encounter list (1d6)
+- Encounter list - 1d6
   - 1 = Enemy x1
   - 2 = Enemy x2
   - 3 = NPC
@@ -254,26 +254,25 @@ if Passage, encounter only, then move onto next room...
 
 if Enemy, fight
 
-- Enemy list (1d6) (attack, HP, reward)
-  - 1 = 
-  - 2 = 
-  - 3 = 
-  - 4 = 
-  - 5 = 
-  - 6 = 
-
+- Enemy list - 1d6 (attack, HP, reward)
+  - 1 = Spider (1, 3, 1 Gold)
+  - 2 = Goblin (2, 2, 2 Gold)
+  - 3 = Orc (3, 2, 3 Gold)
+  - 4 = Skeleton (4, 1, 2 Gold)
+  - 5 = Shaman (4, 2d3 1 XP & 3 Gold)
+  - 6 = Guardian (5, 2d6, +1 Treasure)
 
 if Hazard, test
 
-Hazards
+Dungeon Hazards
 
-- Hazard list (1d6)
-  - 1 = 
-  - 2 = 
-  - 3 = 
-  - 4 = 
-  - 5 = 
-  - 6 = 
+- Dungeon Hazard list - 1d6 (test, fail)
+  - 1 = Pit (DEX 3, -1 HP)
+  - 2 = Spikes (DEX 3, -2 HP)
+  - 3 = Poison Darts (DEX 4, -2 HP)
+  - 4 = Cave In (STR 3, -1 HP)
+  - 5 = Gas (STR 3, -2 HP)
+  - 6 = Maze (INT 3, -1 Torch)
 
 if Treasure, roll for Treasure
 
@@ -281,24 +280,24 @@ You can only have 1 Weapon and 1 piece of Armour at a time.
 
 Dungeon Treasure
 
-- Treasure list (1d6)
+- Treasure list - 1d6 (reward)
   - 1 = Armour (+1 DEX)
-  - 2 = 
-  - 3 = 
-  - 4 = 
-  - 5 = 
-  - 6 = 
+  - 2 = Dagger (+1 ATK)
+  - 3 = Sword (+2 ATK)
+  - 4 = Herbs (+1 Potion)
+  - 5 = Tome (+1 Spell)
+  - 6 = Gold (d3 x10)
 
 
 if NPC, roll on Dungeon NPC list (test)
 
-- Dungeon NPC (tests)
-  - 1 = 
-  - 2 = 
-  - 3 = 
-  - 4 = 
-  - 5 = 
-  - 6 = 
+- Dungeon NPC (test, fail, success)
+  - 1 = Tomb Robber (DEX 3, -5 XP, +5 Gold)
+  - 2 = Vampire (INT 4, -3HP, +1 Potion)
+  - 3 = Dwarf Miner (STR 3, -5 Gold, +10 Gold)
+  - 4 = Barbarian (STR 4, -2 ATK, +2 HP)
+  - 5 = Hermit (INT 4, -1 DEX, +2 XP)
+  - 6 = Assassin (DEX 5, -2 HP, +1 Treasure)
 
 
 -1 Torch per dungeon room. if zero torches, game over (lost in dungeon).
@@ -311,6 +310,9 @@ roll 1d6 to heal HP (unless skipped by usng either using an Accelerate potion or
 
 ---
 
+Enemy
+
+- Enemy list (1d6) (attack, HP, reward)
 
 
 
