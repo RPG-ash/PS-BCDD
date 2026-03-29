@@ -45,8 +45,6 @@ other icons
 - Wilderness (map icon)
 - Potions (potion/bottle icon)
 
-start with 1 Attack
-
 start with 12 Health
 
 start with 6 Rations (used when travelling)

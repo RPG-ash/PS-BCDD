@@ -639,137 +639,160 @@
     "Total_XP": 0,
     "XP_TNL": 0.0,
     "Gold": 0.0,
+    "PotionsTotal": 0,
+    "SpellsTotal": 0,
+    "Torches": 0,
+    "Rations": 0,
     "Stats": {
       "HealthCurrent": 0,
       "HealthMax": 0,
       "HealthMaxUnBuffed": 0,
-      "Attack": 0,
       "Strength": 0,
       "StrengthUnBuffed": 0,
       "Dexterity": 0,
       "DexterityUnBuffed": 0,
       "Intelligence": 0,
       "IntelligenceUnBuffed": 0
-    },
-    "Weapons_Armour": {
-      "Sword": {
-        "Name": "Sword",
-        "Quantity": 0,
-        "Restores": 30,
-        "GoldValue": 50,
-        "IsJunk": false,
-        "ID": 1,
-        "Info": "Restores 30",
-        "Mend & Mana": true
-      },
-      "Shield": {
-        "Name": "Shield",
-        "Quantity": 0,
-        "Restores": 30,
-        "GoldValue": 50,
-        "IsJunk": false,
-        "ID": 1,
-        "Info": "Restores 30",
-        "Mend & Mana": true
-      }
-    },
-    "Potions": {
-      "Lesser Health Potion": {
-        "Name": "Lesser Health Potion",
-        "Quantity": 0,
-        "Restores": 10,
-        "GoldValue": 50,
-        "IsJunk": false,
-        "ID": 1,
-        "Info": "Restores 10",
-        "Mend & Mana": true
-      },
-      "Health Potion": {
-        "Name": "Health Potion",
-        "Quantity": 0,
-        "Restores": 30,
-        "GoldValue": 50,
-        "IsJunk": false,
-        "ID": 1,
-        "Info": "Restores 30",
-        "Mend & Mana": true
-      }
-    },
-    "Spells": {
-      "Lesser Health Spell": {
-        "Name": "Lesser Health Spell",
-        "Quantity": 0,
-        "Restores": 10,
-        "GoldValue": 50,
-        "IsJunk": false,
-        "ID": 1,
-        "Info": "Restores 10",
-        "Mend & Mana": true
-      },
-      "Health Spell": {
-        "Name": "Health Spell",
-        "Quantity": 0,
-        "Restores": 30,
-        "GoldValue": 50,
-        "IsJunk": false,
-        "ID": 1,
-        "Info": "Restores 30",
-        "Mend & Mana": true
-      }
-    },
-    "Quests": {
-      "Rat Infestation": {
-        "Introduction_Task": true,
-        "Name": "Rat infestation",
-        "Quest_Letter": "R",
-        "Description": "Obligatory RPG rat quest",
-        "Hand_In_Location": "Town",
-        "Building": "Tavern",
-        "Hand_In_NPC": "Quest Board",
-        "Mob": "Rat",
-        "Gold_Reward": 10,
-        "Item_Reward": {
-          "Lesser Health Potion": 3,
-          "Random Loot #2": 1
-        },
-        "Progress": 0,
-        "Progress_Max": 5,
-        "Level_Range": "1-5",
-        "Times_Completed": 0,
-        "Available": true,
-        "In_Progress": false,
-        "Completed": false,
-        "Repeatable": true,
-        "Status": "Available"
-      },
-      "Sick Elder": {
-        "Name": "Sick Elder",
-        "Quest_Letter": "S",
-        "Description": "Find a Healing Potion.",
-        "Hand_In_Location": "Town",
-        "Building": "Tavern",
-        "Hand_In_NPC": "Quest Board",
-        "Mob": false,
-        "Gold_Reward": 10,
-        "Item_Reward": false,
-        "Progress": 0,
-        "Progress_Max": 0,
-        "Level_Range": "1-5",
-        "Available": true,
-        "In_Progress": false,
-        "Completed": false,
-        "Repeatable": false,
-        "Status": "Available"
-      }
-    },
-    "Game_Information": {
-      "Info": "I",
-      "Stats": "S",
-      "PSWriteColor": "P",
-      "My Links": "L",
-      "Other": "O",
-      "Start Tutorial": "T",
-      "Exit": "E"
     }
+  },
+  "Weapons_Armour": {
+    "Sword": {
+      "Name": "Sword",
+      "Quantity": 0,
+      "Restores": 30,
+      "GoldValue": 50,
+      "IsJunk": false,
+      "ID": 1,
+      "Info": "Restores 30",
+      "Mend & Mana": true
+    },
+    "Shield": {
+      "Name": "Shield",
+      "Quantity": 0,
+      "Restores": 30,
+      "GoldValue": 50,
+      "IsJunk": false,
+      "ID": 1,
+      "Info": "Restores 30",
+      "Mend & Mana": true
+    }
+  },
+  "Potions": {
+    "1": {
+      "Name": "Healing",
+      "Info": "1d6",
+      "Quantity": 0
+    },
+    "2": {
+      "Name": "Invisability",
+      "Info": "Sneak pass location",
+      "Quantity": 0
+    },
+    "3": {
+      "Name": "Accelerate",
+      "Info": "-3 or +3 journeys or dungeons",
+      "Quantity": 0
+    },
+    "4": {
+      "Name": "Strength",
+      "Info": "+2 STR or +2 ATK against next test or monster",
+      "Quantity": 0
+    },
+    "5": {
+      "Name": "Invincibility",
+      "Info": "auto pass a test",
+      "Quantity": 0
+    },
+    "6": {
+      "Name": "Rock Skin",
+      "Info": "+2 DEF for next fight",
+      "Quantity": 0
+    }
+  },
+  "Spells": {
+    "1": {
+      "Name": "Healing Hands",
+      "Info": "restore d6 HP",
+      "Quantity": 0
+    },
+    "2": {
+      "Name": "Fire Ball",
+      "Info": "damage d3 HP",
+      "Quantity": 0
+    },
+    "3": {
+      "Name": "Light",
+      "Info": "add d6 torches",
+      "Quantity": 0
+    },
+    "4": {
+      "Name": "Lightning",
+      "Info": "damage 2x d3 HP",
+      "Quantity": 0
+    },
+    "5": {
+      "Name": "Morphing",
+      "Info": "temporary +d3 Stats for d3 tests",
+      "Quantity": 0
+    },
+    "6": {
+      "Name": "Teleport",
+      "Info": "teleport to settlement",
+      "Quantity": 0
+    }
+  },
+  "Quests": {
+    "Rat Infestation": {
+      "Introduction_Task": true,
+      "Name": "Rat infestation",
+      "Quest_Letter": "R",
+      "Description": "Obligatory RPG rat quest",
+      "Hand_In_Location": "Town",
+      "Building": "Tavern",
+      "Hand_In_NPC": "Quest Board",
+      "Mob": "Rat",
+      "Gold_Reward": 10,
+      "Item_Reward": {
+        "Lesser Health Potion": 3,
+        "Random Loot #2": 1
+      },
+      "Progress": 0,
+      "Progress_Max": 5,
+      "Level_Range": "1-5",
+      "Times_Completed": 0,
+      "Available": true,
+      "In_Progress": false,
+      "Completed": false,
+      "Repeatable": true,
+      "Status": "Available"
+    },
+    "Sick Elder": {
+      "Name": "Sick Elder",
+      "Quest_Letter": "S",
+      "Description": "Find a Healing Potion.",
+      "Hand_In_Location": "Town",
+      "Building": "Tavern",
+      "Hand_In_NPC": "Quest Board",
+      "Mob": false,
+      "Gold_Reward": 10,
+      "Item_Reward": false,
+      "Progress": 0,
+      "Progress_Max": 0,
+      "Level_Range": "1-5",
+      "Available": true,
+      "In_Progress": false,
+      "Completed": false,
+      "Repeatable": false,
+      "Status": "Available"
+    }
+  },
+  "Game_Information": {
+    "Info": "I",
+    "Stats": "S",
+    "PSWriteColor": "P",
+    "My Links": "L",
+    "Other": "O",
+    "Start Tutorial": "T",
+    "Exit": "E"
   }
 }

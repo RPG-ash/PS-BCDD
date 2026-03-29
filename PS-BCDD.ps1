@@ -232,44 +232,177 @@ Function Create_Character {
             }
         } until ($Character_Name_Confirm -eq $true)
         $Import_JSON.Character.Name = $Character_Name
-        # confirm all character choices
-        Clear-Host
-        $Update_Character_JSON = $false
-        $Update_Character_JSON_Valid = $false
-        $Update_Character_JSON_Confirm = $false
+
+        # health, free potion and free scroll
+
+        # start with 12 Health
+        # start with 6 Rations (used when travelling)
+        # start with 6 Torches (used in dingeons)
+
         do {
-            Write-Color -NoNewLine "Are all your Character details correct? ", "[Y/N/E]" -Color DarkYellow,Green
-            $Update_Character_JSON = Read-Host " "
-            $Update_Character_JSON = $Update_Character_JSON.Trim()
-            if (-not($null -eq $Update_Character_JSON -or $Update_Character_JSON -eq " " -or $Update_Character_JSON -eq "")) {
-                $Update_Character_JSON_Valid = $true
+            for ($Position = 0; $Position -lt 10; $Position++) {
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*105
             }
-        } until ($Update_Character_JSON_Valid -eq $true)
-        if ($Update_Character_JSON -ieq "y") {
-            $Update_Character_JSON_Confirm = $true
-        } else {
-            if ($Update_Character_JSON -ieq "e") {Exit}
-        }
-    } until ($Update_Character_JSON_Confirm -eq $true)
-    #
-    # set JSON character stats
-    #
-    $Import_JSON.Character.Stats.HealthCurrent = 1
-    $Import_JSON.Character.Stats.HealthMax     = 2
-    $Import_JSON.Character.Stats.Attack        = 3
-    $Import_JSON.Character.Stats.Strength      = 4
-    $Import_JSON.Character.Stats.Dexterity     = 5
-    $Import_JSON.Character.Stats.Intelligence  = 6
-    $Import_JSON.Character.Gold                = 7
-    $Import_JSON.Character.Total_XP            = 8
-    $Import_JSON.Character.XP_TNL              = 9
-    $Import_JSON.Character_Creation = $true
-    Save_JSON
-    Import_JSON
-    Update_Variables
-    Clear-Host
-    # Draw_Player_Window_and_Stats
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,0;$Host.UI.Write("")
+            Write-Color "Now that you have chosen a name, let's work on some stats." -Color DarkGray
+            Write-Color ""
+            Write-Color "Your max ","Health"," can only ever be ","12",", so you will start with that. You can't go over this amount, no matter how many ","potions"," you quaff." -Color DarkGray,Green,DarkGray,Green,DarkGray,Blue,DarkGray
+            Write-Color ""
+            Write-Color "You will also start with ","6"," Rations",", and ","6"," Torches." -Color DarkGray,White,Blue,DarkGray,White,Blue
+            Write-Color "Rations"," are used when travelling between locations, and ","Torches"," are used when exploring dungeons." -Color Blue,DarkGray,Blue,DarkGray
+            Write-Color ""
+            Write-Color "You use ","1"," Ration"," per journey. If you run out of ","Rations",", you will lose ","1"," Health"," each time you travel between locations." -Color DarkGray,White,Blue,DarkGray,Blue,DarkGray,White,Green,DarkGray
+            Write-Color "When your character's Health reaches ","0",", it's game over and you will have to re-roll another character." -Color DarkGray,Red,DarkGray
+            Write-Color ""
+            Write-Color "You use ","1"," Torch"," per dungeon room. If you use up all your torches before leaving a dungeon, you'll be lost in dungeon forever unable to escape and will have to re-roll another character." -Color DarkGray,White,Blue,DarkGray,DarkGray,White,Blue,DarkGray
+            Write-Color ""
+            Write-Color "Both ","Rations"," and ","Torches"," can sometimes be found in enemy loot, but also bought from the shop in Settelment." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
+            Write-Color ""
+            Read-Host "Press Enter to continue... "
+            Clear-Host
+            for ($Position = 0; $Position -lt 16; $Position++) {
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*105
+            }
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,0;$Host.UI.Write("")
+            Write-Color "Your other stats, ","STR",", ","DEX"," and ","INT",", will start at ","0"," for now, but you'll get the chance to increase these when you gain some XP from killing enemies." -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+            Write-Color ""
+            Write-Color "STR"," (Strength), ","DEX"," (Dexterity) and ","INT"," (Intelligence), are used to determine ","Pass"," and ","Fail"," results against certain tests from events suchs as Encounters, Hazards and NPC interactions." -Color White,DarkGray,White,DarkGray,White,DarkGray,Green,DarkGray,Red,DarkGray
+            Write-Color ""
+            Write-Color "STR"," and ","DEX"," are also used in combat to determine attack and defence results against enemies." -Color White,DarkGray,White,DarkGray
+            Read-Host "Press Enter to continue... "
+            Clear-Host
+            Write-Color "You have a small pouch to carry some Gold coins which can be used to purchase items from the shop in Settlement." -Color DarkGray,Green,DarkGray
+            Write-Color ""
+            Read-Host "Press a key to roll a D6 to determine how much Gold you will start with... "
+
+            Function Roll_D6_Dice {
+                do {
+                    $Script:Random_Dice_Roll = Get-Random -Minimum 1 -Maximum 7
+                } until ($Random_Dice_Roll -ne $Last_Dice_Roll)
+                Clear-Host
+                $Script:Last_Dice_Roll = $Random_Dice_Roll
+                switch ($Random_Dice_Roll) {
+                    1 {
+                        Write-Color "+-------+"
+                        Write-Color "|       |"
+                        Write-Color "|   o   |"
+                        Write-Color "|       |"
+                        Write-Color "+-------+"
+                        break
+                    }
+                    2 {
+                        Write-Color "+-------+"
+                        Write-Color "| o     |"
+                        Write-Color "|       |"
+                        Write-Color "|     o |"
+                        Write-Color "+-------+"
+                        break
+                    }
+                    3 {
+                        Write-Color "+-------+"
+                        Write-Color "| o     |"
+                        Write-Color "|   o   |"
+                        Write-Color "|     o |"
+                        Write-Color "+-------+"
+                        break
+                    }
+                    4 {
+                        Write-Color "+-------+"
+                        Write-Color "| o   o |"
+                        Write-Color "|       |"
+                        Write-Color "| o   o |"
+                        Write-Color "+-------+"
+                        break
+                    }
+                    5 {
+                        Write-Color "+-------+"
+                        Write-Color "| o   o |"
+                        Write-Color "|   o   |"
+                        Write-Color "| o   o |"
+                        Write-Color "+-------+"
+                        break
+                    }
+                    6 {
+                        Write-Color "+-------+"
+                        Write-Color "| o   o |"
+                        Write-Color "| o   o |"
+                        Write-Color "| o   o |"
+                        Write-Color "+-------+"
+                        break
+                    }
+                    Default {}
+                }
+                $Random_Milliseconds = Get-Random -Minimum 200 -Maximum 1000
+                Start-Sleep -Milliseconds $Random_Milliseconds
+            }
+            # Clear-Host
+            $Random_Dice_Roll_Random_Seconds = Get-Random -Minimum 4 -Maximum 10
+            for ($i = 0; $i -lt $Random_Dice_Roll_Random_Seconds; $i++) {
+                Roll_D6_Dice
+            }
+            Write-Color ""
+            Write-Color "You start with ","$Random_Dice_Roll", " Gold" -Color DarkGray,White,DarkYellow
+
+                
+            Write-Color ""
+            Write-Color ""
+
+
+
+
+
+
+
+
+
+
+
+
+            Read-Host "Press Enter to continue... "
+
+            # confirm all character choices
+            Clear-Host
+            $Update_Character_JSON = $false
+            $Update_Character_JSON_Valid = $false
+            $Update_Character_JSON_Confirm = $false
+            do {
+                Write-Color -NoNewLine "Are all your Character details correct? ", "[Y/N/E]" -Color DarkYellow,Green
+                $Update_Character_JSON = Read-Host " "
+                $Update_Character_JSON = $Update_Character_JSON.Trim()
+                if (-not($null -eq $Update_Character_JSON -or $Update_Character_JSON -eq " " -or $Update_Character_JSON -eq "")) {
+                    $Update_Character_JSON_Valid = $true
+                }
+            } until ($Update_Character_JSON_Valid -eq $true)
+            if ($Update_Character_JSON -ieq "y") {
+                $Update_Character_JSON_Confirm = $true
+            } else {
+                if ($Update_Character_JSON -ieq "e") {Exit}
+            }
+            
+        } until ($Update_Character_JSON_Confirm -eq $true)
+        #
+        # set JSON character stats
+        #
+        $Import_JSON.Character.Stats.HealthCurrent = 12
+        $Import_JSON.Character.Stats.HealthMax     = 12
+        $Import_JSON.Character.Stats.Strength      = 4
+        $Import_JSON.Character.Stats.Dexterity     = 5
+        $Import_JSON.Character.Stats.Intelligence  = 6
+        $Import_JSON.Character.Gold                = 7
+        $Import_JSON.Character.Total_XP            = 8
+        $Import_JSON.Character.XP_TNL              = 9
+        $Import_JSON.Character.Rations             = 0
+        $Import_JSON.Character.Torches             = 0
+        $Import_JSON.Character.SpellsTotal         = 0
+        $Import_JSON.Character.PotionsTotal        = 0
+        $Import_JSON.Character_Creation = $true
+        Save_JSON
+        Import_JSON
+        Update_Variables
+        Clear-Host
+        # Draw_Player_Window_and_Stats
     
+    } until ($Update_Character_JSON_Confirm -eq $true)
 }
 
 #
@@ -277,18 +410,21 @@ Function Create_Character {
 #
 Function Update_Variables {
     "`r`nupdating variables..."
-    $Script:Character_Name           = $Import_JSON.Character.Name
-    $Script:Character_HealthCurrent  = $Import_JSON.Character.Stats.HealthCurrent
-    $Script:Character_HealthMax      = $Import_JSON.Character.Stats.HealthMax
-    $Script:Character_Attack         = $Import_JSON.Character.Stats.Attack
-    $Script:Character_Strength       = $Import_JSON.Character.Stats.Strength
-    $Script:Character_Dexterity      = $Import_JSON.Character.Stats.Dexterity
-    $Script:Character_Intelligence   = $Import_JSON.Character.Stats.Intelligence
-    $Script:Gold                     = $Import_JSON.Character.Gold
-    $Script:Total_XP                 = $Import_JSON.Character.Total_XP
-    $Script:XP_TNL                   = $Import_JSON.Character.XP_TNL
+    $Script:Character_Name          = $Import_JSON.Character.Name
+    $Script:Character_HealthCurrent = $Import_JSON.Character.Stats.HealthCurrent
+    $Script:Character_HealthMax     = $Import_JSON.Character.Stats.HealthMax
+    $Script:Character_Strength      = $Import_JSON.Character.Stats.Strength
+    $Script:Character_Dexterity     = $Import_JSON.Character.Stats.Dexterity
+    $Script:Character_Intelligence  = $Import_JSON.Character.Stats.Intelligence
+    $Script:Rations                 = $Import_JSON.Character.Rations
+    $Script:Torches                 = $Import_JSON.Character.Torches
+    $Script:SpellsTotal             = $Import_JSON.Character.SpellsTotal
+    $Script:PotionsTotal            = $Import_JSON.Character.PotionsTotal
+    $Script:Gold                    = $Import_JSON.Character.Gold
+    $Script:Total_XP                = $Import_JSON.Character.Total_XP
+    $Script:XP_TNL                  = $Import_JSON.Character.XP_TNL
     # sets current Location
-    $All_Locations                   = $Import_JSON.Locations.PSObject.Properties.Name
+    $All_Locations                  = $Import_JSON.Locations.PSObject.Properties.Name
     foreach ($Single_Location in $All_Locations) {
         if ($Import_JSON.Locations.$Single_Location.Current_Location -ieq "true") {
             $Script:Current_Location = $Single_Location
@@ -556,10 +692,13 @@ if ($Load_Save_Data_Choice -ieq "e" -or $Start_A_New_Game -ieq "e") {
 "`r`nJSON Variables"
 $Import_JSON.Character.Stats.HealthCurrent
 $Import_JSON.Character.Stats.HealthMax
-$Import_JSON.Character.Stats.Attack
 $Import_JSON.Character.Stats.Strength
 $Import_JSON.Character.Stats.Dexterity
 $Import_JSON.Character.Stats.Intelligence
+$Import_JSON.Character.Rations
+$Import_JSON.Character.Torches
+$Import_JSON.Character.SpellsTotal
+$Import_JSON.Character.PotionsTotal
 $Import_JSON.Character.Gold
 $Import_JSON.Character.Total_XP
 $Import_JSON.Character.XP_TNL
@@ -569,10 +708,13 @@ $Import_JSON.Character.XP_TNL
 "$Character_Name"
 "$Character_HealthCurrent"
 "$Character_HealthMax"
-"$Character_Attack"
 "$Character_Strength"
 "$Character_Dexterity"
 "$Character_Intelligence"
+"$Character_Rations"
+"$Character_Torches"
+"$Character_SpellsTotal"
+"$Character_PotionsTotal"
 "$Gold"
 "$Total_XP"
 "$XP_TNL"
