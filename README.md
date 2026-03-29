@@ -14,17 +14,24 @@ Goal: Your goal is to gain 120 Gold, enough to buy a piece of frmland to retire 
 - Character Sheet
     - Stats
         - HP (Health)
-        - STR (Strength)
-        - DEX (Dexterity)
+        - STR (Strength) (sword icon)
+        - DEX (Dexterity) (shield icon)
         - INT (Intelligence)
         - ATK (Attack)
     - Rations (cutlery icon)
     - Torch (torch icon)
     - Potions (potion icon)
-    - Scrolls (book icon)
+    - Spells (book icon)
     - Gold ($ bag icon)
     - XP (lightning icon)
-    - 
+
+- other icons
+  - Enemy (monster icon)
+  - Encounter (question mark icon)
+  - Dungeon (three bars icon?)
+  - Wilderness (map icon)
+  - Potions (potion/bottle icon)
+  - 
 
 start with 1 Attack
 
@@ -36,7 +43,7 @@ start with 6 Torches (used in dingeons)
 
 ---
 
-roll 1 d6 a potion
+roll 1 d6 a potion (max 3)
 
 - potions list (1d6)
   - 1 = Healing (+3 HP)
@@ -48,15 +55,21 @@ roll 1 d6 a potion
 
 ---
 
-roll 1 d6 for a scroll
+roll 1 d6 for a spell (max 3)
 
-- scrolls list (1d6)
+- spells list (1d6)
   - 1 = Healing Hands (restore d6 HP)
   - 2 = Fire Ball (damage d3 HP)
   - 3 = Light (add d6 torches)
   - 4 = Lightning (damage 2x d3 HP)
   - 5 = Morphing (temporary +d3 Stats for d3 tests)
   - 6 = Teleport (teleport to setelment)
+
+---
+
+items
+
+you can use an item or potion and any point (expect damaging spells which are for combat only).
 
 ---
 
@@ -113,7 +126,9 @@ Wilderness encounters (tests)
 
 visit first journy - wilderness (test)
 
-roll higher than encounter test amount to pass, otherwise fail.
+roll 1d6 + your stat to see if you pass or fail. higher than encounter test amount to pass, otherwise fail.
+
+rolling a 1 will always result in a fail.
 
 adjust pass/fail values
 
@@ -143,35 +158,51 @@ Enemy
   - 5 = Raider (4, 2d3, 4 Gold)
   - 6 = Wyvern (5, 3d3, 4 XP)
 
+you cn choose to flee a fight
+
+perform a DEX test by rolling 1d6 + your DEX against monster's ATK -1 (minimum of 1). if you roll higher than monsters Attack, you flee successfully.
+
+failing to flee means the monster can attack.
+
+...otherwise fight
+
 player always attacks first.
 
-roll to attack, roll more than enemy attack to hit = -1 Health to enemy.
+roll 1d6 + your ATK to attack, roll more than enemy attack to hit = -1 Health to enemy.
 
-roll to defend, roll higher than enemy attack to defend, otherwise -1 Health to you.
+rolling a 1 will always result in you missing.
 
-adjust reward
+roll 1d6 + DEX to defend, roll higher than enemy attack to defend, otherwise -1 Health to you.
 
-+1 xp for each kill.
+rolling a 1 will always result in a monster hitting you for 1 damage.
 
 if 2 Enemy, fight one after another.
 
-every 6 XP gain 1 level, or 6, 12, 18 per level?
++1 xp for each kill.
+
+gain monster reward.
+
+leveling up Stats
+
+Each Stat can only be leveld up 3 times.
+
+Gain 6 XP to gain 1 Stat point.
+Gain 12 XP to gain 1 Stat point.
+Gain 18 XP to gain 1 Stat point.
 
 choose +1 to STR, DEX or INT
-
-Max stats is +3.
 
 if test, roll for pass/fail
 
 if NPC, roll on Wilderness NPC list (test)
 
 - Wilderness NPC (tests)
-  - 1 = Wizard (INT 3, -5 XP, +1 Spell Scroll?)
+  - 1 = Wizard (INT 3, -5 XP, +1 Spell spell?)
   - 2 = Thief (DEX 3, -5 Gold, +1 XP)
   - 3 = Merchant (INT 3, -10 Gold, +5 Gold)
   - 4 = Wrench (STR 3, -2 XP, +2 XP)
   - 5 = Knight (STR 4, -1 ATK, +2 XP)
-  - 6 = Assassin (DEX 5, -2 HP, +1 Treasure) -------- Treasure is potion or scroll?????
+  - 6 = Assassin (DEX 5, -2 HP, +1 Treasure) -------- Treasure is potion or spell?????
 
 
 if Settelment, buy items.
@@ -184,7 +215,7 @@ if journeys = 0, visit dungeon
 
 ---
 
-## dungeon
+Dungeon
 
 roll 1d6 for dungeon size
 
@@ -195,9 +226,7 @@ roll 1d6 for dungeon size
 
 ---
 
-if zero torches, game over (lost in dungeon).
-
-roll xd6 (3, 4 or 5) for each dungeon room
+roll xd6 (3, 4 or 5) for each dungeon room.
 
 Dungeon room
 
@@ -211,7 +240,7 @@ Dungeon room
 
 Dungeon Encounter
 
-if Passage, encounter only, then move onto next room
+if Passage, encounter only, then move onto next room...
 
 - Encounter list (1d6)
   - 1 = Enemy x1
@@ -221,7 +250,7 @@ if Passage, encounter only, then move onto next room
   - 5 = Hazard (test)
   - 6 = Treasure
 
-otherwise 2-6 = visit dungeon room, then encounter.
+...otherwise 2-6 = visit dungeon room, then roll on an encounter.
 
 if Enemy, fight
 
@@ -248,10 +277,18 @@ Hazards
 
 if Treasure, roll for Treasure
 
-Treasure
+You can only have 1 Weapon and 1 piece of Armour at a time.
+
+Dungeon Treasure
 
 - Treasure list (1d6)
-  - See Potion and Scroll lists above
+  - 1 = Armour (+1 DEX)
+  - 2 = 
+  - 3 = 
+  - 4 = 
+  - 5 = 
+  - 6 = 
+
 
 if NPC, roll on Dungeon NPC list (test)
 
@@ -264,11 +301,13 @@ if NPC, roll on Dungeon NPC list (test)
   - 6 = 
 
 
--1 Torch per dungeon room
+-1 Torch per dungeon room. if zero torches, game over (lost in dungeon).
 
 if dungeon rooms > 0, repeat dungeon room
 
-if dungeon rooms = 0, visit settlement?
+if dungeon rooms = 0, Dungeon complete.
+
+roll 1d6 to heal HP (unless skipped by usng either using an Accelerate potion or a Teleport spell).
 
 ---
 
