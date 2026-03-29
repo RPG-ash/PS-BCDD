@@ -25,8 +25,11 @@ Business Card Dungeon Delve designed by Melv Lee - PowerShell edition
     - 
 
 start with 1 Attack
+
 start with 12 Health
+
 start with Rations 6 (used when travelling)
+
 start with 6 Torches (used in dingeons)
 
 ---
@@ -107,10 +110,11 @@ Wilderness encounters (tests)
 visit first journy - wilderness (test)
 
 roll higher than encounter test amount to pass, otherwise fail.
+
 adjust pass/fail values
 
-
 always an encounter after a Wilderness visit
+
 Enter an Encounter after Wilderness (test)
 
 roll 1d6 for encounter
@@ -124,6 +128,7 @@ roll 1d6 for encounter
   - 6 = Settelment (buy item(s) - see Settelment list above)
 
 if Enemy, fight.
+
 roll 1 or 2d6 to determine enemy type
 
 Enemy
@@ -137,15 +142,21 @@ Enemy
   - 6 = Wyvern (5, 3d3, 4 XP)
 
 player always attacks first.
-roll to attack, roll more than enemy attack to hit = -1 Health to enemy
+
+roll to attack, roll more than enemy attack to hit = -1 Health to enemy.
+
 roll to defend, roll higher than enemy attack to defend, otherwise -1 Health to you.
+
 + reward
+
 +1 xp for each kill.
 
 if 2 Enemy, fight one after another.
 
 every 6 XP gain 1 level, or 6, 12, 18 per level?
+
 choose +1 to STR, DEX or INT
+
 Max stats is +3.
 
 if test, roll for pass/fail
@@ -166,6 +177,7 @@ if Settelment, buy items.
 -1 Ration per journey
 
 if journeys > 0, repeat Wildernesss encounter
+
 if journeys = 0, visit dungeon
 
 ---
@@ -198,6 +210,7 @@ Dungeon room
 -1 Torch per dungeon room
 
 if dungeon rooms > 0, repeat dungeon room
+
 if dungeon rooms = 0, visit settlement
 
 ---
