@@ -101,6 +101,135 @@ Trap {
     Add-Content -Path .\error.log -value "------------------------------------------------------" # leave in
 }
 
+#
+# Pre-requisite checks (install / import / update PSWriteColor module)
+#
+
+if (-not(Test-Path -Path .\PS-BCDD.json)) {
+    # adjust window size
+    do {
+        Clear-Host
+        Write-Host "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" -ForegroundColor DarkYellow
+        for ($index = 0; $index -lt 36; $index++) {
+            Write-Host "+                                                                                                                                                              +" -ForegroundColor DarkYellow
+        }
+        Write-Host "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" -ForegroundColor DarkYellow
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 20,10;$Host.UI.Write( "Using the CTRL + mouse scroll wheel forward and back,")
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 20,11;$Host.UI.Write( "adjust the font size to make sure the yellow box fits within the screen.")
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 2,36;$Host.UI.Write("")
+        Write-Host -NoNewline "Adjust font size with CTRL + mouse scroll wheel, then confirm with 'go' and Enter"
+        $Adjust_Font_Size = Read-Host " "
+        $Adjust_Font_Size = $Adjust_Font_Size.Trim()
+    } until ($Adjust_Font_Size -ieq "go")
+    Clear-Host
+    Write-Host "Pre-requisite checks" -ForegroundColor Red
+    Write-Host "--------------------" -ForegroundColor Red
+    Write-Output "`r`nChecking if PSWriteColor module is installed."
+    $PSWriteColor_Installed = Get-Module -Name "PSWriteColor" -ListAvailable
+    # PSWriteColor is installed so import it
+    if ($PSWriteColor_Installed) {
+        Write-Host "PSWriteColor module is installed." -ForegroundColor Green
+        $PSWriteColor_Installed
+        $PSWriteColor_Installed_Version = $PSWriteColor_Installed.Version
+        Write-Output "`r`nChecing if there is a new version of PSWriteColor."
+        # check for new module and update on prompt
+        $PSWriteColor_Online_Version = Find-Module -Name "PSWriteColor"
+        if ($PSWriteColor_Installed_Version -lt $PSWriteColor_Online_Version.Version) {
+            Write-Host "Version available: $($PSWriteColor_Online_Version.Version)" -ForegroundColor Green
+            Write-Host "Version installed: $($PSWriteColor_Installed_Version)"
+            do {
+                Write-Host -NoNewline "`r`nDo you want to update to version $($PSWriteColor_Online_Version.Version)? [Y/N]"
+                $Update_PSWriteColor_Choice = Read-Host " "
+                $Update_PSWriteColor_Choice = $Update_PSWriteColor_Choice.Trim()
+            } until ($Update_PSWriteColor_Choice -ieq "y" -or $Update_PSWriteColor_Choice -ieq "n")
+            if ($Update_PSWriteColor_Choice -ieq "y") {
+                Write-Output "Updating PSWriteColor module."
+                Write-Output "Install path will be $ENV:USERPROFILE\Documents\WindowsPowerShell\Modules\"
+                Write-Host "Uninstalling PSWriteColor module Version $PSWriteColor_Installed_Version"
+                Uninstall-Module -Name "PSWriteColor" # no confirmation prompt
+                Write-Host "Installing PSWriteColor module version $($PSWriteColor_Online_Version.Version)"
+                Install-Module -Name "PSWriteColor" -Scope CurrentUser -Confirm:$false -Force
+                $Install_PSWrite_Color_ExitCode = $?
+                if ($Install_PSWrite_Color_ExitCode -eq $true) {
+                    $PSWriteColor_Installed = Get-Module -Name "PSWriteColor" -ListAvailable
+                    if ($PSWriteColor_Installed.Version -eq $PSWriteColor_Online_Version.Version) {
+                        $PSWriteColor_Installed = Get-Module -Name PSWriteColor -ListAvailable
+                        Write-Host "PSWriteColor module version $($PSWriteColor_Installed.Version) installed." -ForegroundColor Green
+                        $PSWriteColor_Installed | Format-Table
+                    } else {
+                        Write-Host "`r`nNo PSWriteColor module installed. Please re-run PS-BCDD.ps1" -ForegroundColor Red
+                        Exit
+                    }
+                } else {
+                    Write-Host "PSWriteColor module version $($PSWriteColor_Online_Version.Version) FAILED to install. Please re-run PS-BCDD.ps1" -ForegroundColor Red
+                    Exit
+                }
+            }
+            if ($Update_PSWriteColor_Choice -ieq "n") {
+                Write-Output "Not updating PSWriteColor module."
+            }
+        } else {
+            Write-Output "`r`nPSWriteColor module is up-to-date."
+        }
+        Write-Output "`r`nImporting PSWriteColor module."
+        Import-Module -Name "PSWriteColor"
+        $PSWriteColor_Installed_Version = Get-Module -Name "PSWriteColor" -ListAvailable
+        if ($PSWriteColor_Installed_Version) {
+            Write-Host "PSWriteColor module version $($PSWriteColor_Installed_Version.Version) imported." -ForegroundColor Green
+        } else {
+            Write-Host "PSWriteColor module not imported." -ForegroundColor Red
+            Break
+        }
+        Start-Sleep -Seconds 3 # leave in
+    } else { # otherwise ask for module to be installed
+        Install_PSWriteColor
+    }
+    #
+    # game info
+    #
+    Write-Host -NoNewLine "`r`nPress any key to continue."
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    Clear-Host
+    Write-Color "`r`nInfo" -Color Green
+    Write-Color "----" -Color Green
+    Write-Color "`r`nWelcome to ", "PS-BCDD", ", my 2nd RPG text adventure written in PowerShell." -Color DarkGray,Magenta,DarkGray
+    Write-Color "`r`nBusiness Card Dungeon Delve is a solo RPG that was designed by ","Melv Lee","." -Color DarkGray,Magenta,DarkGray
+    Write-Color "You can download the original PDF game from itch.io: https://melvinli.itch.io/business-card-dungeon-delve" -Color DarkGray,Magenta,DarkGray
+    Write-Color "`r`nAs previously mentioned, the PSWriteColor PowerShell module written by Przemyslaw Klys is required," -Color DarkGray
+    Write-Color "which, if you are seeing this message then it has installed and imported successfully." -Color DarkGray
+    Write-Color "`r`nAbsolutely ", "NO ", "info, personal or otherwise, is collected or sent anywhere or to anybody. " -Color DarkGray,Red,DarkGray
+    Write-Color "`r`nAll the ", "PS-BCDD ", "games files are stored your ", "$PSScriptRoot"," folder which is where you have run the game from." -Color DarkGray,Magenta,DarkGray,Cyan,DarkGray
+    Write-Color "`rThey include:" -Color DarkGray,Magenta,DarkGray,Cyan,DarkGray
+    Write-Color "The main PowerShell script            : ", "PS-BCDD.ps1" -Color DarkGray,Cyan
+    Write-Color "ASCII art for death messages          : ", "ASCII.txt" -Color DarkGray,Cyan
+    Write-Color "A JSON file that stores all game info : ", "PS-BCDD.json ", "(Locations, Mobs, NPCs and Character Stats etc.)" -Color DarkGray,Cyan,DarkGray
+    Write-Color "`r`nPlayer input options appear in ","Green ", "e.g. ", "[Y/N/E/I] ", "would be ", "yes/no/exit/inventory", "." -Color DarkGray,Green,DarkGray,Green,DarkGray,Green,DarkGray
+    Write-Color "Enter the single character then hit `'Enter`' to confirm the choice." -Color DarkGray
+    Write-Color "`r`nWARNING - Quitting the game unexpectedly may cause lose of data." -Color Cyan
+    Write-Color "`r`nYou are now ready to play", " PS-BCDD", "." -Color DarkGray,Magenta,DarkGray
+    do {
+        do {
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+            Write-Color -NoNewLine "No save file found. Are you ready to start playing ", "PS-BCDD", "?"," [Y/N/E]" -Color DarkYellow,Magenta,DarkYellow,Green
+            $Ready_To_Play_PSRPG = Read-Host " "
+            $Ready_To_Play_PSRPG = $Ready_To_Play_PSRPG.Trim()
+        } until ($Ready_To_Play_PSRPG -ieq "y" -or $Ready_To_Play_PSRPG -ieq "n" -or $Ready_To_Play_PSRPG -ieq "e")
+        if ($Ready_To_Play_PSRPG -ieq "n" -or $Ready_To_Play_PSRPG -ieq "e") {
+            do {
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*105
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                Write-Color -NoNewLine "Do you want to quit ", "PS-BCDD", "?"," [Y/N]" -Color DarkYellow,Magenta,DarkYellow,Green
+                $Quit_Game = Read-Host " "
+                $Quit_Game = $Quit_Game.Trim()
+            } until ($Quit_Game -ieq "y" -or $Quit_Game -ieq "n")
+            if ($Quit_Game -ieq "y") {
+                Write-Color -NoNewLine "Exiting ","PS-BCDD","." -Color DarkYellow,Magenta,DarkYellow
+                Exit
+            }
+        }
+    } until ($Ready_To_Play_PSRPG -ieq "y")
+}
+
 
 
 
@@ -111,7 +240,7 @@ Trap {
 #
 # main loop
 
-Install_PSWriteColor
+
 
 "importing JSON..."
 Import_JSON
