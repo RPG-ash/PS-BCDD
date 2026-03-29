@@ -643,12 +643,12 @@
       "HealthCurrent": 60,
       "HealthMax": 110,
       "HealthMaxUnBuffed": 0,
-      "Attack": 100,
-      "AttackUnBuffed": 0,
-      "Dexterity": 44,
+      "Strength": 1,
+      "StrengthUnBuffed": 0,
+      "Dexterity": 2,
       "DexterityUnBuffed": 0,
-      "Armour": 46,
-      "ArmourUnBuffed": 0
+      "Intelligence": 3,
+      "IntelligenceUnBuffed": 0
     },
     "Weapons_Armour": {
       "Sword": {
