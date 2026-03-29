@@ -4,6 +4,7 @@
 # Allow specific files
 !.gitignore
 !PS-BCDD.ps1
+!PS-BCDD_new_game.json
 # !example.txt
 # !example.json
 
