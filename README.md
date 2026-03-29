@@ -207,11 +207,64 @@ Dungeon room
   - 5 = Library (NPC x2 tests)
   - 6 = Throne (Enemy x2)
 
+Dungeon Encounter
+
+if Passage, encounter only
+
+- Encounter list (1d6)
+  - 1 = Enemy x1
+  - 2 = Enemy x2
+  - 3 = NPC
+  - 4 = Empty
+  - 5 = Hazard (test)
+  - 6 = Treasure
+
+if Enemy, fight
+
+- Enemy list (1d6) (attack, HP, reward)
+  - 1 = 
+  - 2 = 
+  - 3 = 
+  - 4 = 
+  - 5 = 
+  - 6 = 
+
+
+if Hazard, test
+
+Hazards
+
+- Hazard list (1d6)
+  - 1 = 
+  - 2 = 
+  - 3 = 
+  - 4 = 
+  - 5 = 
+  - 6 = 
+
+if Treasure, roll for Treasure
+
+Treasure
+
+- Treasure list (1d6)
+  - See Potion and Scroll lists above
+
+if NPC, roll on Dungeon NPC list (test)
+
+- Dungeon NPC (tests)
+  - 1 = 
+  - 2 = 
+  - 3 = 
+  - 4 = 
+  - 5 = 
+  - 6 = 
+
+
 -1 Torch per dungeon room
 
 if dungeon rooms > 0, repeat dungeon room
 
-if dungeon rooms = 0, visit settlement
+if dungeon rooms = 0, visit settlement?
 
 ---
 
