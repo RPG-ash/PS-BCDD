@@ -241,32 +241,33 @@ if (Test-Path -Path .\PS-BCDD.json) {
 }
 
 
+
 #
 # check for JSON save file
 #
 # if the save file has the Character_Creation flag set to false, deletes JSON file (i.e. if character creation was cancelled or not fully completed - safe to delete file)
-if (Test-Path -Path .\PS-BCDD.json) {
+if (Test-Path -Path .\PS-RPG.json) {
     Import_JSON
     if ($Import_JSON.Character_Creation -eq $false) {
-        Remove-Item -Path .\PS-BCDD.json
+        Remove-Item -Path .\PS-RPG.json
     }
 }
 # loads save file and validate JSON file is on PowerShell Core edition
-if (Test-Path -Path .\PS-BCDD.json) {
+if (Test-Path -Path .\PS-RPG.json) {
     # check for powershell core or desktop then validate json data file
     if ($PSVersionTable.PSEdition -ieq "Desktop") { # unable to validata JSON file in PowerShell Desktop edition
-        Write-Color -LinesBefore 1 "Unable to validate JSON file because ","PS-BCDD.ps1 ","is running under PowerShell 'Desktop' edition." -Color DarkYellow,Magenta,DarkYellow
+        Write-Color -LinesBefore 1 "Unable to validate JSON file because ","PS-RPG.ps1 ","is running under PowerShell 'Desktop' edition." -Color DarkYellow,Magenta,DarkYellow
         Write-Color "Continuing." -Color DarkYellow
         Start-Sleep -Seconds 6 # leave in
     }
     if ($PSVersionTable.PSEdition -ieq "Core") { # check if JSON file is valid under PowerShell Core edition
-        $JSON_File_Valid = Test-Json -Path .\PS-BCDD.json
+        $JSON_File_Valid = Test-Json -Path .\PS-RPG.json
         if ($JSON_File_Valid -eq $false) {
-            Write-Color -LinesBefore 1 "Invalid ","PS-BCDD.json"," file. Please download JSON file again from ","https://github.com/RPGash/PS-BCDD ","Exiting." -Color Red,Magenta,Red,Magenta,Red,DarkCyan
-            Write-Color "Exiting ","PS-BCDD.ps1" -Color Red,Magenta
+            Write-Color -LinesBefore 1 "Invalid ","PS-RPG.json"," file. Please download JSON file again from ","https://github.com/RPGash/PS-RPG ","Exiting." -Color Red,Magenta,Red,Magenta,Red,DarkCyan
+            Write-Color "Exiting ","PS-RPG.ps1" -Color Red,Magenta
             Exit
         } else {
-            Write-Color "PS-BCDD.json"," file is ","valid." -Color Magenta,DarkYellow,Green
+            Write-Color "PS-RPG.json"," file is ","valid." -Color Magenta,DarkYellow,Green
             # Start-Sleep -Seconds 1 # pause to show valid JSON message
         }
     }
@@ -281,12 +282,12 @@ if (Test-Path -Path .\PS-BCDD.json) {
         do {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*105
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
-            Write-Color -NoNewLine "PS-BCDD.json ","save data found. Load saved data?"," [Y/N/E]" -Color Magenta,DarkYellow,Green
+            Write-Color -NoNewLine "PS-RPG.json ","save data found. Load saved data?"," [Y/N/E]" -Color Magenta,DarkYellow,Green
             $Load_Save_Data_Choice = Read-Host " "
             $Load_Save_Data_Choice = $Load_Save_Data_Choice.Trim()
         } until ($Load_Save_Data_Choice -ieq "y" -or $Load_Save_Data_Choice -ieq "n" -or $Load_Save_Data_Choice -ieq "e")
         if ($Load_Save_Data_Choice -ieq "e") {
-            Write-Color -NoNewLine "Exiting ","PS-BCDD","." -Color DarkYellow,Magenta,DarkYellow
+            Write-Color -NoNewLine "Exiting ","PS-RPG","." -Color DarkYellow,Magenta,DarkYellow
             Exit
         }
         if ($Load_Save_Data_Choice -ieq "y") {
@@ -316,7 +317,9 @@ if (Test-Path -Path .\PS-BCDD.json) {
     Tutorial
 }
 if ($Load_Save_Data_Choice -ieq "e" -or $Start_A_New_Game -ieq "e") {
-
+    Write-Color -NoNewLine "Quitting ","PS-RPG","." -Color DarkYellow,Magenta,DarkYellow
+    Exit
+}
 
 
 #
