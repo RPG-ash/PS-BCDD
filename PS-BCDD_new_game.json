@@ -638,16 +638,17 @@
     "Name": "CharacterName",
     "Total_XP": 0,
     "XP_TNL": 0.0,
-    "Gold": 10.0,
+    "Gold": 0.0,
     "Stats": {
-      "HealthCurrent": 60,
-      "HealthMax": 110,
+      "HealthCurrent": 0,
+      "HealthMax": 0,
       "HealthMaxUnBuffed": 0,
-      "Strength": 1,
+      "Attack": 0,
+      "Strength": 0,
       "StrengthUnBuffed": 0,
-      "Dexterity": 2,
+      "Dexterity": 0,
       "DexterityUnBuffed": 0,
-      "Intelligence": 3,
+      "Intelligence": 0,
       "IntelligenceUnBuffed": 0
     },
     "Weapons_Armour": {

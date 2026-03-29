@@ -254,23 +254,46 @@ Function Create_Character {
     #
     # set JSON character stats
     #
-    $Import_JSON.Character.Stats.HealthCurrent = 25
-    $Import_JSON.Character.Stats.HealthMax     = 50
-    $Import_JSON.Character.Stats.Strength      = 1
-    $Import_JSON.Character.Stats.Dexterity     = 2
-    $Import_JSON.Character.Stats.Intelligence  = 3
+    $Import_JSON.Character.Stats.HealthCurrent = 1
+    $Import_JSON.Character.Stats.HealthMax     = 2
+    $Import_JSON.Character.Stats.Attack        = 3
+    $Import_JSON.Character.Stats.Strength      = 4
+    $Import_JSON.Character.Stats.Dexterity     = 5
+    $Import_JSON.Character.Stats.Intelligence  = 6
+    $Import_JSON.Character.Gold                = 7
+    $Import_JSON.Character.Total_XP            = 8
+    $Import_JSON.Character.XP_TNL              = 9
     $Import_JSON.Character_Creation = $true
     Save_JSON
     Import_JSON
-    # Update_Variables
+    Update_Variables
     Clear-Host
     # Draw_Player_Window_and_Stats
-    $Import_JSON.Character.Stats.HealthCurrent
-    $Import_JSON.Character.Stats.HealthMax
-    $Import_JSON.Character.Stats.Strength
-    $Import_JSON.Character.Stats.Dexterity
-    $Import_JSON.Character.Stats.Intelligence
     
+}
+
+#
+# sets variables
+#
+Function Update_Variables {
+    "`r`nupdating variables..."
+    $Script:Character_Name           = $Import_JSON.Character.Name
+    $Script:Character_HealthCurrent  = $Import_JSON.Character.Stats.HealthCurrent
+    $Script:Character_HealthMax      = $Import_JSON.Character.Stats.HealthMax
+    $Script:Character_Attack         = $Import_JSON.Character.Stats.Attack
+    $Script:Character_Strength       = $Import_JSON.Character.Stats.Strength
+    $Script:Character_Dexterity      = $Import_JSON.Character.Stats.Dexterity
+    $Script:Character_Intelligence   = $Import_JSON.Character.Stats.Intelligence
+    $Script:Gold                     = $Import_JSON.Character.Gold
+    $Script:Total_XP                 = $Import_JSON.Character.Total_XP
+    $Script:XP_TNL                   = $Import_JSON.Character.XP_TNL
+    # sets current Location
+    $All_Locations                   = $Import_JSON.Locations.PSObject.Properties.Name
+    foreach ($Single_Location in $All_Locations) {
+        if ($Import_JSON.Locations.$Single_Location.Current_Location -ieq "true") {
+            $Script:Current_Location = $Single_Location
+        }
+    }
 }
 
 
@@ -453,6 +476,7 @@ if (Test-Path -Path .\PS-BCDD.json) {
         Remove-Item -Path .\PS-BCDD.json
     }
 }
+
 # loads save file and validate JSON file is on PowerShell Core edition
 if (Test-Path -Path .\PS-BCDD.json) {
     # check for powershell core or desktop then validate json data file
@@ -528,13 +552,30 @@ if ($Load_Save_Data_Choice -ieq "e" -or $Start_A_New_Game -ieq "e") {
 
 
 
-"importing JSON..."
-Import_JSON
 
-"saving JSON..."
-Save_JSON
+"`r`nJSON Variables"
+$Import_JSON.Character.Stats.HealthCurrent
+$Import_JSON.Character.Stats.HealthMax
+$Import_JSON.Character.Stats.Attack
+$Import_JSON.Character.Stats.Strength
+$Import_JSON.Character.Stats.Dexterity
+$Import_JSON.Character.Stats.Intelligence
+$Import_JSON.Character.Gold
+$Import_JSON.Character.Total_XP
+$Import_JSON.Character.XP_TNL
 
 
+"`r`nInternal variables"
+"$Character_Name"
+"$Character_HealthCurrent"
+"$Character_HealthMax"
+"$Character_Attack"
+"$Character_Strength"
+"$Character_Dexterity"
+"$Character_Intelligence"
+"$Gold"
+"$Total_XP"
+"$XP_TNL"
 
 
 
