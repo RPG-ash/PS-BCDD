@@ -9,7 +9,9 @@ Business Card Dungeon Delve designed by Melv Lee - PowerShell edition
 
 ## How to play Business Card Dungeon Delve
 
-Goal: Your goal is to gain 120 Gold, enough to buy a piece of frmland to retire from the risky Adverturer's life.
+**Goal**
+
+Your goal is to gain 120 Gold, enough to buy a piece of frmland to retire from the risky Adverturer's life.
 
 - Character Sheet
     - Stats
@@ -31,7 +33,6 @@ Goal: Your goal is to gain 120 Gold, enough to buy a piece of frmland to retire 
   - Dungeon (three bars icon?)
   - Wilderness (map icon)
   - Potions (potion/bottle icon)
-  - 
 
 start with 1 Attack
 
@@ -43,7 +44,7 @@ start with 6 Torches (used in dingeons)
 
 ---
 
-roll 1 d6 a potion (max 3)
+roll 1d6 a potion (max 3)
 
 - potions list - 1d6
   - 1 = Healing (+3 HP)
@@ -55,7 +56,7 @@ roll 1 d6 a potion (max 3)
 
 ---
 
-roll 1 d6 for a spell (max 3)
+roll 1d6 for a spell (max 3)
 
 - spells list - 1d6
   - 1 = Healing Hands (restore d6 HP)
@@ -73,7 +74,7 @@ you can use an item or potion and any point (expect damaging spells which are fo
 
 ---
 
-roll 1 d6 for Gold
+roll 1d6 for Gold
 
 visit shop to buy items
 
@@ -89,7 +90,11 @@ visit shop to buy items
 
 Obtain Quest
 
-roll 1d6 to see which quest you will take on. you need to reach the Settelment to gain the rewards. only one quest can be embarked on at once.
+roll 1d6 to see which quest you will take on.
+
+you need to reach the Settelment to gain the rewards.
+
+only one quest can be embarked on at once.
 
 - Quest list - 1d6
   - 1 = Hunt - Return 4 rations (+3 XP & +2 d6 Gold)
@@ -110,7 +115,7 @@ roll 1d6 for journeys (wilderness encounters until dungeon)
 
 ---
 
-roll xd6 (3, 4 or 5) for each journey (wilderness encounters)
+roll xd6 (3, 4 or 5 as per roll above) for each journey (wilderness encounters)
 
 Wilderness encounters (tests)
 
@@ -158,7 +163,7 @@ Enemy
   - 5 = Raider (4, 2d3, 4 Gold)
   - 6 = Wyvern (5, 3d3, 4 XP)
 
-you cn choose to flee a fight
+you can choose to flee a fight...
 
 perform a DEX test by rolling 1d6 + your DEX against monster's ATK -1 (minimum of 1). if you roll higher than monsters Attack, you flee successfully.
 
@@ -182,6 +187,8 @@ if 2 Enemy, fight one after another.
 
 gain monster reward.
 
+---
+
 leveling up Stats
 
 Each Stat can only be leveld up 3 times.
@@ -191,6 +198,8 @@ Gain 12 XP to gain 1 Stat point.
 Gain 18 XP to gain 1 Stat point.
 
 choose +1 to STR, DEX or INT
+
+---
 
 if test, roll for pass/fail
 
@@ -202,8 +211,7 @@ if NPC, roll on Wilderness NPC list (test)
   - 3 = Merchant (INT 3, -10 Gold, +5 Gold)
   - 4 = Wrench (STR 3, -2 XP, +2 XP)
   - 5 = Knight (STR 4, -1 ATK, +2 XP)
-  - 6 = Assassin (DEX 5, -2 HP, +1 Treasure) -------- Treasure is potion or spell?????
-
+  - 6 = Assassin (DEX 5, -2 HP, +1 Treasure) --- Treasure is potion or spell? or Treasure from Dungeon list?????
 
 if Settelment, buy items.
 
@@ -226,7 +234,7 @@ roll 1d6 for dungeon size
 
 ---
 
-roll xd6 (3, 4 or 5) for each dungeon room.
+roll xd6 (3, 4 or 5 as per roll above) for each dungeon room.
 
 Dungeon room
 
