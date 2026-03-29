@@ -147,7 +147,7 @@ roll to attack, roll more than enemy attack to hit = -1 Health to enemy.
 
 roll to defend, roll higher than enemy attack to defend, otherwise -1 Health to you.
 
-+ reward
+adjust reward
 
 +1 xp for each kill.
 
