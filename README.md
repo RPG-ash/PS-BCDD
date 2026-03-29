@@ -13,26 +13,28 @@ Business Card Dungeon Delve designed by Melv Lee - PowerShell edition
 
 Your goal is to gain 120 Gold, enough to buy a piece of frmland to retire from the risky Adverturer's life.
 
-- Character Sheet
-    - Stats
-        - HP (Health)
-        - STR (Strength) (sword icon)
-        - DEX (Dexterity) (shield icon)
-        - INT (Intelligence)
-        - ATK (Attack)
-    - Rations (cutlery icon)
-    - Torch (torch icon)
-    - Potions (potion icon)
-    - Spells (book icon)
-    - Gold ($ bag icon)
-    - XP (lightning icon)
+Character Sheet
 
-- other icons
-  - Enemy (monster icon)
-  - Encounter (question mark icon)
-  - Dungeon (three bars icon?)
-  - Wilderness (map icon)
-  - Potions (potion/bottle icon)
+- Stats
+  - HP (Health)
+  - STR (Strength) (sword icon)
+  - DEX (Dexterity) (shield icon)
+  - INT (Intelligence)
+  - ATK (Attack)
+- Rations (cutlery icon)
+- Torch (torch icon)
+- Potions (potion icon)
+- Spells (book icon)
+- Gold ($ bag icon)
+- XP (lightning icon)
+
+other icons
+
+- Enemy (monster icon)
+- Encounter (question mark icon)
+- Dungeon (three bars icon?)
+- Wilderness (map icon)
+- Potions (potion/bottle icon)
 
 start with 1 Attack
 
