@@ -209,7 +209,7 @@ Dungeon room
 
 Dungeon Encounter
 
-if Passage, encounter only
+if Passage, encounter only, then move onto next room
 
 - Encounter list (1d6)
   - 1 = Enemy x1
@@ -218,6 +218,8 @@ if Passage, encounter only
   - 4 = Empty
   - 5 = Hazard (test)
   - 6 = Treasure
+
+otherwise 2-6 = visit dungeon room, then encounter.
 
 if Enemy, fight
 
