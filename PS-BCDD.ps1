@@ -86,6 +86,74 @@ Function Save_JSON {
     }
 }
 
+    
+Function Roll_D6_Dice {
+    # Clear-Host
+    $Random_Dice_Roll_Random_Seconds = Get-Random -Minimum 4 -Maximum 10
+    for ($i = 0; $i -lt $Random_Dice_Roll_Random_Seconds; $i++) {
+        do {
+            $Script:Random_Dice_Roll = Get-Random -Minimum 1 -Maximum 7
+        } until ($Random_Dice_Roll -ne $Last_Dice_Roll)
+        Clear-Host
+        "`r`nRolling D6 Dice...`r`n`n`n`n"
+        $Script:Last_Dice_Roll = $Random_Dice_Roll
+        switch ($Random_Dice_Roll) {
+            1 {
+                Write-Color "      +-------+"
+                Write-Color "      |       |"
+                Write-Color "      |   o   |"
+                Write-Color "      |       |"
+                Write-Color "      +-------+"
+                break
+            }
+            2 {
+                Write-Color "      +-------+"
+                Write-Color "      | o     |"
+                Write-Color "      |       |"
+                Write-Color "      |     o |"
+                Write-Color "      +-------+"
+                break
+            }
+            3 {
+                Write-Color "      +-------+"
+                Write-Color "      | o     |"
+                Write-Color "      |   o   |"
+                Write-Color "      |     o |"
+                Write-Color "      +-------+"
+                break
+            }
+            4 {
+                Write-Color "      +-------+"
+                Write-Color "      | o   o |"
+                Write-Color "      |       |"
+                Write-Color "      | o   o |"
+                Write-Color "      +-------+"
+                break
+            }
+            5 {
+                Write-Color "      +-------+"
+                Write-Color "      | o   o |"
+                Write-Color "      |   o   |"
+                Write-Color "      | o   o |"
+                Write-Color "      +-------+"
+                break
+            }
+            6 {
+                Write-Color "      +-------+"
+                Write-Color "      | o   o |"
+                Write-Color "      | o   o |"
+                Write-Color "      | o   o |"
+                Write-Color "      +-------+"
+                break
+            }
+            Default {}
+        }
+        $Random_Milliseconds = Get-Random -Minimum 200 -Maximum 1000
+        Start-Sleep -Milliseconds $Random_Milliseconds
+    }
+}
+
+
 
 #
 # create character
@@ -258,6 +326,15 @@ Function Create_Character {
             Write-Color ""
             Write-Color "Both ","Rations"," and ","Torches"," can sometimes be found in enemy loot, but also bought from the shop in Settelment." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
             Write-Color ""
+            # save stats to JSON and variables
+            $Import_JSON.Character.Stats.HealthCurrent = 12
+            $Import_JSON.Character.Stats.HealthMax     = 12
+            $Import_JSON.Character.Rations       = 6
+            $Import_JSON.Character.Torches       = 6
+            $Script:Character_HealthCurrent      = $Import_JSON.Character.Stats.HealthCurrent
+            $Script:Character_HealthMax          = $Import_JSON.Character.Stats.HealthMax
+            $Script:Rations                      = $Import_JSON.Character.Rations
+            $Script:Torches                      = $Import_JSON.Character.Torches
             Read-Host "Press Enter to continue... "
             Clear-Host
             for ($Position = 0; $Position -lt 16; $Position++) {
@@ -271,94 +348,47 @@ Function Create_Character {
             Write-Color "STR"," and ","DEX"," are also used in combat to determine attack and defence results against enemies." -Color White,DarkGray,White,DarkGray
             Read-Host "Press Enter to continue... "
             Clear-Host
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             Write-Color "You have a small pouch to carry some Gold coins which can be used to purchase items from the shop in Settlement." -Color DarkGray,Green,DarkGray
             Write-Color ""
             Read-Host "Press a key to roll a D6 to determine how much Gold you will start with... "
-
-            Function Roll_D6_Dice {
-                do {
-                    $Script:Random_Dice_Roll = Get-Random -Minimum 1 -Maximum 7
-                } until ($Random_Dice_Roll -ne $Last_Dice_Roll)
-                Clear-Host
-                $Script:Last_Dice_Roll = $Random_Dice_Roll
-                switch ($Random_Dice_Roll) {
-                    1 {
-                        Write-Color "+-------+"
-                        Write-Color "|       |"
-                        Write-Color "|   o   |"
-                        Write-Color "|       |"
-                        Write-Color "+-------+"
-                        break
-                    }
-                    2 {
-                        Write-Color "+-------+"
-                        Write-Color "| o     |"
-                        Write-Color "|       |"
-                        Write-Color "|     o |"
-                        Write-Color "+-------+"
-                        break
-                    }
-                    3 {
-                        Write-Color "+-------+"
-                        Write-Color "| o     |"
-                        Write-Color "|   o   |"
-                        Write-Color "|     o |"
-                        Write-Color "+-------+"
-                        break
-                    }
-                    4 {
-                        Write-Color "+-------+"
-                        Write-Color "| o   o |"
-                        Write-Color "|       |"
-                        Write-Color "| o   o |"
-                        Write-Color "+-------+"
-                        break
-                    }
-                    5 {
-                        Write-Color "+-------+"
-                        Write-Color "| o   o |"
-                        Write-Color "|   o   |"
-                        Write-Color "| o   o |"
-                        Write-Color "+-------+"
-                        break
-                    }
-                    6 {
-                        Write-Color "+-------+"
-                        Write-Color "| o   o |"
-                        Write-Color "| o   o |"
-                        Write-Color "| o   o |"
-                        Write-Color "+-------+"
-                        break
-                    }
-                    Default {}
-                }
-                $Random_Milliseconds = Get-Random -Minimum 200 -Maximum 1000
-                Start-Sleep -Milliseconds $Random_Milliseconds
-            }
-            # Clear-Host
-            $Random_Dice_Roll_Random_Seconds = Get-Random -Minimum 4 -Maximum 10
-            for ($i = 0; $i -lt $Random_Dice_Roll_Random_Seconds; $i++) {
-                Roll_D6_Dice
-            }
+            Roll_D6_Dice
             Write-Color ""
-            Write-Color "You start with ","$Random_Dice_Roll", " Gold" -Color DarkGray,White,DarkYellow
-
-                
-            Write-Color ""
-            Write-Color ""
-
-
-
-
-
-
-
-
-
-
-
-
+            Write-Color "You start with ","$Random_Dice_Roll", " Gold","." -Color DarkGray,White,DarkYellow,DarkGray
+            # set gold in JSON and variable
+            $Import_JSON.Character.Gold = 7
+            $Script:Gold                = $Import_JSON.Character.Gold
+            
             Read-Host "Press Enter to continue... "
+            Write-Color ""
+
+            Write-Color ""
+
+
+
+
+
+
+
+
+
+
+
+
 
             # confirm all character choices
             Clear-Host
@@ -383,18 +413,6 @@ Function Create_Character {
         #
         # set JSON character stats
         #
-        $Import_JSON.Character.Stats.HealthCurrent = 12
-        $Import_JSON.Character.Stats.HealthMax     = 12
-        $Import_JSON.Character.Stats.Strength      = 4
-        $Import_JSON.Character.Stats.Dexterity     = 5
-        $Import_JSON.Character.Stats.Intelligence  = 6
-        $Import_JSON.Character.Gold                = 7
-        $Import_JSON.Character.Total_XP            = 8
-        $Import_JSON.Character.XP_TNL              = 9
-        $Import_JSON.Character.Rations             = 0
-        $Import_JSON.Character.Torches             = 0
-        $Import_JSON.Character.SpellsTotal         = 0
-        $Import_JSON.Character.PotionsTotal        = 0
         $Import_JSON.Character_Creation = $true
         Save_JSON
         Import_JSON
@@ -711,10 +729,10 @@ $Import_JSON.Character.XP_TNL
 "$Character_Strength"
 "$Character_Dexterity"
 "$Character_Intelligence"
-"$Character_Rations"
-"$Character_Torches"
-"$Character_SpellsTotal"
-"$Character_PotionsTotal"
+"$Rations"
+"$Torches"
+"$SpellsTotal"
+"$PotionsTotal"
 "$Gold"
 "$Total_XP"
 "$XP_TNL"
