@@ -95,7 +95,7 @@ Function Roll_D6_Dice {
             $Script:Random_Dice_Roll = Get-Random -Minimum 1 -Maximum 7
         } until ($Random_Dice_Roll -ne $Last_Dice_Roll)
         Clear-Host
-        "`r`nRolling D6 Dice...`r`n`n`n`n"
+        "`r`nRolling D6 Dice...`r`n"
         $Script:Last_Dice_Roll = $Random_Dice_Roll
         switch ($Random_Dice_Roll) {
             1 {
@@ -300,13 +300,6 @@ Function Create_Character {
             }
         } until ($Character_Name_Confirm -eq $true)
         $Import_JSON.Character.Name = $Character_Name
-
-        # health, free potion and free scroll
-
-        # start with 12 Health
-        # start with 6 Rations (used when travelling)
-        # start with 6 Torches (used in dingeons)
-
         do {
             for ($Position = 0; $Position -lt 10; $Position++) {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*105
@@ -348,29 +341,60 @@ Function Create_Character {
             Write-Color "STR"," and ","DEX"," are also used in combat to determine attack and defence results against enemies." -Color White,DarkGray,White,DarkGray
             Read-Host "Press Enter to continue... "
             Clear-Host
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            # potion and spells
+            Write-Color "Potions and Spells"
+            Write-Color "=================="
+            Write-Color "`r`nPotions and Spells are items that can be used at any time that can heal you, cause damage to enemies," -Color DarkGray
+            Write-Color "raise your stats temporally and even teleport you back to the Settlement." -Color DarkGray
+            Write-Color "You can also find them in loot from enemies, or buy them from the shop in the Settlement." -Color DarkGray
+            Write-Color "`r`nYou start with a free Potion and Spell." -Color DarkGray
+            Write-Color ""
+            foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
+                "$($item.Name) - $($item.Value.Name) ($($item.Value.Info))"
+            }
+            # roll for potion
+            Write-Color "`r`nRoll a D6 now to determine which Potion you receive." -Color DarkGray
+            Read-Host "`r`nPress Enter to continue... "
+            Clear-Host
+            Roll_D6_Dice
+            Write-Color "`r`nYou rolled a ","$Random_Dice_Roll", ". You gain a ","$($Import_JSON.Potions.$Random_Dice_Roll.Name)"," Potion","." -Color DarkGray,White,DarkGray,White,Blue,DarkGray
+            $Import_JSON.Character.PotionsTotal += 1
+            $Script:PotionsTotal = $Import_JSON.Character.PotionsTotal
+            $Import_JSON.Potions.$Random_Dice_Roll.Quantity += 1
+            Write-Color ""
+            # roll for spell
+            Write-Color "`r`nNow roll another D6 to determine which Spell you receive." -Color DarkGray
+            Read-Host "Press Enter to continue... "
+            Clear-Host
+            Roll_D6_Dice
+            Write-Color "`r`nYou rolled a ","$Random_Dice_Roll", ". You gain a ","$($Import_JSON.Spells.$Random_Dice_Roll.Name)"," Spell","." -Color DarkGray,White,DarkGray,White,Blue,DarkGray
+            $Import_JSON.Character.SpellsTotal += 1
+            $Script:SpellsTotal = $Import_JSON.Character.SpellsTotal
+            $Import_JSON.Spells.$Random_Dice_Roll.Quantity += 1
+            Write-Color ""
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            Read-Host "Press Enter to continue... "
+            Clear-Host
+            # roll for gold
             Write-Color "You have a small pouch to carry some Gold coins which can be used to purchase items from the shop in Settlement." -Color DarkGray,Green,DarkGray
             Write-Color ""
             Read-Host "Press a key to roll a D6 to determine how much Gold you will start with... "
+            Clear-Host
             Roll_D6_Dice
             Write-Color ""
             Write-Color "You start with ","$Random_Dice_Roll", " Gold","." -Color DarkGray,White,DarkYellow,DarkGray
             # set gold in JSON and variable
-            $Import_JSON.Character.Gold = 7
+            $Import_JSON.Character.Gold = $Random_Dice_Roll
             $Script:Gold                = $Import_JSON.Character.Gold
             
             Read-Host "Press Enter to continue... "
