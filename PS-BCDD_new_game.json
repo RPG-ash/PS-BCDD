@@ -741,6 +741,36 @@
       "Quantity": 0
     }
   },
+  "Settlement": {
+    "1": {
+      "Description": "+2 Rations",
+      "Cost": 2
+    },
+    "2": {
+      "Description": "+2 Torches",
+      "Cost": 2
+    },
+    "3": {
+      "Description": "Restore 1 HP",
+      "Cost": 3
+    },
+    "4": {
+      "Description": "+1 Potion (+3 HP)",
+      "Cost": 6
+    },
+    "5": {
+      "Description": "+1 Spell",
+      "Cost": 15
+    },
+    "6": {
+      "Description": "Training (+5 XP)",
+      "Cost": 25
+    },
+    "7": {
+      "Description": "Reurrection (return to life at the Settelement when at zero HP)",
+      "Cost": 30
+    }
+  },
   "Quests": {
     "Rat Infestation": {
       "Introduction_Task": true,

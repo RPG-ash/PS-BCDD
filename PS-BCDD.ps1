@@ -72,23 +72,17 @@ Function Save_JSON {
     for ($retry = 1; $retry -le $maxRetries; $retry++) {
         try {
             ($Script:Import_JSON | ConvertTo-Json -depth 32) | Set-Content ".\PS-BCDD.json" -ErrorAction Stop
-            # Add-Content -Path "$ENV:userprofile\My Drive\GitHub\PS-BCDD\error.log" -value "Success attempt #$($retry)" # leave in
-            Break
         } catch {
             Add-Content -Path "$ENV:userprofile\My Drive\GitHub\PS-BCDD\error.log" -value "Error saving attempt #$($retry) $($_.Exception.Message)" # leave in
             if ($retry -lt $maxRetries) {
                 Add-Content -Path "$ENV:userprofile\My Drive\GitHub\PS-BCDD\error.log" -value "Retrying in $($retryDelaySeconds)s" # leave in
                 Start-Sleep -Seconds $retryDelaySeconds # leave in
             } else {
-                Add-Content -Path "$ENV:userprofile\My Drive\GitHub\PS-BCDD\error.log" -value "Failed $($maxRetries) attempts" # leave in
             }
         }
-    }
 }
-
     
 Function Roll_D6_Dice {
-    # Clear-Host
     $Random_Dice_Roll_Random_Seconds = Get-Random -Minimum 4 -Maximum 10
     for ($i = 0; $i -lt $Random_Dice_Roll_Random_Seconds; $i++) {
         do {
@@ -318,8 +312,6 @@ Function Create_Character {
             Write-Color "You use ","1"," Torch"," per dungeon room. If you use up all your torches before leaving a dungeon, you'll be lost in dungeon forever unable to escape and will have to re-roll another character." -Color DarkGray,White,Blue,DarkGray,DarkGray,White,Blue,DarkGray
             Write-Color ""
             Write-Color "Both ","Rations"," and ","Torches"," can sometimes be found in enemy loot, but also bought from the shop in Settelment." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
-            Write-Color ""
-            # save stats to JSON and variables
             $Import_JSON.Character.Stats.HealthCurrent = 12
             $Import_JSON.Character.Stats.HealthMax     = 12
             $Import_JSON.Character.Rations       = 6
@@ -328,7 +320,7 @@ Function Create_Character {
             $Script:Character_HealthMax          = $Import_JSON.Character.Stats.HealthMax
             $Script:Rations                      = $Import_JSON.Character.Rations
             $Script:Torches                      = $Import_JSON.Character.Torches
-            Read-Host "Press Enter to continue... "
+            Read-Host "`r`nPress Enter to continue... "
             Clear-Host
             for ($Position = 0; $Position -lt 16; $Position++) {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*105
@@ -339,8 +331,9 @@ Function Create_Character {
             Write-Color "STR"," (Strength), ","DEX"," (Dexterity) and ","INT"," (Intelligence), are used to determine ","Pass"," and ","Fail"," results against certain tests from events suchs as Encounters, Hazards and NPC interactions." -Color White,DarkGray,White,DarkGray,White,DarkGray,Green,DarkGray,Red,DarkGray
             Write-Color ""
             Write-Color "STR"," and ","DEX"," are also used in combat to determine attack and defence results against enemies." -Color White,DarkGray,White,DarkGray
-            Read-Host "Press Enter to continue... "
+            Read-Host "`r`nPress Enter to continue... "
             Clear-Host
+            
             # potion and spells
             Write-Color "Potions and Spells"
             Write-Color "=================="
@@ -348,62 +341,102 @@ Function Create_Character {
             Write-Color "raise your stats temporally and even teleport you back to the Settlement." -Color DarkGray
             Write-Color "You can also find them in loot from enemies, or buy them from the shop in the Settlement." -Color DarkGray
             Write-Color "`r`nYou start with a free Potion and Spell." -Color DarkGray
-            Write-Color ""
             foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
                 "$($item.Name) - $($item.Value.Name) ($($item.Value.Info))"
             }
+            
             # roll for potion
             Write-Color "`r`nRoll a D6 now to determine which Potion you receive." -Color DarkGray
             Read-Host "`r`nPress Enter to continue... "
             Clear-Host
-            Roll_D6_Dice
+            # Roll_D6_Dice
+            $Random_Dice_Roll = 1
             Write-Color "`r`nYou rolled a ","$Random_Dice_Roll", ". You gain a ","$($Import_JSON.Potions.$Random_Dice_Roll.Name)"," Potion","." -Color DarkGray,White,DarkGray,White,Blue,DarkGray
             $Import_JSON.Character.PotionsTotal += 1
             $Script:PotionsTotal = $Import_JSON.Character.PotionsTotal
             $Import_JSON.Potions.$Random_Dice_Roll.Quantity += 1
-            Write-Color ""
+            
             # roll for spell
             Write-Color "`r`nNow roll another D6 to determine which Spell you receive." -Color DarkGray
             Read-Host "Press Enter to continue... "
             Clear-Host
-            Roll_D6_Dice
+            # Roll_D6_Dice
+            $Random_Dice_Roll = 2
             Write-Color "`r`nYou rolled a ","$Random_Dice_Roll", ". You gain a ","$($Import_JSON.Spells.$Random_Dice_Roll.Name)"," Spell","." -Color DarkGray,White,DarkGray,White,Blue,DarkGray
             $Import_JSON.Character.SpellsTotal += 1
             $Script:SpellsTotal = $Import_JSON.Character.SpellsTotal
             $Import_JSON.Spells.$Random_Dice_Roll.Quantity += 1
-            Write-Color ""
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            Read-Host "Press Enter to continue... "
+            Read-Host "`r`nPress Enter to continue... "
             Clear-Host
+            
             # roll for gold
             Write-Color "You have a small pouch to carry some Gold coins which can be used to purchase items from the shop in Settlement." -Color DarkGray,Green,DarkGray
-            Write-Color ""
-            Read-Host "Press a key to roll a D6 to determine how much Gold you will start with... "
+            Read-Host "`r`nPress a key to roll a D6 to determine how much Gold you will start with... "
             Clear-Host
-            Roll_D6_Dice
+            # Roll_D6_Dice
+            $Random_Dice_Roll = 5
             Write-Color ""
             Write-Color "You start with ","$Random_Dice_Roll", " Gold","." -Color DarkGray,White,DarkYellow,DarkGray
+            
             # set gold in JSON and variable
             $Import_JSON.Character.Gold = $Random_Dice_Roll
             $Script:Gold                = $Import_JSON.Character.Gold
+            Update_Variables
+            Save_JSON
+            Read-Host "`r`nPress Enter to continue... "
+            do {
+                Clear-Host
+                Write-Color "`r`nThe Settlement has a shop where you can buy items before heading out on your adventure." -Color DarkGray
+                Write-Color ""
+                $All_Settlement_Items_Array = New-Object System.Collections.Generic.List[System.Object]
+                foreach ($item in $Import_JSON.Settlement.PSObject.Properties) {
+                    $All_Settlement_Items_Array.Add($item.Name)
+                    "$($item.Name) - $($item.Value.Description) ($($item.Value.Cost))"
+                }
+
+                # if only 1 gold, unable to buy any items
+                if ($Import_JSON.Character.Gold -eq 1) {
+                    Write-Color "`r`nYou only have 1 Gold, so you can't buy any items from the shop just yet." -Color DarkGray,Green,DarkGray,Blue
+                } else {
+                    # choose to purchase items from shop
+                    do {
+                        do {
+                            for ($Position = 19; $Position -lt 22; $Position++) {
+                                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*105
+                            }
+                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,20;$Host.UI.Write("")
+                            Write-Color -NoNewLine "`r`nYou have ","$($Import_JSON.Character.Gold)", " Gold",". Select the item number you would like to purchase, or [L]eave." -Color DarkGray,DarkYellow,DarkGray
+                            $Purchase_Item_Choice = Read-Host " "
+                            $Purchase_Item_Choice = $Purchase_Item_Choice.Trim()
+                        } until ($Purchase_Item_Choice -ieq "l" -or $Purchase_Item_Choice -in $All_Settlement_Items_Array)
+                        # if cannot afford item, loop back to ask question again
+                        Add-Content -Path .\error.log -value "Purchase_Item_Choice 1: $Purchase_Item_Choice"
+                        # Read-Host " "
+                        if ($Purchase_Item_Choice -ne "l"){
+                            if ($Import_JSON.Settlement.$Purchase_Item_Choice.Cost -gt $Gold) {
+                                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,18;$Host.UI.Write("");" "*105
+                                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,18;$Host.UI.Write("")
+                                Write-Color "$($Import_JSON.Settlement.$Purchase_Item_Choice.Description)"," costs ","$($Import_JSON.Settlement.$Purchase_Item_Choice.Cost) Gold"," but you only have ","$($Import_JSON.Character.Gold) Gold","." -Color Blue,DarkGray,DarkYellow,DarkGray,DarkYellow,DarkGray
+                            } else {
+                                # switch ($Purchase_Item_Choice) {
+        
+                                #     }
+                                #     Default {}
+                                # }
+                            }
+                        }
+
+
+                        
+
+                    } until ($Purchase_Item_Choice -ieq "l");
+
+                }
+            } until ($Import_JSON.Character.Gold -lt 2 -or $Purchase_Item_Choice -ieq "c");
+
+            Read-Host "`r`nPress Enter to continue... "
+            Clear-Host
             
-            Read-Host "Press Enter to continue... "
-            Write-Color ""
-
-            Write-Color ""
-
-
-
 
 
 
@@ -503,12 +536,8 @@ Trap {
     Add-Content -Path .\error.log -value "------------------------------------------------------" # leave in
 }
 
-#
 # Pre-requisite checks (install / import / update PSWriteColor module)
 #
-
-# if (-not(Test-Path -Path .\PS-BCDD.json)) {
-#     # adjust window size
 #     do {
 #         Clear-Host
 #         Write-Host "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" -ForegroundColor DarkYellow
