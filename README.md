@@ -16,11 +16,11 @@ Business Card Dungeon Delve designed by Melv Lee - PowerShell edition by RPG-ash
 
 ---
 
-## How to play Business Card Dungeon Delve
+## How to play Business Card Dungeon Delve (needs tidying up)
 
 **Goal**
 
-Your goal is to gain 120 Gold, enough to buy a piece of frmland to retire from the risky Adverturer's life.
+Your goal is to gain 120 Gold, enough to buy a piece of farmland to retire from the risky Adverturer's life.
 
 Character Sheet
 
