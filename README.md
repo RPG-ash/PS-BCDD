@@ -8,7 +8,7 @@
 
 ---
 
-Business Card Dungeon Delve designed by Melv Lee - PowerShell edition
+Business Card Dungeon Delve designed by Melv Lee - PowerShell edition by RPG-ash
 
 [https://melvinli.itch.io/business-card-dungeon-Delve](https://melvinli.itch.io/business-card-dungeon-delve)
 
