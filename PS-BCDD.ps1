@@ -375,7 +375,7 @@ Function Create_Character {
             Read-Host "`r`nPress a key to roll a D6 to determine how much Gold you will start with... "
             Clear-Host
             # Roll_D6_Dice
-            $Random_Dice_Roll = 6
+            $Random_Dice_Roll = 13
             Write-Color ""
             Write-Color "You start with ","$Random_Dice_Roll", " Gold","." -Color DarkGray,White,DarkYellow,DarkGray
             
@@ -385,6 +385,7 @@ Function Create_Character {
             Update_Variables
             Save_JSON
             Read-Host "`r`nPress Enter to continue... "
+            # purchase items from shop
             do {
                 Clear-Host
                 Write-Color "`r`nThe Settlement has a shop where you can buy items before heading out on your adventure." -Color DarkGray
@@ -394,7 +395,6 @@ Function Create_Character {
                     $All_Settlement_Items_Array.Add($item.Name)
                     "$($item.Name) - $($item.Value.Description) ($($item.Value.Cost))"
                 }
-
                 # if only 1 gold, unable to buy any items
                 if ($Import_JSON.Character.Gold -eq 1) {
                     Write-Color "`r`nYou only have 1 Gold, so you can't buy any items from the shop just yet." -Color DarkGray,Green,DarkGray,Blue
@@ -402,13 +402,22 @@ Function Create_Character {
                     # choose to purchase items from shop
                     do {
                         do {
+                            # $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,20;$Host.UI.Write("");" "*140
+                            # $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,20;$Host.UI.Write("")
                             for ($Position = 19; $Position -lt 22; $Position++) {
                                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
                             }
                             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,20;$Host.UI.Write("")
-                            Write-Color -NoNewLine "You have ","$($Import_JSON.Character.Gold)", " Gold",". Select the item number you would like to purchase, or [L]eave." -Color DarkGray,DarkYellow,DarkGray
-                            $Purchase_Item_Choice = Read-Host " "
-                            $Purchase_Item_Choice = $Purchase_Item_Choice.Trim()
+                            if ($Gold -lt 6) {
+                                Write-Color "You have ","$($Import_JSON.Character.Gold) Gold",", so you can't afford to buy any Potions from the shop." -Color DarkGray,DarkYellow,DarkGray,Blue
+                                Read-Host "`r`nPress Enter to continue..."
+                                $Purchase_Item_Choice = "l"
+                            } else {
+                                # Write-Color -NoNewLine "Each Potion costs ", "6 Gold",". Select the item number you would like to purchase, or [L]eave." -Color DarkGray,DarkYellow,DarkGray
+                                Write-Color -NoNewLine "Each Potion costs ", "6 Gold",". You have ","$($Import_JSON.Character.Gold)", " Gold",". Select the item number you would like to purchase, or [L]eave." -Color DarkGray,DarkYellow,DarkGray,DarkYellow,DarkGray
+                                [string]$Purchase_Item_Choice = Read-Host " "
+                                $Purchase_Item_Choice = $Purchase_Item_Choice.Trim()
+                            }
                         } until ($Purchase_Item_Choice -ieq "l" -or $Purchase_Item_Choice -in $All_Settlement_Items_Array)
                         # if cannot afford item, loop back to ask question again
                         Add-Content -Path .\error.log -value "Purchase_Item_Choice 1: $Purchase_Item_Choice"
@@ -458,8 +467,8 @@ Function Create_Character {
                                             do {
                                                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,20;$Host.UI.Write("");" "*140
                                                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,20;$Host.UI.Write("")
-                                                Write-Color -NoNewLine "Each Potion costs", "6 Gold",". Select the item number you would like to purchase, or [L]eave." -Color DarkGray,DarkYellow,DarkGray
-                                                $Potion_Purchase_Choice = Read-Host " "
+                                                Write-Color -NoNewLine "Each Potion costs ", "6 Gold",". You have ","$($Import_JSON.Character.Gold)", " Gold",". Select the item number you would like to purchase, or [L]eave." -Color DarkGray,DarkYellow,DarkGray,DarkYellow,DarkGray
+                                                [string]$Potion_Purchase_Choice = Read-Host " "
                                             } until ($Potion_Purchase_Choice -ieq "l" -or $Potion_Purchase_Choice -in $All_Settlement_Potions_Array)
                                             if ($Purchase_Item_Choice -ne "l"){
                                                 $Potion_Purchased = $true
@@ -491,16 +500,25 @@ Function Create_Character {
                                                     }
                                                     Default {}
                                                 }
+                                                # reduce gold by 6, add potion to inventory, add 1 to potions total
+                                                $Import_JSON.Character.Gold -= 6
+                                                $Script:Gold = $Import_JSON.Character.Gold
+                                                $Import_JSON.Character.PotionsTotal += 1
+                                                $Script:PotionsTotal = $Import_JSON.Character.PotionsTotal
+                                                $Import_JSON.Potions.$Potion_Purchase_Choice.Quantity += 1
                                                 Save_JSON
                                                 Update_Variables
                                             }
-                                        } until ($Potion_Purchase_Choice -ieq "l")
-
-                                        $Import_JSON.Character.PotionsTotal += 1
-                                        $Import_JSON.Character.Gold -= $Import_JSON.Settlement.$Purchase_Item_Choice.Cost
-                                        $Script:Gold = $Import_JSON.Character.Gold
-                                        $Script:PotionsTotal = $Import_JSON.Character.PotionsTotal
-                                        # $Import_JSON.Potions.7.Quantity += 1
+                                        } until ($Potion_Purchase_Choice -ieq "l" -or $Gold -lt 6)
+                                    }
+                                    5 { # spells
+                                        Write-Color "Spells cost ","15 Gold",", so you can't afford to buy any from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
+                                        Read-Host "`r`nPress Enter to continue..."
+                                        $Purchase_Item_Choice = "l"
+                                    }
+                                    6 { # Training (+5 XP)
+                                    }
+                                    7 { # Reurrection (return to life at the Settelement when at zero HP)
                                     }
                                     Default {}
                                 }
@@ -508,12 +526,7 @@ Function Create_Character {
                                 Update_Variables
                             }
                         }
-
-
-                        
-
                     } until ($Purchase_Item_Choice -ieq "l");
-
                 }
             } until ($Import_JSON.Character.Gold -lt 2 -or $Purchase_Item_Choice -ieq "c");
 
@@ -567,7 +580,6 @@ Function Create_Character {
 # sets variables
 #
 Function Update_Variables {
-    "`r`nupdating variables..."
     $Script:Character_Name          = $Import_JSON.Character.Name
     $Script:Character_HealthCurrent = $Import_JSON.Character.Stats.HealthCurrent
     $Script:Character_HealthMax     = $Import_JSON.Character.Stats.HealthMax
