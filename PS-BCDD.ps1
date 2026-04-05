@@ -1,3 +1,11 @@
+# ToDo
+# ----
+#
+# - Obtain Quest
+#
+#
+#
+
 # Business Card Dungeon Delve designed by Melv Lee - PowerShell edition
 # https://melvinli.itch.io/business-card-dungeon-delve
 
@@ -83,6 +91,9 @@ Function Save_JSON {
     }
 }
 
+#
+# roll random D6
+#
 Function Roll_D6_Dice {
     $Random_Dice_Roll_Random_Seconds = Get-Random -Minimum 4 -Maximum 10
     for ($i = 0; $i -lt $Random_Dice_Roll_Random_Seconds; $i++) {
@@ -154,6 +165,9 @@ Function Roll_D6_Dice {
 # create character
 #
 Function Create_Character {
+    #
+    # character name
+    #
     Copy-Item -Path .\PS-BCDD_new_game.json -Destination .\PS-BCDD.json
     Import_JSON
     do {
@@ -295,6 +309,10 @@ Function Create_Character {
             }
         } until ($Character_Name_Confirm -eq $true)
         $Import_JSON.Character.Name = $Character_Name
+        Update_Variables
+        #
+        # character stats
+        #
         do {
             for ($Position = 0; $Position -lt 10; $Position++) {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
@@ -312,15 +330,12 @@ Function Create_Character {
             Write-Color ""
             Write-Color "You use ","1"," Torch"," per dungeon room. If you use up all your torches before leaving a dungeon, you'll be lost in dungeon forever unable to escape and will have to re-roll another character." -Color DarkGray,White,Blue,DarkGray,DarkGray,White,Blue,DarkGray
             Write-Color ""
-            Write-Color "Both ","Rations"," and ","Torches"," can sometimes be found in enemy loot, but also bought from the shop in Settelment." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
+            Write-Color "Both ","Rations"," and ","Torches"," can sometimes be found in enemy loot, but also bought from the shop in Settlement." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
             $Import_JSON.Character.Stats.HealthCurrent = 12
             $Import_JSON.Character.Stats.HealthMax     = 12
-            $Import_JSON.Character.Rations       = 6
-            $Import_JSON.Character.Torches       = 6
-            $Script:Character_HealthCurrent      = $Import_JSON.Character.Stats.HealthCurrent
-            $Script:Character_HealthMax          = $Import_JSON.Character.Stats.HealthMax
-            $Script:Rations                      = $Import_JSON.Character.Rations
-            $Script:Torches                      = $Import_JSON.Character.Torches
+            $Import_JSON.Character.Rations             = 6
+            $Import_JSON.Character.Torches             = 6
+            Update_Variables
             Read-Host "`r`nPress Enter to continue... "
             Clear-Host
             for ($Position = 0; $Position -lt 16; $Position++) {
@@ -334,8 +349,9 @@ Function Create_Character {
             Write-Color "STR"," and ","DEX"," are also used in combat to determine attack and defence results against enemies." -Color White,DarkGray,White,DarkGray
             Read-Host "`r`nPress Enter to continue... "
             Clear-Host
-            
+            #
             # potion and spells
+            #
             Write-Color "Potions and Spells"
             Write-Color "=================="
             Write-Color "`r`nPotions and Spells are items that can be used at any time that can heal you, cause damage to enemies," -Color DarkGray
@@ -345,47 +361,49 @@ Function Create_Character {
             foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
                 "$($item.Name) - $($item.Value.Name) ($($item.Value.Info))"
             }
-            
+            #
             # roll for potion
+            #
             Write-Color "`r`nRoll a D6 now to determine which Potion you receive." -Color DarkGray
             Read-Host "`r`nPress Enter to continue... "
-            Clear-Host
-            # Roll_D6_Dice
-            $Random_Dice_Roll = 1
+            # Clear-Host
+            Roll_D6_Dice
+            # $Random_Dice_Roll = 1
             Write-Color "`r`nYou rolled a ","$Random_Dice_Roll", ". You gain a ","$($Import_JSON.Potions.$Random_Dice_Roll.Name)"," Potion","." -Color DarkGray,White,DarkGray,White,Blue,DarkGray
             $Import_JSON.Character.PotionsTotal += 1
-            $Script:PotionsTotal = $Import_JSON.Character.PotionsTotal
             $Import_JSON.Potions.$Random_Dice_Roll.Quantity += 1
-            
+            Update_Variables
+            #
             # roll for spell
+            #
             Write-Color "`r`nNow roll another D6 to determine which Spell you receive." -Color DarkGray
             Read-Host "Press Enter to continue... "
-            Clear-Host
-            # Roll_D6_Dice
-            $Random_Dice_Roll = 2
+            # Clear-Host
+            Roll_D6_Dice
+            # $Random_Dice_Roll = 2
             Write-Color "`r`nYou rolled a ","$Random_Dice_Roll", ". You gain a ","$($Import_JSON.Spells.$Random_Dice_Roll.Name)"," Spell","." -Color DarkGray,White,DarkGray,White,Blue,DarkGray
             $Import_JSON.Character.SpellsTotal += 1
-            $Script:SpellsTotal = $Import_JSON.Character.SpellsTotal
             $Import_JSON.Spells.$Random_Dice_Roll.Quantity += 1
+            Update_Variables
             Read-Host "`r`nPress Enter to continue... "
             Clear-Host
-            
+            #
             # roll for gold
+            #
             Write-Color "You have a small pouch to carry some Gold coins which can be used to purchase items from the shop in Settlement." -Color DarkGray,Green,DarkGray
-            Read-Host "`r`nPress a key to roll a D6 to determine how much Gold you will start with... "
-            Clear-Host
-            # Roll_D6_Dice
-            $Random_Dice_Roll = 13
+            Read-Host "`r`nPress Enter to roll a D6 to determine how much Gold you will start with... "
+            # Clear-Host
+            Roll_D6_Dice
+            # $Random_Dice_Roll = 13
             Write-Color ""
             Write-Color "You start with ","$Random_Dice_Roll", " Gold","." -Color DarkGray,White,DarkYellow,DarkGray
-            
-            # set gold in JSON and variable
             $Import_JSON.Character.Gold = $Random_Dice_Roll
-            $Script:Gold                = $Import_JSON.Character.Gold
             Update_Variables
             Save_JSON
             Read-Host "`r`nPress Enter to continue... "
+            #
             # purchase items from shop
+            #
             Clear-Host
             Write-Color "`r`nThe Settlement has a shop where you can buy items before heading out on your adventure." -Color DarkGray
             Write-Color ""
@@ -430,18 +448,14 @@ Function Create_Character {
                                         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,18;$Host.UI.Write("")
                                         Write-Color "You purchase ","+2 Rations"," for ","6 Gold","." -Color DarkGray,Blue,DarkGray,DarkYellow,DarkGray
                                         $Import_JSON.Character.Gold -= $Import_JSON.Settlement.$Purchase_Item_Choice.Cost
-                                        $Script:Gold = $Import_JSON.Character.Gold
                                         $Import_JSON.Character.Rations += 2
-                                        $Script:Rations = $Import_JSON.Character.Rations
                                     }
                                     2 { # +2 Torches
                                         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,18;$Host.UI.Write("");" "*140
                                         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,18;$Host.UI.Write("")
                                         Write-Color "You purchase ","+2 Torches"," for ","6 Gold","." -Color DarkGray,Blue,DarkGray,DarkYellow,DarkGray
                                         $Import_JSON.Character.Gold -= $Import_JSON.Settlement.$Purchase_Item_Choice.Cost
-                                        $Script:Gold = $Import_JSON.Character.Gold
                                         $Import_JSON.Character.Torches += 2
-                                        $Script:Torches = $Import_JSON.Character
                                     }
                                     3 { # Restore 1 HP
                                         if ($Import_JSON.Character.Stats.HealthCurrent -eq $Import_JSON.Character.Stats.HealthMax) {
@@ -451,7 +465,6 @@ Function Create_Character {
                                         } else {
                                             $Import_JSON.Character.Stats.HealthCurrent += 1
                                             $Import_JSON.Character.Gold -= $Import_JSON.Settlement.$Purchase_Item_Choice.Cost
-                                            $Script:Gold = $Import_JSON.Character.Gold
                                             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,18;$Host.UI.Write("");" "*140
                                             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,18;$Host.UI.Write("")
                                             Write-Color "Your Health has incresed by +1 and is now ","$($Import_JSON.Character.Stats.HealthCurrent) / $($Import_JSON.Character.Stats.HealthMax) HP","." -Color Blue,DarkGray,DarkYellow,DarkGray
@@ -509,9 +522,7 @@ Function Create_Character {
                                                 }
                                                 # reduce gold by 6, add potion to inventory, add 1 to potions total
                                                 $Import_JSON.Character.Gold -= 6
-                                                $Script:Gold = $Import_JSON.Character.Gold
                                                 $Import_JSON.Character.PotionsTotal += 1
-                                                $Script:PotionsTotal = $Import_JSON.Character.PotionsTotal
                                                 $Import_JSON.Potions.$Potion_Purchase_Choice.Quantity += 1
                                             }
                                         } until ($Potion_Purchase_Choice -ieq "l" -or $Gold -lt 6)
@@ -547,12 +558,46 @@ Function Create_Character {
                     # } until ($Purchase_Item_Choice -ieq "l");
                 }
             } until ($Import_JSON.Character.Gold -lt 2 -or $Purchase_Item_Choice -ieq "l");
-
-            Read-Host "`r`nPress Enter to continue... "
+            #
+            # Obtain Quest
+            #
+            Clear-Host
+            Write-Color "`r`nBefore you can head out on your adventure, select a quest which will earn you some XP and Gold." -Color DarkGray
+            Write-Color "`r`nYou need to return back to the ","Settlement"," to gain the rewards, you don't gain them during your adventure." -Color DarkGray,White,DarkGray
+            Write-Color "`r`nOnly one quest can be embarked on at once." -Color DarkGray,White,DarkGray
+            Write-Color ""
+            foreach ($item in $Import_JSON.Quests.PSObject.Properties) {
+                $All_Settlement_Items_Array.Add("$($item.Name)")
+                Write-Color "$($item.Name) - $($item.Value.Short_Description) - ($($item.Value.Gold_Reward) Gold & $($item.Value.XP_Reward) XP)" -Color Blue,DarkGray,DarkYellow,DarkGray,DarkYellow,DarkGray
+            }
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,20;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,20;$Host.UI.Write("")
+            Write-Color -NoNewLine "`r`nNow roll a D6 to determine which Quest you will embark on. Press Enter to continue..." -Color DarkGray
+            Read-Host " "
+            # Clear-Host
+            Roll_D6_Dice
+            # $Random_Dice_Quest = 1
+            Write-Color -NoNewLine "`r`nYou rolled a ","$Random_Dice_Roll", ". You obtain the ","$($Import_JSON.Quests.$Random_Dice_Roll.Name)"," Quest ","and must ","$($Import_JSON.Quests.$Random_Dice_Roll.Long_Description)",". Press Enter to continue." -Color DarkGray,White,DarkGray,White,Blue,DarkGray,White,DarkGray
+            $Import_JSON.Quests.$Random_Dice_Roll.Active = $true
+            Read-Host " "
             Clear-Host
             
 
+            # roll 1d6 for journeys (wilderness encounters until dungeon)
+            # - Journys (1d6)
+            #   - 1-2 = 3
+            #   - 3-4 = 4
+            #   - 5-6 = 5
 
+            # roll xd6 (3, 4 or 5 as per roll above) for each journey (wilderness encounters)
+            # Wilderness encounters (tests)
+            # - Wilderness list - 1d6 (test, fail, success)
+            #   - 1 = Plains (none, Encounter only)
+            #   - 2 = Forest - INT 3, -1 Rations, +2 Rations
+            #   - 3 = River - DEX 3, -1 HP, +1 Gold
+            #   - 4 = Campsite - STR 3, -2 Gold, +2 HP or +2 Torch
+            #   - 5 = Hill - DEX 4, -2 Rations, +2 XP
+            #   - 6 = Swamp - STR 5, -2 HP, +5 Gold
 
 
 
@@ -641,7 +686,9 @@ Function Update_Variables {
 
 Clear-Host
 
+#
 # write any errors out to error.log file
+#
 Trap {
     $Time = Get-Date -Format "HH:mm:ss"
     Add-Content -Path .\error.log -value "-Trap Error $Time ----------------------------------" # leave in
@@ -774,7 +821,11 @@ Trap {
 #     } until ($Ready_To_Play_PSRPG -ieq "y")
 # }
 
+
+
+#
 # double check module is still installed if JSON file has previously been created, just in case the module has been removed.
+#
 if (Test-Path -Path .\PS-BCDD.json) {
     $PSWriteColor_Installed = Get-Module -Name "PSWriteColor" -ListAvailable
     if ($PSWriteColor_Installed) {
@@ -783,8 +834,6 @@ if (Test-Path -Path .\PS-BCDD.json) {
         Install_PSWriteColor
     }
 }
-
-
 
 #
 # check for JSON save file
@@ -797,7 +846,9 @@ if (Test-Path -Path .\PS-BCDD.json) {
     }
 }
 
+#
 # loads save file and validate JSON file is on PowerShell Core edition
+#
 if (Test-Path -Path .\PS-BCDD.json) {
     # check for powershell core or desktop then validate json data file
     if ($PSVersionTable.PSEdition -ieq "Desktop") { # unable to validata JSON file in PowerShell Desktop edition
@@ -864,7 +915,6 @@ if ($Load_Save_Data_Choice -ieq "e" -or $Start_A_New_Game -ieq "e") {
     Exit
 }
 
-
 #
 # first thing after character creation / loading saved data
 #
@@ -873,35 +923,6 @@ if ($Load_Save_Data_Choice -ieq "e" -or $Start_A_New_Game -ieq "e") {
 
 
 
-"`r`nJSON Variables"
-$Import_JSON.Character.Stats.HealthCurrent
-$Import_JSON.Character.Stats.HealthMax
-$Import_JSON.Character.Stats.Strength
-$Import_JSON.Character.Stats.Dexterity
-$Import_JSON.Character.Stats.Intelligence
-$Import_JSON.Character.Rations
-$Import_JSON.Character.Torches
-$Import_JSON.Character.SpellsTotal
-$Import_JSON.Character.PotionsTotal
-$Import_JSON.Character.Gold
-$Import_JSON.Character.Total_XP
-$Import_JSON.Character.XP_TNL
-
-
-"`r`nInternal variables"
-"$Character_Name"
-"$Character_HealthCurrent"
-"$Character_HealthMax"
-"$Character_Strength"
-"$Character_Dexterity"
-"$Character_Intelligence"
-"$Rations"
-"$Torches"
-"$SpellsTotal"
-"$PotionsTotal"
-"$Gold"
-"$Total_XP"
-"$XP_TNL"
 
 
 

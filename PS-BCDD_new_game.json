@@ -771,49 +771,147 @@
       "Cost": 30
     }
   },
-  "Quests": {
-    "Rat Infestation": {
-      "Introduction_Task": true,
-      "Name": "Rat infestation",
-      "Quest_Letter": "R",
-      "Description": "Obligatory RPG rat quest",
-      "Hand_In_Location": "Town",
-      "Building": "Tavern",
-      "Hand_In_NPC": "Quest Board",
-      "Mob": "Rat",
-      "Gold_Reward": 10,
-      "Item_Reward": {
-        "Lesser Health Potion": 3,
-        "Random Loot #2": 1
+  "Wilderness_Encounters": {
+    "1": {
+      "Name": "Plains",
+      "Test": {
+        "Type": "none",
+        "Difficulty": 0
       },
-      "Progress": 0,
-      "Progress_Max": 5,
-      "Level_Range": "1-5",
-      "Times_Completed": 0,
-      "Available": true,
-      "In_Progress": false,
-      "Completed": false,
-      "Repeatable": true,
-      "Status": "Available"
+      "Reward" : {
+        "Fail": {
+          "Rations": 1
+        },
+        "Success": {
+          "Rations": 2
+        }
+      }
     },
-    "Sick Elder": {
-      "Name": "Sick Elder",
-      "Quest_Letter": "S",
-      "Description": "Find a Healing Potion.",
-      "Hand_In_Location": "Town",
-      "Building": "Tavern",
-      "Hand_In_NPC": "Quest Board",
-      "Mob": false,
+    "2": {
+      "Name": "Forest",
+      "Test": {
+        "Type": "INT",
+        "Difficulty": 3
+      },
+      "Reward" : {
+        "Fail": {
+          "Rations": 1
+        },
+        "Success": {
+          "Rations": 2
+        }
+      }
+    },
+    "3": {
+      "Name": "River",
+      "Test": {
+        "Type": "DEX",
+        "Difficulty": 3
+      },
+      "Reward" : {
+        "Fail": {
+          "HealthCurrent": 1
+        },
+        "Success": {
+          "Gold": 1
+        }
+      }
+    },
+    "4": {
+      "Name": "Campsite",
+      "Test": {
+        "Type": "STR",
+        "Difficulty": 3
+      },
+      "Reward" : {
+        "Fail": {
+          "Gold": 2
+        },
+        "Success": {
+          "Torches": 2,
+          "HealthCurrent": 2
+        }
+      }
+    },
+    "5": {
+      "Name": "Hill",
+      "Test": {
+        "Type": "DEX",
+        "Difficulty": 4
+      },
+      "Reward" : {
+        "Fail": {
+          "Rations": 2
+        },
+        "Success": {
+          "Total_XP": 2
+        }
+      }
+    },
+    "6": {
+      "Name": "Swamp",
+      "Test": {
+        "Type": "STR",
+        "Difficulty": 5
+      },
+      "Reward" : {
+        "Fail": {
+          "HealthCurrent": 2
+        },
+        "Success": {
+          "Gold": 5
+        }
+      }
+    }
+  },
+  "Quests": {
+    "1": {
+      "Name": "Hunt",
+      "Short_Description": "Return 4 rations",
+      "Long_Description": "return with 4 rations",
+      "Gold_Reward": "2d6",
+      "XP_Reward": 3,
+      "Active": false
+    },
+    "2": {
+      "Name": "Deliver",
+      "Short_Description": "Pass 3 NPC tests",
+      "Long_Description": "pass 3 NPC tests",
       "Gold_Reward": 10,
-      "Item_Reward": false,
-      "Progress": 0,
-      "Progress_Max": 0,
-      "Level_Range": "1-5",
-      "Available": true,
-      "In_Progress": false,
-      "Completed": false,
-      "Repeatable": false,
-      "Status": "Available"
+      "XP_Reward": 3,
+      "Active": false
+    },
+    "3": {
+      "Name": "Scout",
+      "Short_Description": "Explore 5 rooms",
+      "Long_Description": "explore 5 Dungeon or Wilderness rooms",
+      "Gold_Reward": 15,
+      "XP_Reward": 3,
+      "Active": false
+    },
+    "4": {
+      "Name": "Destroy",
+      "Short_Description": "Destroy D6 + 3 Dungeon or Wilderness",
+      "Long_Description": "destroy D6 + 3 Dungeon or Wilderness enemies",
+      "Gold_Reward": 25,
+      "XP_Reward": 3,
+      "Active": false
+    },
+    "5": {
+      "Name": "Map",
+      "Short_Description": "Journey through 3 Swamps",
+      "Long_Description": "journey through 3 Wilderness Swamps",
+      "Gold_Reward": 35,
+      "XP_Reward": 6,
+      "Active": false
+    },
+    "6": {
+      "Name": "Retrieve",
+      "Short_Description": "Retrieve 3 Tomes",
+      "Long_Description": "find and retrieve 3 Tomes",
+      "Gold_Reward": 50,
+      "XP_Reward": 6,
+      "Active": false
     }
   },
   "Game_Information": {
