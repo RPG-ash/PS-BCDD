@@ -415,7 +415,8 @@ Function Create_Character {
             do {
                 # if only 1 gold, unable to buy any items
                 if ($Import_JSON.Character.Gold -eq 1) {
-                    Write-Color "`r`nYou only have 1 Gold, so you can't buy any items from the shop just yet." -Color DarkGray,Green,DarkGray,Blue
+                    Write-Color -NoNewLine "`r`nYou only have 1 Gold, so you can't buy any items from the shop just yet." -Color DarkGray,Green,DarkGray,Blue
+                    Read-Host "`r`nPress Enter to continue..."
                 } else {
                     # choose to purchase items from shop
                     # do {
@@ -581,13 +582,35 @@ Function Create_Character {
             $Import_JSON.Quests.$Random_Dice_Roll.Active = $true
             Read-Host " "
             Clear-Host
-            
+            #
+            # roll for journeys and wilderness encounters
+            #
+            Clear-Host
+            Write-Color "`r`nYou're ready to embark on your adventure." -Color DarkGray
+            Write-Color "`r`nThe first steps you take will be into the Wilderness before you reach a Dungeon." -Color DarkGray,White,DarkGray
+            Write-Color ""
+            Write-Color "Wilderness Journeys" -Color DarkGray
+            Write-Color ""
+            Write-Color " d6 roll ","|"," Journeys" -Color DarkGray,White,DarkGray
+            Write-Color "---------+-----------" -Color White
+            Write-Color "   1-2   ","|"," 1 Journey" -Color DarkGray,White,DarkGray
+            Write-Color "   3-4   ","|"," 2 Journeys" -Color DarkGray,White,DarkGray
+            Write-Color "   5-6   ","|"," 3 Journeys" -Color DarkGray,White,DarkGray
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,20;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,20;$Host.UI.Write("")
+            Write-Color -NoNewLine "`r`nRoll a d6 to see how many Wilderness Journeys you will encounter. Press Enter to continue..." -Color DarkGray
+            Read-Host " "
+            Roll_D6_Dice
+            # $Random_Dice_Roll = 5
+            if ($Random_Dice_Roll -eq 1 -or $Random_Dice_Roll -eq 2) { $Wilderness_Journeys = 1 }
+            if ($Random_Dice_Roll -eq 3 -or $Random_Dice_Roll -eq 4) { $Wilderness_Journeys = 2 }
+            if ($Random_Dice_Roll -eq 5 -or $Random_Dice_Roll -eq 6) { $Wilderness_Journeys = 3 }
+            Write-Color -NoNewLine "`r`nYou rolled a ","$Random_Dice_Roll", ". You will encounter ","$Wilderness_Journeys", " Wilderness Journeys on your way to the Dungeon." -Color DarkGray,White,DarkGray,White,DarkGray
+            $Import_JSON.Character.Wilderness_Journeys = $Wilderness_Journeys
+            Update_Variables
+            Read-Host " "
+            #
 
-            # roll 1d6 for journeys (wilderness encounters until dungeon)
-            # - Journys (1d6)
-            #   - 1-2 = 3
-            #   - 3-4 = 4
-            #   - 5-6 = 5
 
             # roll xd6 (3, 4 or 5 as per roll above) for each journey (wilderness encounters)
             # Wilderness encounters (tests)
@@ -656,6 +679,7 @@ Function Update_Variables {
     $Script:Gold                    = $Import_JSON.Character.Gold
     $Script:Total_XP                = $Import_JSON.Character.Total_XP
     $Script:XP_TNL                  = $Import_JSON.Character.XP_TNL
+    $Script:Wilderness_Journeys     = $Import_JSON.Character.Wilderness_Journeys
     # sets current Location
     $All_Locations                  = $Import_JSON.Locations.PSObject.Properties.Name
     foreach ($Single_Location in $All_Locations) {
