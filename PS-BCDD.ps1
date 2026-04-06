@@ -121,56 +121,91 @@ Function Roll_D6_Dice {
         do {
             $Script:Random_Dice_Roll = Get-Random -Minimum 1 -Maximum 7
         } until ($Random_Dice_Roll -ne $Last_Dice_Roll)
-        Clear-Host
-        "`r`nRolling D6 Dice...`r`n"
+        # Clear-Host
+        for ($Position = 32; $Position -lt 36; $Position++) {
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
+        }
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,33;$Host.UI.Write("")
+        # "`r`nRolling D6 Dice...`r`n"
         $Script:Last_Dice_Roll = $Random_Dice_Roll
+        $host.UI.RawUI.ForegroundColor = "White"
         switch ($Random_Dice_Roll) {
             1 {
-                Write-Color "      +-------+"
-                Write-Color "      |       |"
-                Write-Color "      |   o   |"
-                Write-Color "      |       |"
-                Write-Color "      +-------+"
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,27;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,28;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("|   o   |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
+                # Write-Color "      +-------+"
+                # Write-Color "      |       |"
+                # Write-Color "      |   o   |"
+                # Write-Color "      |       |"
+                # Write-Color "      +-------+"
                 break
             }
             2 {
-                Write-Color "      +-------+"
-                Write-Color "      | o     |"
-                Write-Color "      |       |"
-                Write-Color "      |     o |"
-                Write-Color "      +-------+"
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,27;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,28;$Host.UI.Write("| o     |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("|     o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
+                # Write-Color "      +-------+"
+                # Write-Color "      | o     |"
+                # Write-Color "      |       |"
+                # Write-Color "      |     o |"
+                # Write-Color "      +-------+"
                 break
             }
             3 {
-                Write-Color "      +-------+"
-                Write-Color "      | o     |"
-                Write-Color "      |   o   |"
-                Write-Color "      |     o |"
-                Write-Color "      +-------+"
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,27;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,28;$Host.UI.Write("| o     |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("|   o   |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("|     o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
+                # Write-Color "      +-------+"
+                # Write-Color "      | o     |"
+                # Write-Color "      |   o   |"
+                # Write-Color "      |     o |"
+                # Write-Color "      +-------+"
                 break
             }
             4 {
-                Write-Color "      +-------+"
-                Write-Color "      | o   o |"
-                Write-Color "      |       |"
-                Write-Color "      | o   o |"
-                Write-Color "      +-------+"
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,27;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,28;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
+                # Write-Color "      +-------+"
+                # Write-Color "      | o   o |"
+                # Write-Color "      |       |"
+                # Write-Color "      | o   o |"
+                # Write-Color "      +-------+"
                 break
             }
             5 {
-                Write-Color "      +-------+"
-                Write-Color "      | o   o |"
-                Write-Color "      |   o   |"
-                Write-Color "      | o   o |"
-                Write-Color "      +-------+"
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,27;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,28;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("|   o   |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
+                # Write-Color "      +-------+"
+                # Write-Color "      | o   o |"
+                # Write-Color "      |   o   |"
+                # Write-Color "      | o   o |"
+                # Write-Color "      +-------+"
                 break
             }
             6 {
-                Write-Color "      +-------+"
-                Write-Color "      | o   o |"
-                Write-Color "      | o   o |"
-                Write-Color "      | o   o |"
-                Write-Color "      +-------+"
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,27;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,28;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
+                # Write-Color "      +-------+"
+                # Write-Color "      | o   o |"
+                # Write-Color "      | o   o |"
+                # Write-Color "      | o   o |"
+                # Write-Color "      +-------+"
                 break
             }
             Default {}
@@ -178,6 +213,7 @@ Function Roll_D6_Dice {
         $Random_Milliseconds = Get-Random -Minimum 200 -Maximum 1000
         Start-Sleep -Milliseconds $Random_Milliseconds
     }
+    $host.UI.RawUI.ForegroundColor = "DarkGray" # set the foreground color back to original colour
 }
 
 
@@ -319,7 +355,7 @@ Function Create_Character {
                 do {
                     Clear-Host
                     Draw_Player_Window_and_Stats
-                    $Script:Info_Banner = "Create Adventurer"
+                    $Script:Info_Banner = "Adventurer Name"
                     Draw_Info_Banner
                     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,19
                     if ($($Character_Name | Measure-Object -Character).Characters -gt 10) {
@@ -466,6 +502,8 @@ Function Create_Character {
             $Host.UI.ReadLine()
         }
         do {
+            $Info_Banner = "Health, Rations and Torches"
+            Draw_Info_Banner
             for ($Position = 19; $Position -lt 35; $Position++) {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
             }
@@ -499,6 +537,8 @@ Function Create_Character {
             Press_Continue
             # Clear-Host
             Clear_Bottom_Half_of_Screen
+            $Info_Banner = "Stats - STR, DEX and INT"
+            Draw_Info_Banner
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,19;$Host.UI.Write("")
             Write-Color "  Your other stats, ","STR",", ","DEX"," and ","INT",", will start at ","0"," for now," -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
             Write-Color "  but you'll get the chance to increase these when you gain some XP from killing enemies." -Color DarkGray
@@ -516,32 +556,48 @@ Function Create_Character {
             # potion and spells
             #
             Clear_Bottom_Half_of_Screen
-            $banner = "Potions and Spells"
+            $Info_Banner = "Potions and Spells"
             Draw_Info_Banner
-            Write-Color "`r`n  Potions"." and ","Spells"," are items that can be used at any time that can heal you, cause damage to enemies," -Color Blue,DarkGray,Blue,DarkGray
+            Write-Color "`r`n  Potions"," and ","Spells"," are items that can be used at any time that can heal you, cause damage to enemies," -Color Blue,DarkGray,Blue,DarkGray
             Write-Color "  raise your stats temporally and even teleport you back to the Settlement." -Color DarkGray
             Write-Color "  You can also find them in loot from enemies, or buy them from the shop in the Settlement." -Color DarkGray
             Write-Color "`r`n  You start with a free ","Potion"," and ","Spell","." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
-            foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
-                "$($item.Name) - $($item.Value.Name) ($($item.Value.Info))"
-            }
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("")
+            Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
+            $Host.UI.ReadLine()
             #
             # roll for potion
             #
-            Write-Color "`r`n  Roll a D6 now to determine which Potion you receive." -Color DarkGray
-            Read-Host "  Press Enter to continue..."
+            Clear_Bottom_Half_of_Screen
+            $Info_Banner = "Free Potion"
+            Draw_Info_Banner
+            foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
+                "  $($item.Name) - $($item.Value.Name) ($($item.Value.Info))"
+            }
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("")
+            Write-Color -NoNewLine "`r`n  Roll a D6 now to determine which Potion you receive. Press Enter to continue..." -Color DarkYellow
+            $Host.UI.ReadLine()
             # Clear-Host
             Roll_D6_Dice
             # $Random_Dice_Roll = 1
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,33;$Host.UI.Write("")
             Write-Color "`r`n  You rolled a ","$Random_Dice_Roll", ". You gain a ","$($Import_JSON.Potions.$Random_Dice_Roll.Name)"," Potion","." -Color DarkGray,White,DarkGray,White,Blue,DarkGray
             $Import_JSON.Character.PotionsTotal += 1
             $Import_JSON.Potions.$Random_Dice_Roll.Quantity += 1
             Update_Variables
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("")
+            Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
+            $Host.UI.ReadLine()
             #
             # roll for spell
             #
-            Write-Color "`r`n  Now roll another D6 to determine which Spell you receive." -Color DarkGray
-            Read-Host "  Press Enter to continue..."
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("")
+            Write-Color -NoNewLine "`r`n  Now roll another D6 to determine which Spell you receive. Press Enter to continue..." -Color DarkGray
+            $Host.UI.ReadLine()
             # Clear-Host
             Roll_D6_Dice
             # $Random_Dice_Roll = 2
@@ -739,7 +795,7 @@ Function Create_Character {
             }
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("")
-            Write-Color -NoNewLine "`r`n  Now roll a D6 to determine which Quest you will embark on. Press Enter to continue..." -Color DarkGray
+            Write-Color -NoNewLine "`r`n  Now roll a D6 to determine which Quest you will embark on. Press Enter to continue..." -Color DarkYellow
             Read-Host " "
             # Clear-Host
             Roll_D6_Dice
@@ -764,7 +820,7 @@ Function Create_Character {
             Write-Color "      5-6   ","|"," 3 Journeys" -Color DarkGray,White,DarkGray
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,37;$Host.UI.Write("")
-            Write-Color -NoNewLine "`r`n  Roll a d6 to see how many Wilderness Journeys you will encounter. Press Enter to continue..." -Color DarkGray
+            Write-Color -NoNewLine "`r`n  Roll a d6 to see how many Wilderness Journeys you will encounter. Press Enter to continue..." -Color DarkYellow
             Read-Host " "
             Roll_D6_Dice
             # $Random_Dice_Roll = 5
