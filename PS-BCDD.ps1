@@ -98,16 +98,22 @@ Function Save_JSON {
 #
 Function Game_Introduction {
     Clear-Host
-    Write-Color "Welcome to the Business Card Dungeon Delve PowerShell Edition!" -Color Green
-    Write-Color "This is a text-based adventure game inspired by the original card game designed by Melv Lee." -Color DarkGray
-    Write-Color "The game is played through the console and uses a JSON file to store your character's progress." -Color DarkGray
-    Write-Color "The game will automatically save after certain actions, but you can also save manually at any time by typing ","save" -Color DarkGray,Green
-    Write-Color "and pressing Enter." -Color DarkGray
-    Write-Color "`r`nThe game uses the PSWriteColor module to provide colored text output for a better gaming experience." -Color DarkGray
-    Write-Color "If you don't have the module installed, the game will prompt you to install it before you can play." -Color DarkGray
-    Write-Color "`r`nThe game is still in development, so expect some bugs and incomplete features." -Color DarkGray
-    Write-Color "Feel free to report any issues or suggest improvements on the GitHub repository." -Color DarkGray
-    Write-Color "`r`nHave fun playing and delving into the dungeon!" -Color Green
+    Write-Color " "
+    Write-Color "  Welcome to the Business Card Dungeon Delve (PowerShell Edition)!" -Color Green
+    Write-Color "`r`n  This is a text-based adventure game written in PowerShell inspired by the original game designed by Melv Lee." -Color DarkGray
+    Write-Color "  This game follows the original rules and is `'A One card Overland Journey and Dungeon Dive game`'." -Color DarkGray
+    Write-Color "`r`n  In this game, your Adventurer will take on Quests, go on Journeys, encounter NPCs, fight Monsters," -Color DarkGray
+    Write-Color "  take Stat tests, learn Spells, chuck Potions, set off Traps, Earn gold, and Level up." -Color DarkGray
+    Write-Color "`r`n  The game is played through the console and uses a JSON file to save your character's progress." -Color DarkGray
+    Write-Color "  The game will automatically save as you play, but try not to close the console window or save data may be lost." -Color DarkGray
+    Write-Color "`r`n  The game uses the PSWriteColor module to provide coloured text output for a better gaming experience." -Color DarkGray
+    Write-Color "  If you don't have the module installed, the game will prompt you to install it before you can play." -Color DarkGray
+    Write-Color "`r`n  The game is still in development, so expect some bugs and incomplete features." -Color DarkGray
+    Write-Color "  Feel free to report any issues or suggest improvements on the GitHub repository." -Color DarkGray
+    Write-Color "`r`n  Have fun playing and delving into the dungeon!" -Color Green
+    Write-Color " "
+    Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
+    $Host.UI.ReadLine()
 }
 
 
@@ -360,19 +366,20 @@ Function Create_Character {
                     $Script:Info_Banner = "Adventurer Name"
                     Draw_Info_Banner
                     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,19
-                    if ($($Character_Name | Measure-Object -Character).Characters -gt 10) {
+                    if ($($Character_Name | Measure-Object -Character).Characters -gt 12) {
                         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25
-                        Write-Color "  *Your name is too long, your name must be 10 characters or less*" -Color Red
+                        Write-Color "  *Your name is too long, your name must be 12 characters or less*" -Color Red
                         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,19
                     }
                     if ($Random_Character_Name_Count -eq 0) {
                         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25
                         Write-Color "  *All random names have been suggested*" -Color Red
                     }
+                    Write-Color " "
                     Write-Color "  Choose your character name" -Color DarkGray
                     Write-Color "  If you cannot think of a name, try searching for one online or enter ","R ","for some random name suggestions." -Color DarkGray,Green,DarkGray
                     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-                    Write-Color -NoNewLine "  Enter a name (max 10 characters) or ","R","andom ","[R]" -Color DarkYellow,Green,DarkYellow,Green
+                    Write-Color -NoNewLine "  Enter a name (max 12 characters) or ","R","andom ","[R]" -Color DarkYellow,Green,DarkYellow,Green
                     $Character_Name_Valid = $false # set to false to prevent a character name of " " nothing after entering a name with more than 10 characters
                     $Character_Name = Read-Host " "
                     $Character_Name = $Character_Name.Trim()
@@ -402,6 +409,7 @@ Function Create_Character {
                             }
                             if ($Character_Name_Random -ieq "n") {
                                 $Random_Character_Name_Count += 1
+                                Write-Color " "
                                 switch ($Random_Character_Name_Count) {
                                     1  { Write-Color "  What about ", "$Random_Character_Name ", "for your Character's name?" -Color DarkGray,Blue,DarkGray}
                                     2  { Write-Color "  How about ", "$Random_Character_Name ", "for your Character's name instead?" -Color DarkGray,Blue,DarkGray}
@@ -445,6 +453,7 @@ Function Create_Character {
                                 }
                                 $Random_Character_Names.Remove($Random_Character_Name)
                             } else {
+                                Write-Color " "
                                 Write-Color "  How about ", "$Random_Character_Name ", "for your Character's name? " -Color DarkGray,Blue,DarkGray
                             }
                             $Character_Name = $Random_Character_Name
@@ -512,52 +521,52 @@ Function Create_Character {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
             }
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,19;$Host.UI.Write("")
+            Write-Color " "
             Write-Color "  Now that you have chosen a name, let's work on some stats." -Color DarkGray
             Press_Continue
-            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,21;$Host.UI.Write("")
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,22;$Host.UI.Write("")
             Write-Color "  Your max ","Health"," can only ever be ","12",", so you will start with that." -Color DarkGray,Green,DarkGray,Green,DarkGray
             Write-Color "  You can't go over this amount, no matter how many ","potions"," you quaff." -Color DarkGray,Blue,DarkGray
             $Import_JSON.Character.Stats.HealthCurrent = 12
             $Import_JSON.Character.Stats.HealthMax     = 12
             Press_Continue
-            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,24;$Host.UI.Write("")
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
             Write-Color "  You will also start with ","6"," Rations",", and ","6"," Torches." -Color DarkGray,White,Blue,DarkGray,White,Blue
             Write-Color "  Rations"," are used when travelling between locations, and ","Torches"," are used when exploring dungeons." -Color Blue,DarkGray,Blue,DarkGray
             $Import_JSON.Character.Rations = 6
             $Import_JSON.Character.Torches = 6
             Press_Continue
-            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,27;$Host.UI.Write("")
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,28;$Host.UI.Write("")
             Write-Color "  You use ","1"," Ration"," per journey." -Color DarkGray,White,Blue,DarkGray
             Write-Color "  If you run out of ","Rations",", you will lose ","1"," Health"," each time you travel between locations." -Color DarkGray,Blue,DarkGray,White,Green,DarkGray
             Write-Color "  When your character's ","Health ","reaches ","0",", it's game over and you will have to re-roll another character." -Color DarkGray,Green,DarkGray,Red,DarkGray
             Press_Continue
-            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,31;$Host.UI.Write("")
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,32;$Host.UI.Write("")
             Write-Color "  You use ","1"," Torch"," per dungeon room you visit." -Color DarkGray,White,Blue,DarkGray
             Write-Color "  If you use up all your ","Torches",", you'll be lost in the dungeon forever and unable to escape!" -Color DarkGray,Blue,DarkGray
             Write-Color "  If this happens, you will have to re-roll another character and start your Adventure again." -Color DarkGray
             Press_Continue
-            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,35;$Host.UI.Write("")
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
             Write-Color "  Rations"," and ","Torches"," can sometimes be found in enemy loot, but can also bought from the Settlement shop." -Color Blue,DarkGray,Blue,DarkGray
             Press_Continue
-            # Clear-Host
             Clear_Bottom_Half_of_Screen
             $Info_Banner = "Stats - STR, DEX and INT"
             Draw_Info_Banner
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,19;$Host.UI.Write("")
+            Write-Color " "
             Write-Color "  Your other stats, ","STR",", ","DEX"," and ","INT",", will start at ","0"," for now," -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
             Write-Color "  but you'll get the chance to increase these when you gain some XP from killing enemies." -Color DarkGray
             $Import_JSON.Character.Stats.STR = 0
             $Import_JSON.Character.Stats.DEX = 0
             $Import_JSON.Character.Stats.INT = 0
             Press_Continue
-            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,22;$Host.UI.Write("")
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,23;$Host.UI.Write("")
             Write-Color "  STR"," (Strength), ","DEX"," (Dexterity) and ","INT"," (Intelligence), are used to determine ","Pass"," and ","Fail" -Color White,DarkGray,White,DarkGray,White,DarkGray,Green,DarkGray,Red
             Write-Color "  results against certain tests from events suchs as Encounters, Hazards and NPC interactions." -Color DarkGray
             Press_Continue
-            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,26;$Host.UI.Write("")
             Write-Color "  STR"," and ","DEX"," are also used in combat to determine attack and defence results against enemies." -Color White,DarkGray,White,DarkGray
             Press_Continue
-            # Clear-Host
             #
             # potion and spells
             #
@@ -566,7 +575,7 @@ Function Create_Character {
             Draw_Info_Banner
             Write-Color "`r`n  Potions"," and ","Spells"," are items that can be used at any time that can heal you, cause damage to enemies," -Color Blue,DarkGray,Blue,DarkGray
             Write-Color "  raise your stats temporally and even teleport you back to the Settlement." -Color DarkGray
-            Write-Color "  You can also find them in loot from enemies, or buy them from the shop in the Settlement." -Color DarkGray
+            Write-Color "`r`n  You can also find them in loot from enemies, or buy them from the shop in the Settlement." -Color DarkGray
             Write-Color "`r`n  You start with a free ","Potion"," and ","Spell","." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
@@ -586,7 +595,6 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Roll a D6 to determine which Potion you receive. Press Enter to continue..." -Color DarkYellow
             $Host.UI.ReadLine()
-            # Clear-Host
             Roll_D6_Dice
             # $Random_Dice_Roll = 1
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,34;$Host.UI.Write("")
@@ -613,7 +621,6 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Now roll another D6 to determine which Spell you receive. Press Enter to continue..." -Color DarkYellow
             $Host.UI.ReadLine()
-            # Clear-Host
             Roll_D6_Dice
             # $Random_Dice_Roll = 2
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,34;$Host.UI.Write("")
@@ -626,13 +633,20 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
             $Host.UI.ReadLine()
-            Clear-Host
             #
             # roll for gold
             #
-            Write-Color "You have a small pouch to carry some Gold coins which can be used to purchase items from the shop in Settlement." -Color DarkGray,Green,DarkGray
-            Read-Host "  Press Enter to roll a D6 to determine how much Gold you will start with... "
-            # Clear-Host
+            Clear_Bottom_Half_of_Screen
+            $Info_Banner = "Gold"
+            Draw_Info_Banner
+            Write-Color " "
+            Write-Color "  You have a small pouch to carry some ","Gold ","coins which can be used to purchase items from the shop in Settlement." -Color DarkGray,DarkYellow,DarkGray
+            Write-Color "`r`n  As per the original game by Melv Lee, the main goal of the game is to collect 120 ","Gold","," -Color DarkGray,DarkYellow,DarkGray
+            Write-Color "`r`n  enough to buy a piece of farmland to retire from the risky Adventurer's life." -Color DarkGray,
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+            Write-Color -NoNewLine "  Press Enter to roll a D6 to determine how much Gold you will start with..." -Color DarkYellow
+            $Host.UI.ReadLine()
             Roll_D6_Dice
             # $Random_Dice_Roll = 13
             Write-Color ""
@@ -981,7 +995,7 @@ Function Update_Variables {
 #
 
 Clear-Host
-
+Game_Introduction
 #
 # write any errors out to error.log file
 #
