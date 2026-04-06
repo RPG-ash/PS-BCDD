@@ -27,7 +27,7 @@
           "Quickness": 1,
           "Spells": 50,
           "Healing": 50,
-          "Killed": 0,
+          "Killed": "",
           "Rare": "No",
           "Boss": "No",
           "XP": 200,
@@ -53,7 +53,7 @@
           "Quickness": 5,
           "Spells": 50,
           "Healing": 50,
-          "Killed": 0,
+          "Killed": "",
           "Rare": "No",
           "Boss": "No",
           "XP": 1160,
@@ -79,7 +79,7 @@
           "Quickness": 5,
           "Spells": 50,
           "Healing": 50,
-          "Killed": 0,
+          "Killed": "",
           "Rare": "Yes",
           "Boss": "No",
           "XP": 160,
@@ -100,13 +100,13 @@
       ],
       "Buildings": {
         "Home": {
-          "Visited": 0,
+          "Visited": "",
           "Introduction_Task": true,
           "Building_Letter": "H",
           "Owner": "PLAYER NAME"
         },
         "Tavern": {
-          "Visited": 0,
+          "Visited": "",
           "Introduction_Task": false,
           "Building_Letter": "T",
           "Owner": "Elara",
@@ -337,7 +337,7 @@
                 "Quickness": 5,
                 "Spells": 50,
                 "Healing": 50,
-                "Killed": 0,
+                "Killed": "",
                 "Rare": "No",
                 "Boss": "No",
                 "XP": 160,
@@ -359,7 +359,7 @@
                 "Quickness": 2,
                 "Spells": 50,
                 "Healing": 50,
-                "Killed": 0,
+                "Killed": "",
                 "Rare": "Yes",
                 "Boss": "No",
                 "XP": 80,
@@ -381,7 +381,7 @@
                 "Quickness": 10,
                 "Spells": 50,
                 "Healing": 50,
-                "Killed": 0,
+                "Killed": "",
                 "Rare": "Yes",
                 "Boss": "Yes",
                 "XP": 250,
@@ -543,13 +543,13 @@
           }
         },
         "Anvil & Blade": {
-          "Visited": 0,
+          "Visited": "",
           "Building_Letter": "A",
           "Owner": "Draven"
         },
         "Mend & Mana": {
           "Introduction_Task": false,
-          "Visited": 0,
+          "Visited": "",
           "Building_Letter": "M",
           "Owner": "Kaelen"
         }
@@ -636,30 +636,36 @@
   },
   "Character": {
     "Name": "CharacterName",
-    "Total_XP": 0,
-    "XP_TNL": 0.0,
-    "Gold": 0.0,
-    "PotionsTotal": 0,
-    "SpellsTotal": 0,
-    "Torches": 0,
-    "Rations": 0,
-    "Wilderness_Journeys": 0,
+    "Total_XP": "",
+    "Gold": "",
+    "PotionsTotal": "",
+    "SpellsTotal": "",
+    "Torches": "",
+    "Rations": "",
+    "Wilderness_Journeys_Total": "",
+    "Wilderness_Journeys_Current": "",
+    "Dungeon_Room_Total": "",
+    "Dungeon_Room_Current": "",
+    "Current_Location": "",
+    "Equipment" : "",
+    "Weapon" : "",
+    "Quest" : "",
     "Stats": {
-      "HealthCurrent": 0,
-      "HealthMax": 0,
-      "HealthMaxUnBuffed": 0,
-      "Strength": 0,
-      "StrengthUnBuffed": 0,
-      "Dexterity": 0,
-      "DexterityUnBuffed": 0,
-      "Intelligence": 0,
-      "IntelligenceUnBuffed": 0
+      "HealthCurrent": "",
+      "HealthMax": "",
+      "HealthMaxUnBuffed": "",
+      "STR": "",
+      "STRUnBuffed": "",
+      "DEX": "",
+      "DEXUnBuffed": "",
+      "INT": "",
+      "INTUnBuffed": ""
     }
   },
   "Weapons_Armour": {
     "Sword": {
       "Name": "Sword",
-      "Quantity": 0,
+      "Quantity": "",
       "Restores": 30,
       "GoldValue": 50,
       "IsJunk": false,
@@ -669,7 +675,7 @@
     },
     "Shield": {
       "Name": "Shield",
-      "Quantity": 0,
+      "Quantity": "",
       "Restores": 30,
       "GoldValue": 50,
       "IsJunk": false,
@@ -682,64 +688,64 @@
     "1": {
       "Name": "Healing",
       "Info": "1d6",
-      "Quantity": 0
+      "Quantity": ""
     },
     "2": {
-      "Name": "Invisability",
+      "Name": "Invisibility",
       "Info": "Sneak pass location",
-      "Quantity": 0
+      "Quantity": ""
     },
     "3": {
       "Name": "Accelerate",
       "Info": "-3 or +3 journeys or dungeons",
-      "Quantity": 0
+      "Quantity": ""
     },
     "4": {
       "Name": "Strength",
       "Info": "+2 STR or +2 ATK against next test or monster",
-      "Quantity": 0
+      "Quantity": ""
     },
     "5": {
       "Name": "Invincibility",
       "Info": "auto pass a test",
-      "Quantity": 0
+      "Quantity": ""
     },
     "6": {
       "Name": "Rock Skin",
       "Info": "+2 DEF for next fight",
-      "Quantity": 0
+      "Quantity": ""
     }
   },
   "Spells": {
     "1": {
       "Name": "Healing Hands",
       "Info": "restore d6 HP",
-      "Quantity": 0
+      "Quantity": ""
     },
     "2": {
       "Name": "Fire Ball",
       "Info": "damage d3 HP",
-      "Quantity": 0
+      "Quantity": ""
     },
     "3": {
       "Name": "Light",
       "Info": "add d6 torches",
-      "Quantity": 0
+      "Quantity": ""
     },
     "4": {
       "Name": "Lightning",
       "Info": "damage 2x d3 HP",
-      "Quantity": 0
+      "Quantity": ""
     },
     "5": {
       "Name": "Morphing",
       "Info": "temporary +d3 Stats for d3 tests",
-      "Quantity": 0
+      "Quantity": ""
     },
     "6": {
       "Name": "Teleport",
       "Info": "teleport to settlement",
-      "Quantity": 0
+      "Quantity": ""
     }
   },
   "Settlement": {
@@ -772,12 +778,12 @@
       "Cost": 30
     }
   },
-  "Wilderness_Encounters": {
+  "Wilderness_Journeys": {
     "1": {
       "Name": "Plains",
       "Test": {
         "Type": "none",
-        "Difficulty": 0
+        "Difficulty": ""
       },
       "Reward" : {
         "Fail": {
