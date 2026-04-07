@@ -857,7 +857,7 @@ Function Create_Character {
             Write-Color ""
             Write-Color "  Wilderness Journeys" -Color DarkGray
             Write-Color ""
-            Write-Color "   d6 roll ","|"," Journeys" -Color DarkGray,White,DarkGray
+            Write-Color "    d6 roll ","|"," Journeys" -Color DarkGray,White,DarkGray
             Write-Color "   ---------+-----------" -Color White
             Write-Color "      1-2   ","|"," 1 Journey" -Color DarkGray,White,DarkGray
             Write-Color "      3-4   ","|"," 2 Journeys" -Color DarkGray,White,DarkGray

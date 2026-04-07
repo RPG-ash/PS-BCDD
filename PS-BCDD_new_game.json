@@ -1,7 +1,7 @@
 {
   "Character_Creation": false,
   "Locations": {
-    "Home Town": {
+    "Settlement": {
       "Current_Location": true,
       "Linked_Locations": {
         "The Forest": "F"
@@ -555,7 +555,85 @@
         }
       }
     },
-    "The Forest": {
+    "Wilderness": {
+      "Current_Location": false,
+      "Linked_Locations": {
+        "Home Town": "T",
+        "The River": "R"
+      },
+      "Location_Options": {
+        "Hunt": true,
+        "Travel": true,
+        "Visit": false,
+        "Quests": true,
+        "Inventory": true
+      },
+      "Mobs": {
+        "Worm": {
+          "Name": "Worm",
+          "Level": 5,
+          "Health": 40,
+          "Stamina": 50,
+          "Mana": 50,
+          "Attack": 5,
+          "Damage": 5,
+          "Armour": 10,
+          "Dodge": 5,
+          "Quickness": 5,
+          "Spells": 50,
+          "Healing": 50,
+          "Killed": 6,
+          "Rare": "No",
+          "Boss": "No",
+          "XP": 160,
+          "Loot": {
+            "Gold": 2
+          }
+        },
+        "Mouse": {
+          "Name": "Mouse",
+          "Level": 6,
+          "Health": 40,
+          "Stamina": 50,
+          "Mana": 50,
+          "Attack": 5,
+          "Damage": 5,
+          "Armour": 10,
+          "Dodge": 5,
+          "Quickness": 5,
+          "Spells": 50,
+          "Healing": 50,
+          "Killed": 1,
+          "Rare": "Yes",
+          "Boss": "No",
+          "XP": 160,
+          "Loot": {
+            "Gold": 3,
+            "Mouse Tails": 1
+          }
+        }
+      },
+      "NPC": [
+        {
+          "Name": "Bob"
+        }
+      ],
+      "Buildings": {
+        "Hut": {
+          "Building_Letter": "H",
+          "Owner": "Hut Owner?????"
+        },
+        "Tree House": {
+          "Building_Letter": "T",
+          "Owner": "Tree House Owner???"
+        },
+        "Secret Location": {
+          "Building_Letter": "S",
+          "Owner": "Unknown"
+        }
+      }
+    },
+    "Dungeon": {
       "Current_Location": false,
       "Linked_Locations": {
         "Home Town": "T",
