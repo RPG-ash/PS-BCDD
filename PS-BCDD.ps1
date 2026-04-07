@@ -127,7 +127,6 @@ Function Roll_D6_Dice {
         do {
             $Script:Random_Dice_Roll = Get-Random -Minimum 1 -Maximum 7
         } until ($Random_Dice_Roll -ne $Last_Dice_Roll)
-        # Clear-Host
         for ($Position = 32; $Position -lt 36; $Position++) {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
         }
@@ -142,11 +141,6 @@ Function Roll_D6_Dice {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("|   o   |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("|       |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
-                # Write-Color "      +-------+"
-                # Write-Color "      |       |"
-                # Write-Color "      |   o   |"
-                # Write-Color "      |       |"
-                # Write-Color "      +-------+"
                 break
             }
             2 {
@@ -155,11 +149,6 @@ Function Roll_D6_Dice {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("|       |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("|     o |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
-                # Write-Color "      +-------+"
-                # Write-Color "      | o     |"
-                # Write-Color "      |       |"
-                # Write-Color "      |     o |"
-                # Write-Color "      +-------+"
                 break
             }
             3 {
@@ -168,11 +157,6 @@ Function Roll_D6_Dice {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("|   o   |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("|     o |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
-                # Write-Color "      +-------+"
-                # Write-Color "      | o     |"
-                # Write-Color "      |   o   |"
-                # Write-Color "      |     o |"
-                # Write-Color "      +-------+"
                 break
             }
             4 {
@@ -181,11 +165,6 @@ Function Roll_D6_Dice {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("|       |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("| o   o |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
-                # Write-Color "      +-------+"
-                # Write-Color "      | o   o |"
-                # Write-Color "      |       |"
-                # Write-Color "      | o   o |"
-                # Write-Color "      +-------+"
                 break
             }
             5 {
@@ -194,11 +173,6 @@ Function Roll_D6_Dice {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("|   o   |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("| o   o |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
-                # Write-Color "      +-------+"
-                # Write-Color "      | o   o |"
-                # Write-Color "      |   o   |"
-                # Write-Color "      | o   o |"
-                # Write-Color "      +-------+"
                 break
             }
             6 {
@@ -207,11 +181,6 @@ Function Roll_D6_Dice {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,29;$Host.UI.Write("| o   o |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,30;$Host.UI.Write("| o   o |")
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 25,31;$Host.UI.Write("+-------+")
-                # Write-Color "      +-------+"
-                # Write-Color "      | o   o |"
-                # Write-Color "      | o   o |"
-                # Write-Color "      | o   o |"
-                # Write-Color "      +-------+"
                 break
             }
             Default {}
@@ -596,8 +565,8 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Roll a D6 to determine which Potion you receive. Press Enter to continue..." -Color DarkYellow
             $Host.UI.ReadLine() | Out-Null
-            Roll_D6_Dice
-            # $Random_Dice_Roll = 1
+            # Roll_D6_Dice
+            $Random_Dice_Roll = 1
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,34;$Host.UI.Write("")
             Write-Color "  You rolled a ","$Random_Dice_Roll", ". You gain a ","$($Import_JSON.Potions.$Random_Dice_Roll.Name)"," Potion","." -Color DarkGray,White,DarkGray,White,Blue,DarkGray
             $Import_JSON.Character.PotionsTotal += 1
@@ -622,8 +591,8 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Now roll another D6 to determine which Spell you receive. Press Enter to continue..." -Color DarkYellow
             $Host.UI.ReadLine() | Out-Null
-            Roll_D6_Dice
-            # $Random_Dice_Roll = 2
+            # Roll_D6_Dice
+            $Random_Dice_Roll = 2
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,34;$Host.UI.Write("")
             Write-Color "  You rolled a ","$Random_Dice_Roll", ". You gain a ","$($Import_JSON.Spells.$Random_Dice_Roll.Name)"," Spell","." -Color DarkGray,White,DarkGray,White,Blue,DarkGray
             $Import_JSON.Character.SpellsTotal += 1
@@ -679,7 +648,7 @@ Function Create_Character {
                 # if only 1 gold, unable to buy any items
                 if ($Import_JSON.Character.Gold -eq 1) {
                     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
-                    Write-Color -NoNewLine "  You only have ","1 Gold",", so you can't buy any items from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
+                    Write-Color "  You only have ","1 Gold",", so you can't buy any items from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
                     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
                     Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
                     $Host.UI.ReadLine() | Out-Null
@@ -754,10 +723,10 @@ Function Create_Character {
                                         do {
                                             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
                                             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
-                                            Write-Color -NoNewLine "  Each Potion costs ", "6 Gold","." -Color DarkGray,DarkYellow,DarkGray
+                                            Write-Color "  Each Potion costs ", "6 Gold","." -Color DarkGray,DarkYellow,DarkGray
                                             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
                                             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-                                            Write-Color -NoNewLine "  Select the ","item number ","you would like to purchase, or ","L","eave." -Color DarkYellow,White,DarkYellow,Green,DarkYellow
+                                            Write-Color "  Select the ","item number ","you would like to purchase, or ","L","eave." -Color DarkYellow,White,DarkYellow,Green,DarkYellow
                                             $Potion_Purchase_Choice = Read-Host " "
                                         } until ($Potion_Purchase_Choice -ieq "l" -or $Potion_Purchase_Choice -in $All_Settlement_Potions_Array)
                                         if ($Potion_Purchase_Choice -ine "l"){
@@ -807,19 +776,19 @@ Function Create_Character {
                                     } until ($Potion_Purchase_Choice -ieq "l" -or $Gold -lt 6)
                                 }
                                 5 { # spells
-                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                    Write-Color -NoNewLine "  Spells cost ","15 Gold",", so you can't afford to buy any from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                                    Write-Color "  Spells cost ","15 Gold",", so you can't afford to buy any from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
                                 }
                                 6 { # Training (+5 XP)
-                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                    Write-Color -NoNewLine "  Training costs ","25 Gold",", so you can't afford to buy it from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                                    Write-Color "  Training costs ","25 Gold",", so you can't afford to buy it from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
                                 }
                                 7 { # Reurrection (return to life at the Settelement when at zero HP)
-                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                    Write-Color -NoNewLine "  Reurrection costs ","30 Gold",", so you can't afford to buy it from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                                    Write-Color "  Reurrection costs ","30 Gold",", so you can't afford to buy it from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
                                 }
                                 Default {}
                             }
@@ -836,32 +805,55 @@ Function Create_Character {
             #
             # Obtain Quest
             #
-            Clear-Host
-            Write-Color "`r`n  Before you can head out on your adventure, select a quest which will earn you some XP and Gold." -Color DarkGray
-            Write-Color "`r`n  You need to return back to the ","Settlement"," to gain the rewards, you don't gain them during your adventure." -Color DarkGray,White,DarkGray
-            Write-Color "`r`n  Only one quest can be embarked on at once." -Color DarkGray,White,DarkGray
+            Clear_Bottom_Half_of_Screen
+            $Info_Banner = "Quests"
+            Draw_Info_Banner
+            # $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,19;$Host.UI.Write("")
+            Write-Color "`r`n  Before you can head out on your Adventure, you need a ","quest",". ","Quests ","will earn you some ","XP ","and ","Gold","." -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,DarkYellow,DarkGray
+            Press_Continue
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,22;$Host.UI.Write("")
+            Write-Color "  You need to return back to the ","Settlement"," to gain the rewards, you don't gain them during your Adventure." -Color DarkGray,White,DarkGray
+            Press_Continue
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,24;$Host.UI.Write("")
+            Write-Color "  Only one quest can be embarked on at once." -Color DarkGray
+            Press_Continue
+            Clear_Bottom_Half_of_Screen
+            $Info_Banner = "Quests"
+            Draw_Info_Banner
             Write-Color ""
             foreach ($item in $Import_JSON.Quests.PSObject.Properties) {
                 $All_Settlement_Items_Array.Add("$($item.Name)")
-                Write-Color "$($item.Name) - $($item.Value.Short_Description) - ($($item.Value.Gold_Reward) Gold & $($item.Value.XP_Reward) XP)" -Color Blue,DarkGray,DarkYellow,DarkGray,DarkYellow,DarkGray
+                Write-Color "  $($item.Name) ","- ","$($item.Value.Name) ","- ","($($item.Value.Short_Description)) ","(","$($item.Value.Gold_Reward) Gold ","& ","$($item.Value.XP_Reward) XP",")" -Color White,DarkGray,Blue,DarkGray,Blue,DarkGray,DarkYellow,DarkGray,White,DarkGray
             }
-            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+            Write-Color "  Now roll a D6 to determine which ","Quest ","you will embark on." -Color DarkGray,White,DarkGray
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-            Write-Color -NoNewLine "  Now roll a D6 to determine which Quest you will embark on. Press Enter to continue..." -Color DarkYellow
-            Read-Host " "
-            # Clear-Host
-            Roll_D6_Dice
-            # $Random_Dice_Quest = 1
-            Write-Color -NoNewLine "`r`n  You rolled a ","$Random_Dice_Roll", ". You obtain the ","$($Import_JSON.Quests.$Random_Dice_Roll.Name)"," Quest ","and must ","$($Import_JSON.Quests.$Random_Dice_Roll.Long_Description)",". Press Enter to continue." -Color DarkGray,White,DarkGray,White,Blue,DarkGray,White,DarkGray
+            Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
+            $Host.UI.ReadLine() | Out-Null
+            # Roll_D6_Dice
+            $Random_Dice_Roll = 1
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,35;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,35;$Host.UI.Write("")
+            Write-Color "  You rolled a ","$Random_Dice_Roll", " and obtain the ","$($Import_JSON.Quests.$Random_Dice_Roll.Name) ","Quest","." -Color DarkGray,White,DarkGray,Blue,White,DarkGray
+            Write-Color "  You must ","$($Import_JSON.Quests.$Random_Dice_Roll.Long_Description)","." -Color DarkGray,White,DarkGray
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+            Write-Color -NoNewLine "  Press Enter to continue." -Color DarkYellow
             $Import_JSON.Quests.$Random_Dice_Roll.Active = $true
-            Read-Host " "
-            Clear-Host
+            $Import_JSON.Character.Quest = $Import_JSON.Quests.$Random_Dice_Roll.Name
+            Update_Variables
+            Save_JSON
+            Draw_Player_Window_and_Stats
+            $Host.UI.ReadLine() | Out-Null
             #
             # roll for journeys and wilderness encounters
             #
-            Clear-Host
-            Write-Color "`r`n  You're ready to embark on your adventure." -Color DarkGray
-            Write-Color "`r`n  The first steps you take will be into the Wilderness before you reach a Dungeon." -Color DarkGray,White,DarkGray
+            Clear_Bottom_Half_of_Screen
+            $Info_Banner = "Wilderness Journeys"
+            Draw_Info_Banner
+            Write-Color ""
+            Write-Color "  You're now finally ready to embark on your adventure." -Color DarkGray
+            Write-Color "  The first steps you take will be into the Wilderness before you reach a Dungeon." -Color DarkGray,White,DarkGray
             Write-Color ""
             Write-Color "  Wilderness Journeys" -Color DarkGray
             Write-Color ""
@@ -873,7 +865,7 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Roll a d6 to see how many Wilderness Journeys you will encounter. Press Enter to continue..." -Color DarkYellow
-            Read-Host " "
+            $Host.UI.ReadLine() | Out-Null
             Roll_D6_Dice
             # $Random_Dice_Roll = 5
             if ($Random_Dice_Roll -eq 1 -or $Random_Dice_Roll -eq 2) { $Wilderness_Journeys = 1 }
@@ -891,7 +883,7 @@ Function Create_Character {
                 Write-Color -NoNewLine "`r`n  Journey #","$i" -Color DarkGray,White
 
             }
-            Read-Host " "
+            $Host.UI.ReadLine() | Out-Null
 
             # roll xd6 (3, 4 or 5 as per roll above) for each journey (wilderness encounters)
             # Wilderness encounters (tests)
