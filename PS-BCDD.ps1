@@ -589,7 +589,7 @@ Function Create_Character {
             Draw_Info_Banner
             Write-Color ""
             foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
-                "  $($item.Name) - $($item.Value.Name) ($($item.Value.Info))"
+                Write-Color "  $($item.Name)"," - ","$($item.Value.Name)"," ($($item.Value.Info))" -Color White,DarkGray,Blue,DarkGray
             }
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
@@ -615,7 +615,7 @@ Function Create_Character {
             Draw_Info_Banner
             Write-Color ""
             foreach ($item in $Import_JSON.Spells.PSObject.Properties) {
-                "  $($item.Name) - $($item.Value.Name) ($($item.Value.Info))"
+                Write-Color "  $($item.Name)"," - ","$($item.Value.Name)"," ($($item.Value.Info))" -Color White,DarkGray,Blue,DarkGray
             }
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
@@ -640,31 +640,41 @@ Function Create_Character {
             $Info_Banner = "Gold"
             Draw_Info_Banner
             Write-Color " "
-            Write-Color "  You have a small pouch to carry some ","Gold ","coins which can be used to purchase items from the shop in Settlement." -Color DarkGray,DarkYellow,DarkGray
+            Write-Color "  You have a small pouch to carry some ","Gold ","coins." -Color DarkGray,DarkYellow,DarkGray
+            Write-Color "  These can be used to purchase items from the Settlement shop." -Color DarkGray,DarkYellow,DarkGray
+            Press_Continue
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,22;$Host.UI.Write("")
             Write-Color "`r`n  As per the original game by Melv Lee, the main goal of the game is to collect 120 ","Gold","," -Color DarkGray,DarkYellow,DarkGray
-            Write-Color "`r`n  enough to buy a piece of farmland to retire from the risky Adventurer's life." -Color DarkGray,
+            Write-Color "  enough to buy a piece of farmland to retire from the risky Adventurer's life." -Color DarkGray
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Press Enter to roll a D6 to determine how much Gold you will start with..." -Color DarkYellow
             $Host.UI.ReadLine()
             Roll_D6_Dice
             # $Random_Dice_Roll = 13
-            Write-Color ""
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,34;$Host.UI.Write("")
             Write-Color "  You start with ","$Random_Dice_Roll", " Gold","." -Color DarkGray,White,DarkYellow,DarkGray
             $Import_JSON.Character.Gold = $Random_Dice_Roll
             Update_Variables
+            Draw_Player_Window_and_Stats
             Save_JSON
-            Read-Host "  Press Enter to continue..."
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+            Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
+            $Host.UI.ReadLine()
             #
             # purchase items from shop
             #
-            Clear-Host
-            Write-Color "`r`n  The Settlement has a shop where you can buy items before heading out on your adventure." -Color DarkGray
-            Write-Color ""
+            Clear_Bottom_Half_of_Screen
+            $Info_Banner = "Shop"
+            Draw_Info_Banner
+            Write-Color " "
+            Write-Color "  The Settlement has a shop where you can buy items before heading out on your adventure." -Color DarkGray
+            Write-Color " "
             $All_Settlement_Items_Array = New-Object System.Collections.Generic.List[System.Object]
             foreach ($item in $Import_JSON.Settlement.PSObject.Properties) {
                 $All_Settlement_Items_Array.Add("$($item.Name)")
-                "$($item.Name) - $($item.Value.Description) ($($item.Value.Cost))"
+                Write-Color "  $($item.Name)"," - ","$($item.Value.Description)"," ($($item.Value.Cost))" -Color White,DarkGray,Blue,DarkGray
             }
             do {
                 # if only 1 gold, unable to buy any items
