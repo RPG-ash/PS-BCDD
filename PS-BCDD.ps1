@@ -113,7 +113,7 @@ Function Game_Introduction {
     Write-Color "`r`n  Have fun playing and delving into the dungeon!" -Color Green
     Write-Color " "
     Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
-    $Host.UI.ReadLine()
+    $Host.UI.ReadLine() | Out-Null
 }
 
 
@@ -216,8 +216,8 @@ Function Roll_D6_Dice {
             }
             Default {}
         }
-        $Random_Milliseconds = Get-Random -Minimum 200 -Maximum 1000
-        Start-Sleep -Milliseconds $Random_Milliseconds
+        # $Random_Milliseconds = Get-Random -Minimum 200 -Maximum 1000
+        # Start-Sleep -Milliseconds $Random_Milliseconds
     }
     $host.UI.RawUI.ForegroundColor = "DarkGray" # set the foreground color back to original colour
 }
@@ -332,7 +332,7 @@ Function Draw_Info_Banner {
 # clear the bottom of the screen for new text output
 #
 Function Clear_Bottom_Half_of_Screen {
-    for ($Position = 19; $Position -lt 37; $Position++) {
+    for ($Position = 19; $Position -lt 38; $Position++) {
         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
     }
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,19;$Host.UI.Write("")
@@ -510,9 +510,10 @@ Function Create_Character {
             Draw_Player_Window_and_Stats
             Save_JSON
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,39;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
-            $Host.UI.ReadLine()
+            $Host.UI.ReadLine() | Out-Null
         }
         do {
             $Info_Banner = "Health, Rations and Torches"
@@ -580,7 +581,7 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
-            $Host.UI.ReadLine()
+            $Host.UI.ReadLine() | Out-Null
             #
             # roll for potion
             #
@@ -594,7 +595,7 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Roll a D6 to determine which Potion you receive. Press Enter to continue..." -Color DarkYellow
-            $Host.UI.ReadLine()
+            $Host.UI.ReadLine() | Out-Null
             Roll_D6_Dice
             # $Random_Dice_Roll = 1
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,34;$Host.UI.Write("")
@@ -606,7 +607,7 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
-            $Host.UI.ReadLine()
+            $Host.UI.ReadLine() | Out-Null
             #
             # roll for spell
             #
@@ -620,7 +621,7 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Now roll another D6 to determine which Spell you receive. Press Enter to continue..." -Color DarkYellow
-            $Host.UI.ReadLine()
+            $Host.UI.ReadLine() | Out-Null
             Roll_D6_Dice
             # $Random_Dice_Roll = 2
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,34;$Host.UI.Write("")
@@ -632,7 +633,7 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
-            $Host.UI.ReadLine()
+            $Host.UI.ReadLine() | Out-Null
             #
             # roll for gold
             #
@@ -649,10 +650,10 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Press Enter to roll a D6 to determine how much Gold you will start with..." -Color DarkYellow
-            $Host.UI.ReadLine()
-            Roll_D6_Dice
-            # $Random_Dice_Roll = 13
-            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,34;$Host.UI.Write("")
+            $Host.UI.ReadLine() | Out-Null
+            # Roll_D6_Dice
+            $Random_Dice_Roll = 6
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
             Write-Color "  You start with ","$Random_Dice_Roll", " Gold","." -Color DarkGray,White,DarkYellow,DarkGray
             $Import_JSON.Character.Gold = $Random_Dice_Roll
             Update_Variables
@@ -661,168 +662,175 @@ Function Create_Character {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
             Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
-            $Host.UI.ReadLine()
+            $Host.UI.ReadLine() | Out-Null
             #
             # purchase items from shop
             #
-            Clear_Bottom_Half_of_Screen
-            $Info_Banner = "Shop"
-            Draw_Info_Banner
-            Write-Color " "
-            Write-Color "  The Settlement has a shop where you can buy items before heading out on your adventure." -Color DarkGray
-            Write-Color " "
-            $All_Settlement_Items_Array = New-Object System.Collections.Generic.List[System.Object]
-            foreach ($item in $Import_JSON.Settlement.PSObject.Properties) {
-                $All_Settlement_Items_Array.Add("$($item.Name)")
-                Write-Color "  $($item.Name)"," - ","$($item.Value.Description)"," ($($item.Value.Cost))" -Color White,DarkGray,Blue,DarkGray
-            }
             do {
+                Clear_Bottom_Half_of_Screen
+                $Info_Banner = "Shop"
+                Draw_Info_Banner
+                Write-Color " "
+                $All_Settlement_Items_Array = New-Object System.Collections.Generic.List[System.Object]
+                foreach ($item in $Import_JSON.Settlement.PSObject.Properties) {
+                    $All_Settlement_Items_Array.Add("$($item.Name)")
+                    Write-Color "  $($item.Name)"," - ","$($item.Value.Description)"," ($($item.Value.Cost))" -Color White,DarkGray,Blue,DarkGray
+                }
                 # if only 1 gold, unable to buy any items
                 if ($Import_JSON.Character.Gold -eq 1) {
-                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                    Write-Color -NoNewLine "  You only have ","1 Gold",", so you can't buy any items from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
                     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-                    Write-Color "  You only have 1 Gold, so you can't buy any items from the shop just yet." -Color DarkGray,Green,DarkGray,Blue
-                    Read-Host "  Press Enter to continue..."
-                } else {
-                    # choose to purchase items from shop
-                    # do {
-                        do {
-                            # for ($Position = 19; $Position -lt 22; $Position++) {
-                            #     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
-                            # }
-                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
-                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-                            if ($Gold -lt 2) {
-                                Write-Color "  You have ","$($Import_JSON.Character.Gold) Gold",", so you can't afford to buy any Potions from the shop." -Color DarkGray,DarkYellow,DarkGray,Blue
-                                Read-Host "  Press Enter to continue..."
-                                $Purchase_Item_Choice = "l"
-                            } else {
-                                # select an item to purchase from shop
-                                Write-Color -NoNewLine "  You have ","$($Import_JSON.Character.Gold) Gold",". Select the item number you would like to purchase, or ","L","eave." -Color DarkGray,DarkYellow,DarkGray,Green,DarkGray
-                                $Purchase_Item_Choice = Read-Host " "
-                                $Purchase_Item_Choice = $Purchase_Item_Choice.Trim()
-                            }
-                        } until ($Purchase_Item_Choice -ieq "l" -or $Purchase_Item_Choice -in $All_Settlement_Items_Array)
-                        if ($Purchase_Item_Choice -ne "l"){
-                            if ($Import_JSON.Settlement.$Purchase_Item_Choice.Cost -gt $Gold) {
-                                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                Write-Color "  $($Import_JSON.Settlement.$Purchase_Item_Choice.Description)"," costs ","$($Import_JSON.Settlement.$Purchase_Item_Choice.Cost) Gold"," and you only have ","$($Import_JSON.Character.Gold) Gold","." -Color Blue,DarkGray,DarkYellow,DarkGray,DarkYellow,DarkGray
-                            } else {
-                                switch ($Purchase_Item_Choice) {
-                                    1 { # +2 Rations
-                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                        Write-Color "  You purchase ","+2 Rations"," for ","6 Gold","." -Color DarkGray,Blue,DarkGray,DarkYellow,DarkGray
-                                        $Import_JSON.Character.Gold -= $Import_JSON.Settlement.$Purchase_Item_Choice.Cost
-                                        $Import_JSON.Character.Rations += 2
-                                    }
-                                    2 { # +2 Torches
-                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                        Write-Color "  You purchase ","+2 Torches"," for ","6 Gold","." -Color DarkGray,Blue,DarkGray,DarkYellow,DarkGray
-                                        $Import_JSON.Character.Gold -= $Import_JSON.Settlement.$Purchase_Item_Choice.Cost
-                                        $Import_JSON.Character.Torches += 2
-                                    }
-                                    3 { # Restore 1 HP
-                                        if ($Import_JSON.Character.Stats.HealthCurrent -eq $Import_JSON.Character.Stats.HealthMax) {
-                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                            Write-Color "  Your Health is already full at ","$($Import_JSON.Character.Stats.HealthCurrent) / $($Import_JSON.Character.Stats.HealthMax) HP",". You don't need to buy this item right now." -Color Blue,DarkGray,DarkYellow,DarkGray
-                                        } else {
-                                            $Import_JSON.Character.Stats.HealthCurrent += 1
-                                            $Import_JSON.Character.Gold -= $Import_JSON.Settlement.$Purchase_Item_Choice.Cost
-                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                            Write-Color "  Your Health has incresed by +1 and is now ","$($Import_JSON.Character.Stats.HealthCurrent) / $($Import_JSON.Character.Stats.HealthMax) HP","." -Color Blue,DarkGray,DarkYellow,DarkGray
-                                        }
-                                    }
-                                    4 { # +1 Potion
-                                        $Potion_Purchased = $false
-                                        do {
-                                            if ($Potion_purchased -eq $false) {
-                                                Clear-Host
-                                                Write-Color "`r`n  The Settlement Potions (6 Gold each)" -Color DarkGray
-                                                Write-Color ""
-                                                $All_Settlement_Potions_Array = New-Object System.Collections.Generic.List[System.Object]
-                                                foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
-                                                    $All_Settlement_Potions_Array.Add($item.Name)
-                                                    "$($item.Name) - $($item.Value.Name) ($($item.Value.Info))"
-                                                }
-                                            }
-                                            do {
-                                                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
-                                                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-                                                Write-Color -NoNewLine "  Each Potion costs ", "6 Gold",". You have ","$($Import_JSON.Character.Gold)", " Gold",". Select the item number you would like to purchase, or [L]eave." -Color DarkGray,DarkYellow,DarkGray,DarkYellow,DarkGray
-                                                $Potion_Purchase_Choice = Read-Host " "
-                                            } until ($Potion_Purchase_Choice -ieq "l" -or $Potion_Purchase_Choice -in $All_Settlement_Potions_Array)
-                                            if ($Potion_Purchase_Choice -ine "l"){
-                                                $Potion_Purchased = $true
-                                                for ($Position = 19; $Position -lt 25; $Position++) {
-                                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
-                                                }
-                                                # $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                                switch ($Potion_Purchase_Choice) {
-                                                    1 { # Healing (1d6)
-                                                        Write-Color "  You have purchased a ","$($Import_JSON.Potions.$Potion_Purchase_Choice.Name)"," Potion"," for 6 Gold.", "`r`nThis potion can be used at any time to restore your Health by 3 HP." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
-                                                    }
-                                                    2 { # Invisibility (Sneak pass location)
-                                                        Write-Color "  You have purchased an ","$($Import_JSON.Potions.$Potion_Purchase_Choice.Name)"," Potion"," for 6 Gold.", "`r`nThis potion can be used at any time to sneak past a location hazard or enemy encounter without having to go through the challenge." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
-                                                    }
-                                                    3 { # Accelerate -3 or +3 journeys or dungeons
-                                                        Write-Color "  *** TODO -3 or +3 journeys or dungeons??????????????????????" -Color DarkGray
-                                                        Write-Color "  -3 or +3 journeys or dungeons. Add 3 extra journeys or dungeons to your next adventure." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
-                                                    }
-                                                    4 { # Strength (+2 STR or +2 ATK against next test or monster)
-                                                        Write-Color "  *** TODO -3 or +3 journeys or dungeons??????????????????????" -Color DarkGray
-                                                        Write-Color "  +2 STR or +2 ATK against next test or monster. +2, or give you +2 ATK against the next monster you fight or test you take." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
-                                                    }
-                                                    5 { # Invincibility (auto pass a test)
-                                                        Write-Color "  You have purchased an Invincibility Potion which will allow you to automatically pass a test.`r`nThis potion can be used when a test is encountered." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
-                                                    }
-                                                    6 { # Rock Skin (+2 DEF for next fight)
-                                                        Write-Color "  You have purchased a Rock Skin Potion which gives you +2 DEF for the next fight." -Color DarkGray,Blue,DarkGray,Blue,DarkGray
-                                                    }
-                                                    Default {
-                                                    }
-                                                }
-                                                # reduce gold by 6, add potion to inventory, add 1 to potions total
-                                                $Import_JSON.Character.Gold -= 6
-                                                $Import_JSON.Character.PotionsTotal += 1
-                                                $Import_JSON.Potions.$Potion_Purchase_Choice.Quantity += 1
-                                            }
-                                        } until ($Potion_Purchase_Choice -ieq "l" -or $Gold -lt 6)
-                                        Clear-Host
-                                        Write-Color "`r`n  The Settlement has a shop where you can buy items before heading out on your adventure." -Color DarkGray
-                                        Write-Color ""
-                                        foreach ($item in $Import_JSON.Settlement.PSObject.Properties) {
-                                            $All_Settlement_Items_Array.Add("$($item.Name)")
-                                            "$($item.Name) - $($item.Value.Description) ($($item.Value.Cost))"
-                                        }
-                                    }
-                                    5 { # spells
-                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                        Write-Color -NoNewLine "  Spells cost ","15 Gold",", so you can't afford to buy any from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
-                                    }
-                                    6 { # Training (+5 XP)
-                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                        Write-Color -NoNewLine "  Training costs ","25 Gold",", so you can't afford to buy it from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
-                                    }
-                                    7 { # Reurrection (return to life at the Settelement when at zero HP)
-                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
-                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
-                                        Write-Color -NoNewLine "  Reurrection costs ","30 Gold",", so you can't afford to buy it from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
-                                    }
-                                    Default {}
+                    Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
+                    $Host.UI.ReadLine() | Out-Null
+                } else { # otherwise choose to purchase items from shop
+                    do {
+                        # select an item to purchase from shop
+                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+                        Write-Color -NoNewLine "  Select the ","item number ","you would like to purchase, or ","L","eave." -Color DarkYellow,White,DarkYellow,Green,DarkYellow
+                        $Purchase_Item_Choice = Read-Host " "
+                        $Purchase_Item_Choice = $Purchase_Item_Choice.Trim()
+                    } until ($Purchase_Item_Choice -ieq "l" -or $Purchase_Item_Choice -in $All_Settlement_Items_Array)
+                    if ($Purchase_Item_Choice -ne "l"){
+                        if ($Import_JSON.Settlement.$Purchase_Item_Choice.Cost -gt $Gold) {
+                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                            Write-Color "  $($Import_JSON.Settlement.$Purchase_Item_Choice.Description)"," costs ","$($Import_JSON.Settlement.$Purchase_Item_Choice.Cost) Gold"," but you only have ","$($Import_JSON.Character.Gold) Gold","." -Color Blue,DarkGray,DarkYellow,DarkGray,DarkYellow,DarkGray
+                        } else {
+                            switch ($Purchase_Item_Choice) {
+                                1 { # +2 Rations
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                                    Write-Color "  You purchase ","+2 Rations"," for ","2 Gold","." -Color DarkGray,Blue,DarkGray,DarkYellow,DarkGray
+                                    $Import_JSON.Character.Gold -= $Import_JSON.Settlement.$Purchase_Item_Choice.Cost
+                                    $Import_JSON.Character.Rations += 2
+                                    Update_Variables
+                                    Draw_Player_Window_and_Stats
+                                    Save_JSON
                                 }
-                                Save_JSON
-                                Update_Variables
+                                2 { # +2 Torches
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                                    Write-Color "  You purchase ","+2 Torches"," for ","2 Gold","." -Color DarkGray,Blue,DarkGray,DarkYellow,DarkGray
+                                    $Import_JSON.Character.Gold -= $Import_JSON.Settlement.$Purchase_Item_Choice.Cost
+                                    $Import_JSON.Character.Torches += 2
+                                    Update_Variables
+                                    Draw_Player_Window_and_Stats
+                                    Save_JSON
+                                }
+                                3 { # Restore 1 HP
+                                    if ($Import_JSON.Character.Stats.HealthCurrent -eq $Import_JSON.Character.Stats.HealthMax) {
+                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                                        Write-Color "  Your Health is already full at ","$($Import_JSON.Character.Stats.HealthCurrent) / $($Import_JSON.Character.Stats.HealthMax) HP",". You don't need to buy this item right now." -Color Blue,DarkGray,DarkYellow,DarkGray
+                                    } else {
+                                        $Import_JSON.Character.Stats.HealthCurrent += 1
+                                        $Import_JSON.Character.Gold -= $Import_JSON.Settlement.$Purchase_Item_Choice.Cost
+                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+                                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                                        Write-Color "  Your Health has incresed by +1 and is now ","$($Import_JSON.Character.Stats.HealthCurrent) / $($Import_JSON.Character.Stats.HealthMax) HP","." -Color Blue,DarkGray,DarkYellow,DarkGray
+                                        Update_Variables
+                                        Draw_Player_Window_and_Stats
+                                        Save_JSON
+                                    }
+                                }
+                                4 { # +1 Potion
+                                    $Potion_Purchased = $false
+                                    do {
+                                        if ($Potion_purchased -eq $false) {
+                                            Clear_Bottom_Half_of_Screen
+                                            $Info_Banner = "Shop - Potions"
+                                            Draw_Info_Banner
+                                            Write-Color ""
+                                            Write-Color "  Settlement Shop Potions" -Color DarkGray
+                                            Write-Color ""
+                                            $All_Settlement_Potions_Array = New-Object System.Collections.Generic.List[System.Object]
+                                            foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
+                                                $All_Settlement_Potions_Array.Add($item.Name)
+                                                Write-Color "  $($item.Name)"," - ","$($item.Value.Name)"," ($($item.Value.Info))" -Color White,DarkGray,Blue,DarkGray
+                                            }
+                                        }
+                                        do {
+                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+                                            Write-Color -NoNewLine "  Each Potion costs ", "6 Gold","." -Color DarkGray,DarkYellow,DarkGray
+                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+                                            Write-Color -NoNewLine "  Select the ","item number ","you would like to purchase, or ","L","eave." -Color DarkYellow,White,DarkYellow,Green,DarkYellow
+                                            $Potion_Purchase_Choice = Read-Host " "
+                                        } until ($Potion_Purchase_Choice -ieq "l" -or $Potion_Purchase_Choice -in $All_Settlement_Potions_Array)
+                                        if ($Potion_Purchase_Choice -ine "l"){
+                                            $Potion_Purchased = $true
+                                            # for ($Position = 19; $Position -lt 25; $Position++) {
+                                            #     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
+                                            # }
+                                            # $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
+                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,33;$Host.UI.Write("");" "*140
+                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,34;$Host.UI.Write("");" "*140
+                                            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,33;$Host.UI.Write("")
+                                            switch ($Potion_Purchase_Choice) {
+                                                1 { # Healing (1d6)
+                                                    Write-Color "  You have purchased a ","$($Import_JSON.Potions.$Potion_Purchase_Choice.Name)"," Potion"," for ","6 Gold","." -Color DarkGray,White,Blue,DarkGray,DarkYellow,DarkGray
+                                                    Write-Color "  This ","Potion ","can be used at any time to restore your ","Health ","by ","3 HP","." -Color DarkGray,Blue,DarkGray,Green,DarkGray,Green,DarkGray
+                                                }
+                                                2 { # Invisibility (Sneak pass location)
+                                                    Write-Color "  You have purchased an ","$($Import_JSON.Potions.$Potion_Purchase_Choice.Name)"," Potion"," for ","6 Gold","." -Color DarkGray,White,Blue,DarkGray,DarkYellow,DarkGray
+                                                    Write-Color "  This ","Potion ","can be used to sneak past a hazard or enemy without having to pass the challenge." -Color DarkGray,Blue,DarkGray
+                                                }
+                                                3 { # Accelerate -3 or +3 journeys or dungeons
+                                                    Write-Color "  *** TODO -3 or +3 journeys or dungeons??????????????????????" -Color Magenta
+                                                    Write-Color "  -3 or +3 journeys or dungeons. Add 3 extra journeys or dungeons to your next adventure." -Color Magenta
+                                                }
+                                                4 { # Strength (+2 STR or +2 ATK against next test or monster)
+                                                    Write-Color "  *** TODO -3 or +3 journeys or dungeons??????????????????????" -Color Magenta
+                                                    Write-Color "  +2 STR or +2 ATK against next test or monster. +2, or give you +2 ATK against the next monster you fight or test you take." -Color Magenta
+                                                }
+                                                5 { # Invincibility (auto pass a test)
+                                                    Write-Color "  You have purchased an ","Invincibility ","Potion ","which will allow you to automatically pass a test." -Color DarkGray,White,Blue,DarkGray
+                                                    Write-Color "  This ","Potion ","can be used when a test is encountered." -Color DarkGray,Blue,DarkGray
+                                                }
+                                                6 { # Rock Skin (+2 DEF for next fight)
+                                                    Write-Color "  You have purchased a ","Rock Skin ","Potion ","which gives you ","+2 DEF ","for the next fight." -Color DarkGray,White,Blue,DarkGray,White,DarkGray
+                                                }
+                                                Default {
+                                                }
+                                            }
+                                            # reduce gold by 6, add potion to inventory, add 1 to potions total
+                                            $Import_JSON.Character.Gold -= 6
+                                            $Import_JSON.Character.PotionsTotal += 1
+                                            $Import_JSON.Potions.$Potion_Purchase_Choice.Quantity += 1
+                                            Update_Variables
+                                            Draw_Player_Window_and_Stats
+                                            Save_JSON
+                                        }
+                                    } until ($Potion_Purchase_Choice -ieq "l" -or $Gold -lt 6)
+                                }
+                                5 { # spells
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
+                                    Write-Color -NoNewLine "  Spells cost ","15 Gold",", so you can't afford to buy any from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
+                                }
+                                6 { # Training (+5 XP)
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
+                                    Write-Color -NoNewLine "  Training costs ","25 Gold",", so you can't afford to buy it from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
+                                }
+                                7 { # Reurrection (return to life at the Settelement when at zero HP)
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("");" "*140
+                                    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,25;$Host.UI.Write("")
+                                    Write-Color -NoNewLine "  Reurrection costs ","30 Gold",", so you can't afford to buy it from the shop just yet." -Color DarkGray,DarkYellow,DarkGray
+                                }
+                                Default {}
                             }
+                            Save_JSON
+                            Update_Variables
                         }
-                    # } until ($Purchase_Item_Choice -ieq "l");
+                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+                        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+                        Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
+                        $Host.UI.ReadLine() | Out-Null
+                    }
                 }
             } until ($Import_JSON.Character.Gold -lt 2 -or $Purchase_Item_Choice -ieq "l");
             #
