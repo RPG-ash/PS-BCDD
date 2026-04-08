@@ -1211,6 +1211,27 @@ if ($Load_Save_Data_Choice -ieq "e" -or $Start_A_New_Game -ieq "e") {
 #
 # main loop
 
+# loop
+#   wilderness journey 1
+#       wilderness encounter
+#           enemy / test / NPC / shop
+#   wilderness journey 2
+#       wilderness encounter
+#           enemy / test / NPC / shop
+#   dungeon
+#       dungeon room 1
+#           enemy / test / NPC / hazard / treasure
+#       dungeon room 2
+#           enemy / test / NPC / hazard / treasure
+#   Settlement
+#       quest reward
+#       shop
+#       obtain new quest
+#       roll on new wilderness journeys table
+#   repeat loop
+
+
+
 # Write-Color "  Your ","$Wilderness_Journeys_Total", " Wilderness Journeys are:" -Color DarkGray,White,DarkGray
 # for ($i = 1; $i -lt $Wilderness_Journeys_Total+1; $i++) {
 #     # $i
