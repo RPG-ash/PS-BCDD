@@ -202,7 +202,7 @@ Function Draw_Player_Window_and_Stats {
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,0;$Host.UI.Write( "+---------------------------+---------------------+-------------------------+-------------------+")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,1;$Host.UI.Write( "| Adventurer                | Enemy               | Quest :                 | Potions      of 3 |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,2;$Host.UI.Write( "+---------------------------+---------------------+-------------------------+ Healing       :   |")
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,3;$Host.UI.Write( "| Name      :               | Name   : Skeleton   | Wilderness : Campsite   | Invisibility  :   |")
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,3;$Host.UI.Write( "| Name      :               | Name   : Skeleton   | Wilderness :            | Invisibility  :   |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,4;$Host.UI.Write( "| Health    :    of         | HP     :            | Journeys                | Accelerate    :   |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,5;$Host.UI.Write( "| STR       :               | Attack :            |     of                  | Strength      :   |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,6;$Host.UI.Write( "| DEX       :               | Loot   :            |                         | Invincibility :   |")
@@ -241,7 +241,8 @@ Function Draw_Player_Window_and_Stats {
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 37,12;$Host.UI.Write($Test_Fail)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 60,1;$Host.UI.Write($Quest)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 59,5;$Host.UI.Write($Wilderness_Journeys_Total)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 54,5;$Host.UI.Write($Wilderness_Journeys_Current)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 54,5;$Host.UI.Write($Wilderness_Journeys_Current_Number)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,3;$Host.UI.Write($Wilderness_Journeys_Current_Name)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,3;$Host.UI.Write($Wilderness_Journey_Name_1)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,4;$Host.UI.Write($Wilderness_Journey_Name_2)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,5;$Host.UI.Write($Wilderness_Journey_Name_3)
@@ -894,7 +895,7 @@ Function Create_Character {
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
     Write-Color "  You rolled a ","$Random_Dice_Roll", ". You will encounter ","$Wilderness_Journeys_Total", " Wilderness Journeys on your way to the Dungeon." -Color DarkGray,White,DarkGray,White,DarkGray
     $Import_JSON.Character.Wilderness_Journeys_Total = $Wilderness_Journeys_Total
-    $Import_JSON.Character.Wilderness_Journeys_Current = 1
+    $Import_JSON.Character.Wilderness_Journeys_Current_Number = 1
     Update_Variables
     Draw_Player_Window_and_Stats
     Save_JSON
@@ -911,7 +912,6 @@ Function Create_Character {
     Save_JSON
     Import_JSON
     Update_Variables
-    Clear-Host
 }
 
 
@@ -920,40 +920,41 @@ Function Create_Character {
 # sets variables
 #
 Function Update_Variables {
-    $Script:Character_Name              = $Import_JSON.Character.Name
-    $Script:Character_HealthCurrent     = $Import_JSON.Character.Stats.HealthCurrent
-    $Script:Character_HealthMax         = $Import_JSON.Character.Stats.HealthMax
-    $Script:Character_STR               = $Import_JSON.Character.Stats.STR
-    $Script:Character_DEX               = $Import_JSON.Character.Stats.DEX
-    $Script:Character_INT               = $Import_JSON.Character.Stats.INT
-    $Script:Rations                     = $Import_JSON.Character.Rations
-    $Script:Torches                     = $Import_JSON.Character.Torches
-    $Script:SpellsTotal                 = $Import_JSON.Character.SpellsTotal
-    $Script:PotionsTotal                = $Import_JSON.Character.PotionsTotal
-    $Script:Gold                        = $Import_JSON.Character.Gold
-    $Script:Total_XP                    = $Import_JSON.Character.Total_XP
-    $Script:Current_Location            = $Import_JSON.Character.Current_Location
-    $Script:Equipment                   = $Import_JSON.Character.Equipment
-    $Script:Weapon                      = $Import_JSON.Character.Weapon
-    $Script:Quest                       = $Import_JSON.Character.Quest
-    $Script:Wilderness_Journeys_Total   = $Import_JSON.Character.Wilderness_Journeys_Total
-    $Script:Wilderness_Journeys_Current = $Import_JSON.Character.Wilderness_Journeys_Current
-    $Script:Dungeon_Room_Total          = $Import_JSON.Character.Dungeon_Room_Total
-    $Script:Dungeon_Room_Current        = $Import_JSON.Character.Dungeon_Room_Current
-    $Script:Potions_Total               = $Import_JSON.Character.PotionsTotal
-    $Script:Potions_Quantity_1          = $Import_JSON.Potions."1".Quantity
-    $Script:Potions_Quantity_2          = $Import_JSON.Potions."2".Quantity
-    $Script:Potions_Quantity_3          = $Import_JSON.Potions."3".Quantity
-    $Script:Potions_Quantity_4          = $Import_JSON.Potions."4".Quantity
-    $Script:Potions_Quantity_5          = $Import_JSON.Potions."5".Quantity
-    $Script:Potions_Quantity_6          = $Import_JSON.Potions."6".Quantity
-    $Script:Spells_Total                = $Import_JSON.Character.SpellsTotal
-    $Script:Spells_Quantity_1           = $Import_JSON.Spells."1".Quantity
-    $Script:Spells_Quantity_2           = $Import_JSON.Spells."2".Quantity
-    $Script:Spells_Quantity_3           = $Import_JSON.Spells."3".Quantity
-    $Script:Spells_Quantity_4           = $Import_JSON.Spells."4".Quantity
-    $Script:Spells_Quantity_5           = $Import_JSON.Spells."5".Quantity
-    $Script:Spells_Quantity_6           = $Import_JSON.Spells."6".Quantity
+    $Script:Character_Name                     = $Import_JSON.Character.Name
+    $Script:Character_HealthCurrent            = $Import_JSON.Character.Stats.HealthCurrent
+    $Script:Character_HealthMax                = $Import_JSON.Character.Stats.HealthMax
+    $Script:Character_STR                      = $Import_JSON.Character.Stats.STR
+    $Script:Character_DEX                      = $Import_JSON.Character.Stats.DEX
+    $Script:Character_INT                      = $Import_JSON.Character.Stats.INT
+    $Script:Rations                            = $Import_JSON.Character.Rations
+    $Script:Torches                            = $Import_JSON.Character.Torches
+    $Script:SpellsTotal                        = $Import_JSON.Character.SpellsTotal
+    $Script:PotionsTotal                       = $Import_JSON.Character.PotionsTotal
+    $Script:Gold                               = $Import_JSON.Character.Gold
+    $Script:Total_XP                           = $Import_JSON.Character.Total_XP
+    $Script:Current_Location                   = $Import_JSON.Character.Current_Location
+    $Script:Equipment                          = $Import_JSON.Character.Equipment
+    $Script:Weapon                             = $Import_JSON.Character.Weapon
+    $Script:Quest                              = $Import_JSON.Character.Quest
+    $Script:Wilderness_Journeys_Total          = $Import_JSON.Character.Wilderness_Journeys_Total
+    $Script:Wilderness_Journeys_Current_Number = $Import_JSON.Character.Wilderness_Journeys_Current_Number
+    $Script:Wilderness_Journeys_Current_Name   = $Import_JSON.Character.Wilderness_Journeys_Current_Name
+    $Script:Dungeon_Room_Total                 = $Import_JSON.Character.Dungeon_Room_Total
+    $Script:Dungeon_Room_Current               = $Import_JSON.Character.Dungeon_Room_Current
+    $Script:Potions_Total                      = $Import_JSON.Character.PotionsTotal
+    $Script:Potions_Quantity_1                 = $Import_JSON.Potions."1".Quantity
+    $Script:Potions_Quantity_2                 = $Import_JSON.Potions."2".Quantity
+    $Script:Potions_Quantity_3                 = $Import_JSON.Potions."3".Quantity
+    $Script:Potions_Quantity_4                 = $Import_JSON.Potions."4".Quantity
+    $Script:Potions_Quantity_5                 = $Import_JSON.Potions."5".Quantity
+    $Script:Potions_Quantity_6                 = $Import_JSON.Potions."6".Quantity
+    $Script:Spells_Total                       = $Import_JSON.Character.SpellsTotal
+    $Script:Spells_Quantity_1                  = $Import_JSON.Spells."1".Quantity
+    $Script:Spells_Quantity_2                  = $Import_JSON.Spells."2".Quantity
+    $Script:Spells_Quantity_3                  = $Import_JSON.Spells."3".Quantity
+    $Script:Spells_Quantity_4                  = $Import_JSON.Spells."4".Quantity
+    $Script:Spells_Quantity_5                  = $Import_JSON.Spells."5".Quantity
+    $Script:Spells_Quantity_6                  = $Import_JSON.Spells."6".Quantity
     # sets current Location
     $All_Locations                      = $Import_JSON.Locations.PSObject.Properties.Name
     foreach ($Single_Location in $All_Locations) {
@@ -970,7 +971,7 @@ Function Update_Variables {
 #
 
 Clear-Host
-Game_Introduction
+# Game_Introduction
 #
 # write any errors out to error.log file
 #
@@ -1160,10 +1161,8 @@ if (Test-Path -Path .\PS-BCDD.json) {
         Clear-Host
         # display current saved file info
         Import_JSON
-        # Update_Variables
-        # Draw_Player_Window_and_Stats
-        # Draw_Inventory
-        # Draw_Introduction_Tasks
+        Update_Variables
+        Draw_Player_Window_and_Stats
         do {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
@@ -1176,9 +1175,10 @@ if (Test-Path -Path .\PS-BCDD.json) {
             Exit
         }
         if ($Load_Save_Data_Choice -ieq "y") {
+            # if yes then just exit loop and continue onto main loop
             # Import_JSON
             # Update_Variables
-            Clear-Host
+            # Clear-Host
             # Draw_Player_Window_and_Stats
         }
         if ($Load_Save_Data_Choice -ieq "n") {
@@ -1209,7 +1209,76 @@ if ($Load_Save_Data_Choice -ieq "e" -or $Start_A_New_Game -ieq "e") {
 #
 # first thing after character creation / loading saved data
 #
-# main loop
+# main wilderness loop
+do {
+    #
+    # wilderness journey roll
+    #
+    Clear-Host
+    Draw_Player_Window_and_Stats
+    $Info_Banner = "Wilderness Journey"
+    Draw_Info_Banner
+    Write-Color ""
+    $Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
+    foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
+        $Wilderness_Journeys_Array.Add("$($item.Name)")
+        $Fail_Properties = $($item.Value.Reward.Fail.PSObject.Properties)
+        # $Fail_Properties.Name
+        # $Fail_Properties.Value
+        $Success_Properties = $($item.Value.Reward.Success.PSObject.Properties)
+        # $Success_Properties.Name
+        # $Success_Properties.Value
+        Write-Color "  $($item.Name) ","- ","$($item.Value.Name) (Test $($item.Value.Test.Type) $($item.Value.Test.Difficulty)) (Fail -$($Fail_Properties.Name) $($Fail_Properties.Value)) (Success +$($Success_Properties.Name) $($Success_Properties.Value))" -Color White,DarkGray,Blue
+    }
+    Write-Color "  " -Color DarkGray
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+    Write-Color -NoNewLine "  Roll a d6 to find out which Wilderness Journey you will encounter..." -Color DarkYellow
+    $Host.UI.ReadLine() | Out-Null
+    Roll_D6_Dice
+    # $Random_Dice_Roll = 1
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+    Write-Color "  Your first ","Wilderness encounter ","will be a trip to the ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","." -Color DarkGray,White,DarkGray,White,DarkGray
+    $Import_JSON.Character.Wilderness_Journeys_Current_Name = $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name
+    Save_JSON
+    Draw_Player_Window_and_Stats
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+    Write-Color -NoNewLine "  Press Enter to travel to the $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)..." -Color DarkYellow
+    $Host.UI.ReadLine() | Out-Null
+    #
+    # wilderness encounter
+    #
+    Clear_Bottom_Half_of_Screen
+    $Info_Banner = "Wilderness Encounter #$Wilderness_Journeys_Current_Number - $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"
+    Draw_Info_Banner
+    Write-Color ""
+    Write-Color "  After some time of traveling, you arrive at a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","." -Color DarkGray,White,DarkGray
+    if ($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type -ieq "none") {
+        Write-Color "`r`n  You wonder around the ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"," for a while but nothing of interest happens.","." -Color DarkGray,White,DarkGray,Green
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+        Write-Color -NoNewLine "  Roll a d6 to continue your journey..." -Color DarkYellow
+        $Host.UI.ReadLine() | Out-Null
+    } else {
+        Write-Color "`r`n  The $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name) requires you to complete a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) ","test with a difficulty of ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty)","." -Color DarkGray,White,DarkGray,White,DarkGray
+        $Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
+        foreach ($item in $Import_JSON.Wilderness_Journeys."3".Reward.PSObject.Properties) {
+            # $Wilderness_Journeys_Array.Add("$($item.Name)")
+            $Fail_Properties = $($item.Name.PSObject.Properties)
+            $Fail_Properties.Name
+            $Fail_Properties.Value
+            # $Success_Properties = $($item.Success.PSObject.Properties)
+            # $Success_Properties.Name
+            # $Success_Properties.Value
+            # Write-Color "  $($item.Name) ","- ","$($item.Value.Name) (Test $($item.Value.Test.Type) $($item.Value.Test.Difficulty)) (Fail -$($Fail_Properties.Name) $($Fail_Properties.Value)) (Success +$($Success_Properties.Name) $($Success_Properties.Value))" -Color White,DarkGray,Blue
+        }
+
+        Write-Color "`r`n  If you succeed, you will gain ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Reward.Success.$Success_Properties.Name) ", "and if you fail, you will lose ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Reward.Fail.$Fail_Properties.Name)","." -Color DarkGray,White,DarkGray,DarkYellow,DarkGray,Red
+        $Host.UI.ReadLine() | Out-Null
+    }
+} until ($Wilderness_Journeys_Total - $Wilderness_Journeys_Current_Number -eq 0)
+
 
 # loop
 #   wilderness journey 1
@@ -1229,6 +1298,8 @@ if ($Load_Save_Data_Choice -ieq "e" -or $Start_A_New_Game -ieq "e") {
 #       obtain new quest
 #       roll on new wilderness journeys table
 #   repeat loop
+#
+# stat level up when?
 
 
 
