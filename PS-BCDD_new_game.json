@@ -771,7 +771,7 @@
     },
     "2": {
       "Name": "Invisibility",
-      "Info": "Sneak pass location",
+      "Info": "Sneak past location",
       "Quantity": ""
     },
     "3": {
@@ -869,7 +869,7 @@
         "Fail": {
           "Rations": 1
         },
-        "Success": {
+        "Pass": {
           "Rations": 2
         }
       }
@@ -885,7 +885,7 @@
         "Fail": {
           "Rations": 1
         },
-        "Success": {
+        "Pass": {
           "Rations": 2
         }
       }
@@ -901,7 +901,7 @@
         "Fail": {
           "Health": 1
         },
-        "Success": {
+        "Pass": {
           "Gold": 1
         }
       }
@@ -917,7 +917,7 @@
         "Fail": {
           "Gold": 2
         },
-        "Success": {
+        "Pass": {
           "Torches": 2,
           "Health": 2
         }
@@ -934,7 +934,7 @@
         "Fail": {
           "Rations": 2
         },
-        "Success": {
+        "Pass": {
           "XP": 2
         }
       }
@@ -950,7 +950,7 @@
         "Fail": {
           "Health": 2
         },
-        "Success": {
+        "Pass": {
           "Gold": 5
         }
       }
@@ -968,7 +968,7 @@
     "2": {
       "Name": "Deliver",
       "Short_Description": "Pass 3 NPC tests",
-      "Long_Description": "pass 3 NPC tests",
+      "Long_Description": "Pass 3 NPC tests",
       "Gold_Reward": 10,
       "XP_Reward": 3,
       "Active": false

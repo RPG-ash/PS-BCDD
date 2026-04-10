@@ -743,7 +743,7 @@ Function Create_Character {
                                             Write-Color "  You have purchased a ","$($Import_JSON.Potions.$Potion_Purchase_Choice.Name)"," Potion"," for ","6 Gold","." -Color DarkGray,White,Blue,DarkGray,DarkYellow,DarkGray
                                             Write-Color "  This ","Potion ","can be used at any time to restore your ","Health ","by ","3 HP","." -Color DarkGray,Blue,DarkGray,Green,DarkGray,Green,DarkGray
                                         }
-                                        2 { # Invisibility (Sneak pass location)
+                                        2 { # Invisibility (Sneak past location)
                                             Write-Color "  You have purchased an ","$($Import_JSON.Potions.$Potion_Purchase_Choice.Name)"," Potion"," for ","6 Gold","." -Color DarkGray,White,Blue,DarkGray,DarkYellow,DarkGray
                                             Write-Color "  This ","Potion ","can be used to sneak past a hazard or enemy without having to pass the challenge." -Color DarkGray,Blue,DarkGray
                                         }
@@ -861,7 +861,7 @@ Function Create_Character {
     Write-Color "  The first steps you take will be into the ","Wilderness ", "before you reach a ","Dungeon","." -Color DarkGray,White,DarkGray,White,DarkGray
     Press_Continue
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,24;$Host.UI.Write("")
-    Write-Color "  Each ","Wilderness Journey ","will consist of a ","STAT ","test to complete with a reward for ","Success ","and penalty for a ","Fail","." -Color DarkGray,White,DarkGray,White,DarkGray,Green,DarkGray,Red
+    Write-Color "  Each ","Wilderness Journey ","will consist of a ","STAT ","test to complete with a reward for a ","Pass ","and a penalty for a ","Fail","." -Color DarkGray,White,DarkGray,White,DarkGray,Green,DarkGray,Red
     Press_Continue
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,26;$Host.UI.Write("")
     $All_Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
@@ -870,10 +870,10 @@ Function Create_Character {
         $Fail_Properties = $($item.Value.Reward.Fail.PSObject.Properties)
         # $Fail_Properties.Name
         # $Fail_Properties.Value
-        $Success_Properties = $($item.Value.Reward.Success.PSObject.Properties)
-        # $Success_Properties.Name
-        # $Success_Properties.Value
-        Write-Color "  $($item.Name) ","- ","$($item.Value.Name) (Test $($item.Value.Test.Type) $($item.Value.Test.Difficulty)) (Fail -$($Fail_Properties.Name) $($Fail_Properties.Value)) (Success +$($Success_Properties.Name) $($Success_Properties.Value))" -Color White,DarkGray,Blue
+        $Pass_Properties = $($item.Value.Reward.Pass.PSObject.Properties)
+        # $Pass_Properties.Name
+        # $Pass_Properties.Value
+        Write-Color "  $($item.Name) ","- ","$($item.Value.Name) (Test $($item.Value.Test.Type) $($item.Value.Test.Difficulty)) (Fail -$($Fail_Properties.Name) $($Fail_Properties.Value)) (Pass +$($Pass_Properties.Name) $($Pass_Properties.Value))" -Color White,DarkGray,Blue
     }
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Roll a D6 to determine how many Wilderness Journeys you will encounter." -Color DarkYellow
@@ -1225,10 +1225,10 @@ do {
         $Fail_Properties = $($item.Value.Reward.Fail.PSObject.Properties)
         # $Fail_Properties.Name
         # $Fail_Properties.Value
-        $Success_Properties = $($item.Value.Reward.Success.PSObject.Properties)
-        # $Success_Properties.Name
-        # $Success_Properties.Value
-        Write-Color "  $($item.Name) ","- ","$($item.Value.Name) (Test $($item.Value.Test.Type) $($item.Value.Test.Difficulty)) (Fail -$($Fail_Properties.Name) $($Fail_Properties.Value)) (Success +$($Success_Properties.Name) $($Success_Properties.Value))" -Color White,DarkGray,Blue
+        $Pass_Properties = $($item.Value.Reward.Pass.PSObject.Properties)
+        # $Pass_Properties.Name
+        # $Pass_Properties.Value
+        Write-Color "  $($item.Name) ","- ","$($item.Value.Name) (Test $($item.Value.Test.Type) $($item.Value.Test.Difficulty)) (Fail -$($Fail_Properties.Name) $($Fail_Properties.Value)) (Pass +$($Pass_Properties.Name) $($Pass_Properties.Value))" -Color White,DarkGray,Blue
     }
     Write-Color "  " -Color DarkGray
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
@@ -1275,17 +1275,15 @@ do {
         Write-Color "`r`n  The $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name) requires you to complete a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) ","test with a difficulty of ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty)","." -Color DarkGray,White,DarkGray,White,DarkGray
         $Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
         foreach ($item in $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Reward.PSObject.Properties) {
-            # $Wilderness_Journeys_Array.Add("$($item.Name)")
-            $Fail_Properties = $($item.Name.PSObject.Properties)
-            # $Fail_Properties.Name
-            # $Fail_Properties.Value
-            # $Success_Properties = $($item.Success.PSObject.Properties)
-            # $Success_Properties.Name
-            # $Success_Properties.Value
-            # Write-Color "  $($item.Name) ","- ","$($item.Value.Name) (Test $($item.Value.Test.Type) $($item.Value.Test.Difficulty)) (Fail -$($Fail_Properties.Name) $($Fail_Properties.Value)) (Success +$($Success_Properties.Name) $($Success_Properties.Value))" -Color White,DarkGray,Blue
+            if ($item.Name -ieq "Fail") {
+                $Fail_Properties = $($item.Value.PSObject.Properties)
+            }
+            if ($item.Name -ieq "Pass") {
+                $Pass_Properties = $($item.Value.PSObject.Properties)
+            }
         }
-
-        Write-Color "`r`n  If you succeed, you will gain ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Reward.Success.$Success_Properties.Name) ", "and if you fail, you will lose ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Reward.Fail.$Fail_Properties.Name)","." -Color DarkGray,White,DarkGray,DarkYellow,DarkGray,Red
+        write-Color "`r`n  TODO : one of the Pass tests has a choice of two rewards which is not taken into account." -Color Red
+        Write-Color "`r`n  If you Pass, you will gain ","$($Pass_Properties.Value) $($Pass_Properties.Name) ", "and if you Fail, you will lose ","$($Fail_Properties.Value) $($Fail_Properties.Name)","." -Color DarkGray,White,DarkGray,DarkYellow,DarkGray,Red
         $Host.UI.ReadLine() | Out-Null
     }
     $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = "c"
