@@ -242,29 +242,29 @@ Function Draw_Player_Window_and_Stats {
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 60,1;$Host.UI.Write($Quest)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 59,5;$Host.UI.Write($Wilderness_Journeys_Total)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 54,5;$Host.UI.Write($Wilderness_Journeys_Current_Number)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,3;$Host.UI.Write($Wilderness_Journeys_Current_Name)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,3;$Host.UI.Write($Wilderness_Journey_Name_1)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,4;$Host.UI.Write($Wilderness_Journey_Name_2)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,5;$Host.UI.Write($Wilderness_Journey_Name_3)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,6;$Host.UI.Write($Wilderness_Journey_Name_4)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,7;$Host.UI.Write($Wilderness_Journey_Name_5)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 75,3;$Host.UI.Write($Wilderness_Journey_Complete_1)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 75,4;$Host.UI.Write($Wilderness_Journey_Complete_2)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 75,5;$Host.UI.Write($Wilderness_Journey_Complete_3)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 75,6;$Host.UI.Write($Wilderness_Journey_Complete_4)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 75,7;$Host.UI.Write($Wilderness_Journey_Complete_5)
+    # $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,3;$Host.UI.Write($Wilderness_Journeys_Current_Name)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,3;$Host.UI.Write($Wilderness_Journey_Name_1)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,4;$Host.UI.Write($Wilderness_Journey_Name_2)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,5;$Host.UI.Write($Wilderness_Journey_Name_3)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,6;$Host.UI.Write($Wilderness_Journey_Name_4)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,7;$Host.UI.Write($Wilderness_Journey_Name_5)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,3;$Host.UI.Write($Wilderness_Journey_Complete_1)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,4;$Host.UI.Write($Wilderness_Journey_Complete_2)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,5;$Host.UI.Write($Wilderness_Journey_Complete_3)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,6;$Host.UI.Write($Wilderness_Journey_Complete_4)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,7;$Host.UI.Write($Wilderness_Journey_Complete_5)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 59,11;$Host.UI.Write($Dungeon_Room_Total)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 54,11;$Host.UI.Write($Dungeon_Room_Current)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,9;$Host.UI.Write($Dungeon_Room_Name_1)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,10;$Host.UI.Write($Dungeon_Room_Name_2)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,11;$Host.UI.Write($Dungeon_Room_Name_3)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,12;$Host.UI.Write($Dungeon_Room_Name_4)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 66,13;$Host.UI.Write($Dungeon_Room_Name_5)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 75,10;$Host.UI.Write($Dungeon_Room_Complete_1)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 75,11;$Host.UI.Write($Dungeon_Room_Complete_2)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 75,12;$Host.UI.Write($Dungeon_Room_Complete_3)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 75,13;$Host.UI.Write($Dungeon_Room_Complete_4)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 75,14;$Host.UI.Write($Dungeon_Room_Complete_5)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,9;$Host.UI.Write($Dungeon_Room_Name_1)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,10;$Host.UI.Write($Dungeon_Room_Name_2)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,11;$Host.UI.Write($Dungeon_Room_Name_3)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,12;$Host.UI.Write($Dungeon_Room_Name_4)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,13;$Host.UI.Write($Dungeon_Room_Name_5)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,10;$Host.UI.Write($Dungeon_Room_Complete_1)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,11;$Host.UI.Write($Dungeon_Room_Complete_2)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,12;$Host.UI.Write($Dungeon_Room_Complete_3)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,13;$Host.UI.Write($Dungeon_Room_Complete_4)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,14;$Host.UI.Write($Dungeon_Room_Complete_5)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 89,1;$Host.UI.Write($Potions_Total)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 94,2;$Host.UI.Write($Potions_Quantity_1)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 94,3;$Host.UI.Write($Potions_Quantity_2)
@@ -895,7 +895,7 @@ Function Create_Character {
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
     Write-Color "  You rolled a ","$Random_Dice_Roll", ". You will encounter ","$Wilderness_Journeys_Total", " Wilderness Journeys on your way to the Dungeon." -Color DarkGray,White,DarkGray,White,DarkGray
     $Import_JSON.Character.Wilderness_Journeys_Total = $Wilderness_Journeys_Total
-    $Import_JSON.Character.Wilderness_Journeys_Current_Number = 1
+    $Import_JSON.Character.Wilderness_Journeys_Current_Number = ""
     Update_Variables
     Draw_Player_Window_and_Stats
     Save_JSON
@@ -1240,8 +1240,18 @@ do {
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
     Write-Color "  Your first ","Wilderness encounter ","will be a trip to the ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","." -Color DarkGray,White,DarkGray,White,DarkGray
     $Import_JSON.Character.Wilderness_Journeys_Current_Name = $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name
-    Save_JSON
+    $Import_JSON.Character.Wilderness_Journeys_Current_Number += 1
+    Update_Variables
+    switch ($Wilderness_Journeys_Current_Number) {
+        1 { $Wilderness_Journey_Name_1 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
+        2 { $Wilderness_Journey_Name_2 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
+        3 { $Wilderness_Journey_Name_3 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
+        4 { $Wilderness_Journey_Name_4 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
+        5 { $Wilderness_Journey_Name_5 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
+        Default {}
+    }
     Draw_Player_Window_and_Stats
+    Save_JSON
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Press Enter to travel to the $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)..." -Color DarkYellow
@@ -1250,12 +1260,13 @@ do {
     # wilderness encounter
     #
     Clear_Bottom_Half_of_Screen
-    $Info_Banner = "Wilderness Encounter #$Wilderness_Journeys_Current_Number - $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"
+    $Info_Banner = "Wilderness Encounter #$Wilderness_Journeys_Current_Number - $Wilderness_Journeys_Current_Name"
+    # $Info_Banner = "Wilderness Encounter #$Wilderness_Journeys_Current_Number - $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"
     Draw_Info_Banner
     Write-Color ""
-    Write-Color "  After some time of traveling, you arrive at a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","." -Color DarkGray,White,DarkGray
+    Write-Color "  After some time traveling, you arrive at a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","." -Color DarkGray,White,DarkGray
     if ($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type -ieq "none") {
-        Write-Color "`r`n  You wonder around the ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"," for a while but nothing of interest happens.","." -Color DarkGray,White,DarkGray,Green
+        Write-Color "`r`n  You wonder around the ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"," for a while but nothing of interest happens." -Color DarkGray,White,DarkGray
         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
         Write-Color -NoNewLine "  Roll a d6 to continue your journey..." -Color DarkYellow
@@ -1263,11 +1274,11 @@ do {
     } else {
         Write-Color "`r`n  The $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name) requires you to complete a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) ","test with a difficulty of ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty)","." -Color DarkGray,White,DarkGray,White,DarkGray
         $Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
-        foreach ($item in $Import_JSON.Wilderness_Journeys."3".Reward.PSObject.Properties) {
+        foreach ($item in $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Reward.PSObject.Properties) {
             # $Wilderness_Journeys_Array.Add("$($item.Name)")
             $Fail_Properties = $($item.Name.PSObject.Properties)
-            $Fail_Properties.Name
-            $Fail_Properties.Value
+            # $Fail_Properties.Name
+            # $Fail_Properties.Value
             # $Success_Properties = $($item.Success.PSObject.Properties)
             # $Success_Properties.Name
             # $Success_Properties.Value
@@ -1277,7 +1288,19 @@ do {
         Write-Color "`r`n  If you succeed, you will gain ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Reward.Success.$Success_Properties.Name) ", "and if you fail, you will lose ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Reward.Fail.$Fail_Properties.Name)","." -Color DarkGray,White,DarkGray,DarkYellow,DarkGray,Red
         $Host.UI.ReadLine() | Out-Null
     }
-} until ($Wilderness_Journeys_Total - $Wilderness_Journeys_Current_Number -eq 0)
+    $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = "c"
+    Update_Variables
+    switch ($Wilderness_Journeys_Current_Number) {
+        1 { $Wilderness_Journey_Complete_1 = "c"; break }
+        2 { $Wilderness_Journey_Complete_2 = "c"; break }
+        3 { $Wilderness_Journey_Complete_3 = "c"; break }
+        4 { $Wilderness_Journey_Complete_4 = "c"; break }
+        5 { $Wilderness_Journey_Complete_5 = "c"; break }
+        Default {}
+    }
+    Save_JSON
+    Draw_Player_Window_and_Stats
+} until ($Wilderness_Journeys_Current_Number -eq $Wilderness_Journeys_Total)
 
 
 # loop
