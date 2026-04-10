@@ -137,51 +137,51 @@ Function Roll_D6_Dice {
         $host.UI.RawUI.ForegroundColor = "White"
         switch ($Random_Dice_Roll) {
             1 {
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,27;$Host.UI.Write("+-------+")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,28;$Host.UI.Write("|       |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,29;$Host.UI.Write("|   o   |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("|       |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,32;$Host.UI.Write("|   o   |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,33;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,34;$Host.UI.Write("+-------+")
                 break
             }
             2 {
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,27;$Host.UI.Write("+-------+")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,28;$Host.UI.Write("| o     |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,29;$Host.UI.Write("|       |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("|     o |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("| o     |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,32;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,33;$Host.UI.Write("|     o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,34;$Host.UI.Write("+-------+")
                 break
             }
             3 {
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,27;$Host.UI.Write("+-------+")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,28;$Host.UI.Write("| o     |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,29;$Host.UI.Write("|   o   |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("|     o |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("| o     |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,32;$Host.UI.Write("|   o   |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,33;$Host.UI.Write("|     o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,34;$Host.UI.Write("+-------+")
                 break
             }
             4 {
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,27;$Host.UI.Write("+-------+")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,28;$Host.UI.Write("| o   o |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,29;$Host.UI.Write("|       |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("| o   o |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,32;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,33;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,34;$Host.UI.Write("+-------+")
                 break
             }
             5 {
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,27;$Host.UI.Write("+-------+")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,28;$Host.UI.Write("| o   o |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,29;$Host.UI.Write("|   o   |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("| o   o |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,32;$Host.UI.Write("|   o   |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,33;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,34;$Host.UI.Write("+-------+")
                 break
             }
             6 {
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,27;$Host.UI.Write("+-------+")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,28;$Host.UI.Write("| o   o |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,29;$Host.UI.Write("| o   o |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("| o   o |")
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,31;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,32;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,33;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 50,34;$Host.UI.Write("+-------+")
                 break
             }
             Default {}
@@ -1274,6 +1274,7 @@ do {
     } else {
         Write-Color "`r`n  The $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name) requires you to complete a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) ","test with a difficulty of ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty)","." -Color DarkGray,White,DarkGray,White,DarkGray
         $Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
+        # get fail and pass properties for current wilderness journey
         foreach ($item in $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Reward.PSObject.Properties) {
             if ($item.Name -ieq "Fail") {
                 $Fail_Properties = $($item.Value.PSObject.Properties)
@@ -1282,9 +1283,16 @@ do {
                 $Pass_Properties = $($item.Value.PSObject.Properties)
             }
         }
-        write-Color "`r`n  TODO : one of the Pass tests has a choice of two rewards which is not taken into account." -Color Red
-        Write-Color "`r`n  If you Pass, you will gain ","$($Pass_Properties.Value) $($Pass_Properties.Name) ", "and if you Fail, you will lose ","$($Fail_Properties.Value) $($Fail_Properties.Name)","." -Color DarkGray,White,DarkGray,DarkYellow,DarkGray,Red
+        Write-Color "`r`n  TODO : one of the Pass tests has a choice of two rewards which is not taken into account." -Color Red
+        Write-Color "`r`n  If you ","Pass",", you will gain ","$($Pass_Properties.Value) $($Pass_Properties.Name) ", "and if you ","Fail",", you will lose ","$($Fail_Properties.Value) $($Fail_Properties.Name)","." -Color DarkGray,Green,DarkGray,White,DarkGray,Red,DarkGray,White,DarkGray
+        Write-Color "`r`n  Your ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) ","STAT is ","$($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type))",". You need to roll higher than a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty)"," to pass." -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+        # roll higher to pass test
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+        Write-Color -NoNewLine "  Roll a d6 to continue your journey..." -Color DarkYellow
         $Host.UI.ReadLine() | Out-Null
+        Roll_D6_Dice
+        # $Random_Dice_Roll = 1
     }
     $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = "c"
     Update_Variables
