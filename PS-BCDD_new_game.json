@@ -860,6 +860,7 @@
   "Wilderness_Journeys": {
     "1": {
       "Name": "Plains",
+      "Complete": "",
       "Test": {
         "Type": "none",
         "Difficulty": ""
@@ -875,6 +876,7 @@
     },
     "2": {
       "Name": "Forest",
+      "Complete": "",
       "Test": {
         "Type": "INT",
         "Difficulty": 3
@@ -890,6 +892,7 @@
     },
     "3": {
       "Name": "River",
+      "Complete": "",
       "Test": {
         "Type": "DEX",
         "Difficulty": 3
@@ -905,6 +908,7 @@
     },
     "4": {
       "Name": "Campsite",
+      "Complete": "",
       "Test": {
         "Type": "STR",
         "Difficulty": 3
@@ -921,6 +925,7 @@
     },
     "5": {
       "Name": "Hill",
+      "Complete": "",
       "Test": {
         "Type": "DEX",
         "Difficulty": 4
@@ -936,6 +941,7 @@
     },
     "6": {
       "Name": "Swamp",
+      "Complete": "",
       "Test": {
         "Type": "STR",
         "Difficulty": 5
