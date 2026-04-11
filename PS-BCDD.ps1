@@ -939,6 +939,12 @@ Function Update_Variables {
     $Script:Wilderness_Journeys_Total          = $Import_JSON.Character.Wilderness_Journeys_Total
     $Script:Wilderness_Journeys_Current_Number = $Import_JSON.Character.Wilderness_Journeys_Current_Number
     $Script:Wilderness_Journeys_Current_Name   = $Import_JSON.Character.Wilderness_Journeys_Current_Name
+    $Script:Wilderness_Journey_Complete_1      = $Import_JSON.Wilderness_Journeys."1".Complete
+    $Script:Wilderness_Journey_Complete_2      = $Import_JSON.Wilderness_Journeys."2".Complete
+    $Script:Wilderness_Journey_Complete_3      = $Import_JSON.Wilderness_Journeys."3".Complete
+    $Script:Wilderness_Journey_Complete_4      = $Import_JSON.Wilderness_Journeys."4".Complete
+    $Script:Wilderness_Journey_Complete_5      = $Import_JSON.Wilderness_Journeys."5".Complete
+    $Script:Wilderness_Journey_Complete_6      = $Import_JSON.Wilderness_Journeys."6".Complete
     $Script:Dungeon_Room_Total                 = $Import_JSON.Character.Dungeon_Room_Total
     $Script:Dungeon_Room_Current               = $Import_JSON.Character.Dungeon_Room_Current
     $Script:Potions_Total                      = $Import_JSON.Character.PotionsTotal
@@ -1272,7 +1278,7 @@ do {
         Write-Color -NoNewLine "  Roll a d6 to continue your journey..." -Color DarkYellow
         $Host.UI.ReadLine() | Out-Null
     } else {
-        Write-Color "`r`n  The $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name) requires you to complete a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) ","test with a difficulty of ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty)","." -Color DarkGray,White,DarkGray,White,DarkGray
+        Write-Color "`r`n  The ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name) ","has a difficulty test of ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty) ","against your ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) ","STAT." -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
         $Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
         # get fail and pass properties for current wilderness journey
         foreach ($item in $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Reward.PSObject.Properties) {
@@ -1285,25 +1291,79 @@ do {
         }
         Write-Color "`r`n  TODO : one of the Pass tests has a choice of two rewards which is not taken into account." -Color Red
         Write-Color "`r`n  If you ","Pass",", you will gain ","$($Pass_Properties.Value) $($Pass_Properties.Name) ", "and if you ","Fail",", you will lose ","$($Fail_Properties.Value) $($Fail_Properties.Name)","." -Color DarkGray,Green,DarkGray,White,DarkGray,Red,DarkGray,White,DarkGray
-        Write-Color "`r`n  Your ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) ","STAT is ","$($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type))",". You need to roll higher than a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty)"," to pass." -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+        Write-Color "`r`n  Your ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) ","STAT is ","$($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type))",". Roll higher than a ","$($($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty) - $($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type)) + 1) ","to ","Pass"," ($($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty) - your $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) $($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type)) STAT)." -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,Green,DarkGray
         # roll higher to pass test
         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-        Write-Color -NoNewLine "  Roll a d6 to continue your journey..." -Color DarkYellow
+        Write-Color -NoNewLine "  Roll a d6..." -Color DarkYellow
         $Host.UI.ReadLine() | Out-Null
         Roll_D6_Dice
         # $Random_Dice_Roll = 1
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+        if ($Random_Dice_Roll -ge ($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty)) {
+            Write-Color "  You roll a ","$Random_Dice_Roll"," and ","Pass"," the test. You gain ","$($Pass_Properties.Value) $($Pass_Properties.Name)","." -Color DarkGray,White,DarkGray,Green,DarkGray,White,DarkGray
+            $Test_Pass_Result = "P"
+        } else {
+            Write-Color "  You roll a ","$Random_Dice_Roll"," and ","Fail"," the test. You lose ","$($Fail_Properties.Value) $($Fail_Properties.Name)","." -Color DarkGray,White,DarkGray,Red,DarkGray,White,DarkGray
+            $Test_Pass_Result = "F"
+        }
+        if ($Test_Pass_Result -eq "P") { # Pass
+            switch ($Pass_Properties.Name) {
+                health { $Import_JSON.Character.Stats.HealthCurrent += $($Pass_Properties.Value);break }
+                gold { $Import_JSON.Character.Gold += $($Pass_Properties.Value);break }
+                rations { $Import_JSON.Character.Rations += $($Pass_Properties.Value);break }
+                torches { $Import_JSON.Character.Torches += $($Pass_Properties.Value);break }
+                xp { $Import_JSON.Character.Total_XP += $($Pass_Properties.Value);break }
+                Default {}
+            }
+        } else { # Fail
+            switch ($Fail_Properties.Name) {
+                health { $Import_JSON.Character.Stats.HealthCurrent -= $($Fail_Properties.Value);break }
+                gold { $Import_JSON.Character.Gold -= $($Fail_Properties.Value);break }
+                rations { $Import_JSON.Character.Rations -= $($Fail_Properties.Value);break }
+                torches { $Import_JSON.Character.Torches -= $($Fail_Properties.Value);break }
+                xp { $Import_JSON.Character.Total_XP -= $($Fail_Properties.Value);break }
+                Default {}
+            }
+        }
+        Update_Variables
+        Draw_Player_Window_and_Stats
+        Save_JSON
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+        Write-Color -NoNewLine "  Roll a d6..." -Color DarkYellow
+        $Host.UI.ReadLine() | Out-Null
     }
-    $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = "c"
     Update_Variables
     switch ($Wilderness_Journeys_Current_Number) {
-        1 { $Wilderness_Journey_Complete_1 = "c"; break }
-        2 { $Wilderness_Journey_Complete_2 = "c"; break }
-        3 { $Wilderness_Journey_Complete_3 = "c"; break }
-        4 { $Wilderness_Journey_Complete_4 = "c"; break }
-        5 { $Wilderness_Journey_Complete_5 = "c"; break }
+        1 {
+            $Wilderness_Journey_Complete_1 = $Test_Pass_Result
+            # $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
+            break
+        }
+        2 {
+            $Wilderness_Journey_Complete_2 = $Test_Pass_Result
+            # $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
+            break
+        }
+        3 {
+            $Wilderness_Journey_Complete_3 = $Test_Pass_Result
+            # $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
+            break
+        }
+        4 {
+            $Wilderness_Journey_Complete_4 = $Test_Pass_Result
+            # $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
+            break
+        }
+        5 {
+            $Wilderness_Journey_Complete_5 = $Test_Pass_Result
+            # $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
+            break
+        }
         Default {}
     }
+    $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
     Save_JSON
     Draw_Player_Window_and_Stats
 } until ($Wilderness_Journeys_Current_Number -eq $Wilderness_Journeys_Total)
