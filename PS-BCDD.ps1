@@ -4,6 +4,7 @@
 # - when listing Wilderness_Journeys, list all details, not just the name
 # - You rolled a 6. You will encounter 3 Wilderness Journeys on your way to the Dungeon.
 #     journey for 1, journeys for 2-3
+#  - TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
 #
 #
 
@@ -1287,6 +1288,13 @@ do {
             }
             if ($item.Name -ieq "Pass") {
                 $Pass_Properties = $($item.Value.PSObject.Properties)
+                if ($Random_Dice_Roll -eq 4) {# TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
+                    # PSCustomObject
+                    $Pass_Properties = New-Object PSObject -Property @{
+                        Name  = "ToDo: Fix me"
+                        Value = "ToDo: Fix me"
+                    }
+                }
             }
         }
         Write-Color "`r`n  TODO : one of the Pass tests has a choice of two rewards which is not taken into account." -Color Red
@@ -1309,20 +1317,20 @@ do {
         }
         if ($Test_Pass_Result -eq "P") { # Pass
             switch ($Pass_Properties.Name) {
-                health { $Import_JSON.Character.Stats.HealthCurrent += $($Pass_Properties.Value);break }
-                gold { $Import_JSON.Character.Gold += $($Pass_Properties.Value);break }
-                rations { $Import_JSON.Character.Rations += $($Pass_Properties.Value);break }
-                torches { $Import_JSON.Character.Torches += $($Pass_Properties.Value);break }
-                xp { $Import_JSON.Character.Total_XP += $($Pass_Properties.Value);break }
+                health  { $Import_JSON.Character.Stats.HealthCurrent += $($Pass_Properties.Value);break }
+                gold    { $Import_JSON.Character.Gold                += $($Pass_Properties.Value);break }
+                rations { $Import_JSON.Character.Rations             += $($Pass_Properties.Value);break }
+                torches { $Import_JSON.Character.Torches             += $($Pass_Properties.Value);break }
+                xp      { $Import_JSON.Character.Total_XP            += $($Pass_Properties.Value);break }
                 Default {}
             }
         } else { # Fail
             switch ($Fail_Properties.Name) {
-                health { $Import_JSON.Character.Stats.HealthCurrent -= $($Fail_Properties.Value);break }
-                gold { $Import_JSON.Character.Gold -= $($Fail_Properties.Value);break }
-                rations { $Import_JSON.Character.Rations -= $($Fail_Properties.Value);break }
-                torches { $Import_JSON.Character.Torches -= $($Fail_Properties.Value);break }
-                xp { $Import_JSON.Character.Total_XP -= $($Fail_Properties.Value);break }
+                health  { $Import_JSON.Character.Stats.HealthCurrent -= $($Fail_Properties.Value);break }
+                gold    { $Import_JSON.Character.Gold                -= $($Fail_Properties.Value);break }
+                rations { $Import_JSON.Character.Rations             -= $($Fail_Properties.Value);break }
+                torches { $Import_JSON.Character.Torches             -= $($Fail_Properties.Value);break }
+                xp      { $Import_JSON.Character.Total_XP            -= $($Fail_Properties.Value);break }
                 Default {}
             }
         }
