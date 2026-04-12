@@ -713,7 +713,7 @@
     }
   },
   "Character": {
-    "Name": "CharacterName",
+    "Name": "",
     "Total_XP": "",
     "Gold": "",
     "PotionsTotal": "",
