@@ -1,12 +1,20 @@
 # ToDo
 # ----
 #
+#
 # - when listing Wilderness_Journeys, list all details, not just the name
 # - You rolled a 6. You will encounter 3 Wilderness Journeys on your way to the Dungeon.
 #     journey for 1, journeys for 2-3
 # - TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
 # - after spending all gold at the shop during adventurer creation, say you have no gold left before continuing
+# - is there a message when rolling 1 gold that you don't have enough gold to purchase any items?
+# - save wilderness journey history to JSON or on re-load, they won't be listed
 #
+# BUGS
+# ----
+#
+# - 
+
 
 # Business Card Dungeon Delve designed by Melv Lee - PowerShell edition
 # https://melvinli.itch.io/business-card-dungeon-delve
@@ -845,8 +853,8 @@ Function Create_Adventurer {
     $Import_JSON.Quests.$Random_Dice_Roll.Active = $true
     $Import_JSON.Character.Quest = $Import_JSON.Quests.$Random_Dice_Roll.Name
     Update_Variables
-    Save_JSON
     Draw_Player_Window_and_Stats
+    Save_JSON
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
     $Host.UI.ReadLine() | Out-Null
@@ -872,25 +880,30 @@ Function Create_Adventurer {
     foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
         $All_Wilderness_Journeys_Array.Add("$($item.Name)")
         $Fail_Properties = $($item.Value.Reward.Fail.PSObject.Properties)
-        # $Fail_Properties.Name
-        # $Fail_Properties.Value
         $Pass_Properties = $($item.Value.Reward.Pass.PSObject.Properties)
-        # $Pass_Properties.Name
-        # $Pass_Properties.Value
         Write-Color "  $($item.Name) ","- ","$($item.Value.Name) (Test $($item.Value.Test.Type) $($item.Value.Test.Difficulty)) (Fail -$($Fail_Properties.Name) $($Fail_Properties.Value)) (Pass +$($Pass_Properties.Name) $($Pass_Properties.Value))" -Color White,DarkGray,Blue
     }
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Roll a D6 to determine how many Wilderness Journeys you will encounter." -Color DarkYellow
     $Host.UI.ReadLine() | Out-Null
-    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,29;$Host.UI.Write("")
+    Clear_Bottom_Half_of_Screen
+    $Info_Banner = "Wilderness Journeys"
+    Draw_Info_Banner
+    Write-Color ""
+    foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
+        $All_Wilderness_Journeys_Array.Add("$($item.Name)")
+        $Fail_Properties = $($item.Value.Reward.Fail.PSObject.Properties)
+        $Pass_Properties = $($item.Value.Reward.Pass.PSObject.Properties)
+        Write-Color "  $($item.Name) ","- ","$($item.Value.Name) (Test $($item.Value.Test.Type) $($item.Value.Test.Difficulty)) (Fail -$($Fail_Properties.Name) $($Fail_Properties.Value)) (Pass +$($Pass_Properties.Name) $($Pass_Properties.Value))" -Color White,DarkGray,Blue
+    }
     Write-Color ""
     Write-Color "   d6 roll ","|"," Journeys" -Color DarkGray,White,DarkGray
     Write-Color "  ---------+------------" -Color White
     Write-Color "     1-2   ","|"," 1 Journey" -Color DarkGray,White,DarkGray
     Write-Color "     3-4   ","|"," 2 Journeys" -Color DarkGray,White,DarkGray
     Write-Color "     5-6   ","|"," 3 Journeys" -Color DarkGray,White,DarkGray
-    Roll_D6_Dice
-    # $Random_Dice_Roll = 5
+    # Roll_D6_Dice
+    $Random_Dice_Roll = 5
     if ($Random_Dice_Roll -eq 1 -or $Random_Dice_Roll -eq 2) { $Wilderness_Journeys_Total = 1 }
     if ($Random_Dice_Roll -eq 3 -or $Random_Dice_Roll -eq 4) { $Wilderness_Journeys_Total = 2 }
     if ($Random_Dice_Roll -eq 5 -or $Random_Dice_Roll -eq 6) { $Wilderness_Journeys_Total = 3 }
@@ -942,28 +955,27 @@ Function Update_Variables {
     $Script:Wilderness_Journeys_Total          = $Import_JSON.Character.Wilderness_Journeys_Total
     $Script:Wilderness_Journeys_Current_Number = $Import_JSON.Character.Wilderness_Journeys_Current_Number
     $Script:Wilderness_Journeys_Current_Name   = $Import_JSON.Character.Wilderness_Journeys_Current_Name
-    $Script:Wilderness_Journey_Complete_1      = $Import_JSON.Wilderness_Journeys."1".Complete
-    $Script:Wilderness_Journey_Complete_2      = $Import_JSON.Wilderness_Journeys."2".Complete
-    $Script:Wilderness_Journey_Complete_3      = $Import_JSON.Wilderness_Journeys."3".Complete
-    $Script:Wilderness_Journey_Complete_4      = $Import_JSON.Wilderness_Journeys."4".Complete
-    $Script:Wilderness_Journey_Complete_5      = $Import_JSON.Wilderness_Journeys."5".Complete
-    $Script:Wilderness_Journey_Complete_6      = $Import_JSON.Wilderness_Journeys."6".Complete
+    $Script:Wilderness_Journeys_History_1      = $Import_JSON.Character.Wilderness_Journeys_History_1
+    $Script:Wilderness_Journeys_History_2      = $Import_JSON.Character.Wilderness_Journeys_History_2
+    $Script:Wilderness_Journeys_History_3      = $Import_JSON.Character.Wilderness_Journeys_History_3
+    $Script:Wilderness_Journeys_History_4      = $Import_JSON.Character.Wilderness_Journeys_History_4
+    $Script:Wilderness_Journeys_History_5      = $Import_JSON.Character.Wilderness_Journeys_History_5
     $Script:Dungeon_Room_Total                 = $Import_JSON.Character.Dungeon_Room_Total
     $Script:Dungeon_Room_Current               = $Import_JSON.Character.Dungeon_Room_Current
     $Script:Potions_Total                      = $Import_JSON.Character.PotionsTotal
-    $Script:Potions_Quantity_1                 = $Import_JSON.Potions."1".Quantity
-    $Script:Potions_Quantity_2                 = $Import_JSON.Potions."2".Quantity
-    $Script:Potions_Quantity_3                 = $Import_JSON.Potions."3".Quantity
-    $Script:Potions_Quantity_4                 = $Import_JSON.Potions."4".Quantity
-    $Script:Potions_Quantity_5                 = $Import_JSON.Potions."5".Quantity
-    $Script:Potions_Quantity_6                 = $Import_JSON.Potions."6".Quantity
+    $Script:Potions_Quantity_1                 = $Import_JSON.Potions.'1'.Quantity
+    $Script:Potions_Quantity_2                 = $Import_JSON.Potions.'2'.Quantity
+    $Script:Potions_Quantity_3                 = $Import_JSON.Potions.'3'.Quantity
+    $Script:Potions_Quantity_4                 = $Import_JSON.Potions.'4'.Quantity
+    $Script:Potions_Quantity_5                 = $Import_JSON.Potions.'5'.Quantity
+    $Script:Potions_Quantity_6                 = $Import_JSON.Potions.'6'.Quantity
     $Script:Spells_Total                       = $Import_JSON.Character.SpellsTotal
-    $Script:Spells_Quantity_1                  = $Import_JSON.Spells."1".Quantity
-    $Script:Spells_Quantity_2                  = $Import_JSON.Spells."2".Quantity
-    $Script:Spells_Quantity_3                  = $Import_JSON.Spells."3".Quantity
-    $Script:Spells_Quantity_4                  = $Import_JSON.Spells."4".Quantity
-    $Script:Spells_Quantity_5                  = $Import_JSON.Spells."5".Quantity
-    $Script:Spells_Quantity_6                  = $Import_JSON.Spells."6".Quantity
+    $Script:Spells_Quantity_1                  = $Import_JSON.Spells.'1'.Quantity
+    $Script:Spells_Quantity_2                  = $Import_JSON.Spells.'2'.Quantity
+    $Script:Spells_Quantity_3                  = $Import_JSON.Spells.'3'.Quantity
+    $Script:Spells_Quantity_4                  = $Import_JSON.Spells.'4'.Quantity
+    $Script:Spells_Quantity_5                  = $Import_JSON.Spells.'5'.Quantity
+    $Script:Spells_Quantity_6                  = $Import_JSON.Spells.'6'.Quantity
     # sets current Location
     $All_Locations                      = $Import_JSON.Locations.PSObject.Properties.Name
     foreach ($Single_Location in $All_Locations) {
@@ -995,130 +1007,130 @@ Trap {
 #
 # Pre-requisite checks (install / import / update PSWriteColor module)
 #
-if (-not(Test-Path -Path .\PS-BCDD.json)) {
-    # adjust window size
-    do {
-        Clear-Host
-        Write-Host "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" -ForegroundColor DarkYellow
-        for ($index = 0; $index -lt 36; $index++) {
-            Write-Host "+                                                                                                                                                              +" -ForegroundColor DarkYellow
-        }
-        Write-Host "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" -ForegroundColor DarkYellow
-        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 20,10;$Host.UI.Write( "Using the CTRL + mouse scroll wheel forward and back,")
-        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 20,11;$Host.UI.Write( "adjust the font size to make sure the yellow box fits within the screen.")
-        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 2,36;$Host.UI.Write("")
-        Write-Host -NoNewline "Adjust font size with CTRL + mouse scroll wheel, then confirm with 'go' and Enter"
-        $Adjust_Font_Size = Read-Host " "
-        $Adjust_Font_Size = $Adjust_Font_Size.Trim()
-    } until ($Adjust_Font_Size -ieq "go")
-    Clear-Host
-    Write-Host "Pre-requisite checks" -ForegroundColor Red
-    Write-Host "--------------------" -ForegroundColor Red
-    Write-Output "`r`nChecking if PSWriteColor module is installed."
-    $PSWriteColor_Installed = Get-Module -Name "PSWriteColor" -ListAvailable
-    # PSWriteColor is installed so import it
-    if ($PSWriteColor_Installed) {
-        Write-Host "PSWriteColor module is installed." -ForegroundColor Green
-        $PSWriteColor_Installed
-        $PSWriteColor_Installed_Version = $PSWriteColor_Installed.Version
-        Write-Output "`r`nChecing if there is a new version of PSWriteColor."
-        # check for new module and update on prompt
-        $PSWriteColor_Online_Version = Find-Module -Name "PSWriteColor"
-        if ($PSWriteColor_Installed_Version -lt $PSWriteColor_Online_Version.Version) {
-            Write-Host "Version available: $($PSWriteColor_Online_Version.Version)" -ForegroundColor Green
-            Write-Host "Version installed: $($PSWriteColor_Installed_Version)"
-            do {
-                Write-Host -NoNewline "`r`nDo you want to update to version $($PSWriteColor_Online_Version.Version)? [Y/N]"
-                $Update_PSWriteColor_Choice = Read-Host " "
-                $Update_PSWriteColor_Choice = $Update_PSWriteColor_Choice.Trim()
-            } until ($Update_PSWriteColor_Choice -ieq "y" -or $Update_PSWriteColor_Choice -ieq "n")
-            if ($Update_PSWriteColor_Choice -ieq "y") {
-                Write-Output "Updating PSWriteColor module."
-                Write-Output "Install path will be $ENV:USERPROFILE\Documents\WindowsPowerShell\Modules\"
-                Write-Host "Uninstalling PSWriteColor module Version $PSWriteColor_Installed_Version"
-                Uninstall-Module -Name "PSWriteColor" # no confirmation prompt
-                Write-Host "Installing PSWriteColor module version $($PSWriteColor_Online_Version.Version)"
-                Install-Module -Name "PSWriteColor" -Scope CurrentUser -Confirm:$false -Force
-                $Install_PSWrite_Color_ExitCode = $?
-                if ($Install_PSWrite_Color_ExitCode -eq $true) {
-                    $PSWriteColor_Installed = Get-Module -Name "PSWriteColor" -ListAvailable
-                    if ($PSWriteColor_Installed.Version -eq $PSWriteColor_Online_Version.Version) {
-                        $PSWriteColor_Installed = Get-Module -Name PSWriteColor -ListAvailable
-                        Write-Host "PSWriteColor module version $($PSWriteColor_Installed.Version) installed." -ForegroundColor Green
-                        $PSWriteColor_Installed | Format-Table
-                    } else {
-                        Write-Host "`r`nNo PSWriteColor module installed. Please re-run PS-BCDD.ps1" -ForegroundColor Red
-                        Exit
-                    }
-                } else {
-                    Write-Host "PSWriteColor module version $($PSWriteColor_Online_Version.Version) FAILED to install. Please re-run PS-BCDD.ps1" -ForegroundColor Red
-                    Exit
-                }
-            }
-            if ($Update_PSWriteColor_Choice -ieq "n") {
-                Write-Output "Not updating PSWriteColor module."
-            }
-        } else {
-            Write-Output "`r`nPSWriteColor module is up-to-date."
-        }
-        Write-Output "`r`nImporting PSWriteColor module."
-        Import-Module -Name "PSWriteColor"
-        $PSWriteColor_Installed_Version = Get-Module -Name "PSWriteColor" -ListAvailable
-        if ($PSWriteColor_Installed_Version) {
-            Write-Host "PSWriteColor module version $($PSWriteColor_Installed_Version.Version) imported." -ForegroundColor Green
-        } else {
-            Write-Host "PSWriteColor module not imported." -ForegroundColor Red
-            Break
-        }
-        Start-Sleep -Seconds 3 # leave in
-    } else { # otherwise ask for module to be installed
-        Install_PSWriteColor
-    }
-    #
-    # game info
-    #
-    Write-Host -NoNewLine "`r`nPress any key to continue."
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-    Clear-Host
-    Write-Color "`r`nInfo" -Color Green
-    Write-Color "----" -Color Green
-    Write-Color "`r`nWelcome to ", "PS-BCDD", ", my 2nd RPG text adventure written in PowerShell." -Color DarkGray,Magenta,DarkGray
-    Write-Color "`r`nBusiness Card Dungeon Delve is a solo RPG that was designed by ","Melv Lee","." -Color DarkGray,Magenta,DarkGray
-    Write-Color "You can download the original PDF game from itch.io: https://melvinli.itch.io/business-card-dungeon-delve" -Color DarkGray,Magenta,DarkGray
-    Write-Color "`r`nAs previously mentioned, the PSWriteColor PowerShell module written by Przemyslaw Klys is required, which," -Color DarkGray
-    Write-Color "if you are seeing this message then it has installed and imported successfully." -Color DarkGray
-    Write-Color "`r`nAbsolutely ", "NO ", "info, personal or otherwise, is collected or sent anywhere or to anybody. " -Color DarkGray,Red,DarkGray
-    Write-Color "`r`nAll the ", "PS-BCDD ", "games files are stored your ", "$PSScriptRoot"," folder which is where you have run the game from." -Color DarkGray,Magenta,DarkGray,Cyan,DarkGray
-    Write-Color "`rThey include:" -Color DarkGray,Magenta,DarkGray,Cyan,DarkGray
-    Write-Color "The main PowerShell script            : ", "PS-BCDD.ps1" -Color DarkGray,Cyan
-    Write-Color "ASCII art for death messages          : ", "ASCII.txt" -Color DarkGray,Cyan
-    Write-Color "A JSON file that stores all game info : ", "PS-BCDD.json ", "(Locations, Mobs, NPCs and Adventurer Stats etc.)" -Color DarkGray,Cyan,DarkGray
-    Write-Color "`r`nPlayer input options appear in ","Green ", "e.g. ", "[Y/N/E/I] ", "would be ", "yes/no/exit/inventory", "." -Color DarkGray,Green,DarkGray,Green,DarkGray,Green,DarkGray
-    Write-Color "Enter the single Adventurer then hit `'Enter`' to confirm the choice." -Color DarkGray
-    Write-Color "`r`nWARNING - Quitting the game unexpectedly may cause lose of data." -Color Cyan
-    Write-Color "`r`nYou are now ready to play", " PS-BCDD", "." -Color DarkGray,Magenta,DarkGray
-    do {
-        do {
-            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
-            Write-Color -NoNewLine "No save file found. Are you ready to start playing ", "PS-BCDD", "?"," [Y/N/E]" -Color DarkYellow,Magenta,DarkYellow,Green
-            $Ready_To_Play_PSRPG = Read-Host " "
-            $Ready_To_Play_PSRPG = $Ready_To_Play_PSRPG.Trim()
-        } until ($Ready_To_Play_PSRPG -ieq "y" -or $Ready_To_Play_PSRPG -ieq "n" -or $Ready_To_Play_PSRPG -ieq "e")
-        if ($Ready_To_Play_PSRPG -ieq "n" -or $Ready_To_Play_PSRPG -ieq "e") {
-            do {
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*105
-                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
-                Write-Color -NoNewLine "Do you want to quit ", "PS-BCDD", "?"," [Y/N]" -Color DarkYellow,Magenta,DarkYellow,Green
-                $Quit_Game = Read-Host " "
-                $Quit_Game = $Quit_Game.Trim()
-            } until ($Quit_Game -ieq "y" -or $Quit_Game -ieq "n")
-            if ($Quit_Game -ieq "y") {
-                Write-Color -NoNewLine "Exiting ","PS-BCDD","." -Color DarkYellow,Magenta,DarkYellow
-                Exit
-            }
-        }
-    } until ($Ready_To_Play_PSRPG -ieq "y")
-}
+# if (-not(Test-Path -Path .\PS-BCDD.json)) {
+#     # adjust window size
+#     do {
+#         Clear-Host
+#         Write-Host "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" -ForegroundColor DarkYellow
+#         for ($index = 0; $index -lt 36; $index++) {
+#             Write-Host "+                                                                                                                                                              +" -ForegroundColor DarkYellow
+#         }
+#         Write-Host "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" -ForegroundColor DarkYellow
+#         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 20,10;$Host.UI.Write( "Using the CTRL + mouse scroll wheel forward and back,")
+#         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 20,11;$Host.UI.Write( "adjust the font size to make sure the yellow box fits within the screen.")
+#         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 2,36;$Host.UI.Write("")
+#         Write-Host -NoNewline "Adjust font size with CTRL + mouse scroll wheel, then confirm with 'go' and Enter"
+#         $Adjust_Font_Size = Read-Host " "
+#         $Adjust_Font_Size = $Adjust_Font_Size.Trim()
+#     } until ($Adjust_Font_Size -ieq "go")
+#     Clear-Host
+#     Write-Host "Pre-requisite checks" -ForegroundColor Red
+#     Write-Host "--------------------" -ForegroundColor Red
+#     Write-Output "`r`nChecking if PSWriteColor module is installed."
+#     $PSWriteColor_Installed = Get-Module -Name "PSWriteColor" -ListAvailable
+#     # PSWriteColor is installed so import it
+#     if ($PSWriteColor_Installed) {
+#         Write-Host "PSWriteColor module is installed." -ForegroundColor Green
+#         $PSWriteColor_Installed
+#         $PSWriteColor_Installed_Version = $PSWriteColor_Installed.Version
+#         Write-Output "`r`nChecing if there is a new version of PSWriteColor."
+#         # check for new module and update on prompt
+#         $PSWriteColor_Online_Version = Find-Module -Name "PSWriteColor"
+#         if ($PSWriteColor_Installed_Version -lt $PSWriteColor_Online_Version.Version) {
+#             Write-Host "Version available: $($PSWriteColor_Online_Version.Version)" -ForegroundColor Green
+#             Write-Host "Version installed: $($PSWriteColor_Installed_Version)"
+#             do {
+#                 Write-Host -NoNewline "`r`nDo you want to update to version $($PSWriteColor_Online_Version.Version)? [Y/N]"
+#                 $Update_PSWriteColor_Choice = Read-Host " "
+#                 $Update_PSWriteColor_Choice = $Update_PSWriteColor_Choice.Trim()
+#             } until ($Update_PSWriteColor_Choice -ieq "y" -or $Update_PSWriteColor_Choice -ieq "n")
+#             if ($Update_PSWriteColor_Choice -ieq "y") {
+#                 Write-Output "Updating PSWriteColor module."
+#                 Write-Output "Install path will be $ENV:USERPROFILE\Documents\WindowsPowerShell\Modules\"
+#                 Write-Host "Uninstalling PSWriteColor module Version $PSWriteColor_Installed_Version"
+#                 Uninstall-Module -Name "PSWriteColor" # no confirmation prompt
+#                 Write-Host "Installing PSWriteColor module version $($PSWriteColor_Online_Version.Version)"
+#                 Install-Module -Name "PSWriteColor" -Scope CurrentUser -Confirm:$false -Force
+#                 $Install_PSWrite_Color_ExitCode = $?
+#                 if ($Install_PSWrite_Color_ExitCode -eq $true) {
+#                     $PSWriteColor_Installed = Get-Module -Name "PSWriteColor" -ListAvailable
+#                     if ($PSWriteColor_Installed.Version -eq $PSWriteColor_Online_Version.Version) {
+#                         $PSWriteColor_Installed = Get-Module -Name PSWriteColor -ListAvailable
+#                         Write-Host "PSWriteColor module version $($PSWriteColor_Installed.Version) installed." -ForegroundColor Green
+#                         $PSWriteColor_Installed | Format-Table
+#                     } else {
+#                         Write-Host "`r`nNo PSWriteColor module installed. Please re-run PS-BCDD.ps1" -ForegroundColor Red
+#                         Exit
+#                     }
+#                 } else {
+#                     Write-Host "PSWriteColor module version $($PSWriteColor_Online_Version.Version) FAILED to install. Please re-run PS-BCDD.ps1" -ForegroundColor Red
+#                     Exit
+#                 }
+#             }
+#             if ($Update_PSWriteColor_Choice -ieq "n") {
+#                 Write-Output "Not updating PSWriteColor module."
+#             }
+#         } else {
+#             Write-Output "`r`nPSWriteColor module is up-to-date."
+#         }
+#         Write-Output "`r`nImporting PSWriteColor module."
+#         Import-Module -Name "PSWriteColor"
+#         $PSWriteColor_Installed_Version = Get-Module -Name "PSWriteColor" -ListAvailable
+#         if ($PSWriteColor_Installed_Version) {
+#             Write-Host "PSWriteColor module version $($PSWriteColor_Installed_Version.Version) imported." -ForegroundColor Green
+#         } else {
+#             Write-Host "PSWriteColor module not imported." -ForegroundColor Red
+#             Break
+#         }
+#         Start-Sleep -Seconds 3 # leave in
+#     } else { # otherwise ask for module to be installed
+#         Install_PSWriteColor
+#     }
+#     #
+#     # game info
+#     #
+#     Write-Host -NoNewLine "`r`nPress any key to continue."
+#     $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+#     Clear-Host
+#     Write-Color "`r`nInfo" -Color Green
+#     Write-Color "----" -Color Green
+#     Write-Color "`r`nWelcome to ", "PS-BCDD", ", my 2nd RPG text adventure written in PowerShell." -Color DarkGray,Magenta,DarkGray
+#     Write-Color "`r`nBusiness Card Dungeon Delve is a solo RPG that was designed by ","Melv Lee","." -Color DarkGray,Magenta,DarkGray
+#     Write-Color "You can download the original PDF game from itch.io: https://melvinli.itch.io/business-card-dungeon-delve" -Color DarkGray,Magenta,DarkGray
+#     Write-Color "`r`nAs previously mentioned, the PSWriteColor PowerShell module written by Przemyslaw Klys is required, which," -Color DarkGray
+#     Write-Color "if you are seeing this message then it has installed and imported successfully." -Color DarkGray
+#     Write-Color "`r`nAbsolutely ", "NO ", "info, personal or otherwise, is collected or sent anywhere or to anybody. " -Color DarkGray,Red,DarkGray
+#     Write-Color "`r`nAll the ", "PS-BCDD ", "games files are stored your ", "$PSScriptRoot"," folder which is where you have run the game from." -Color DarkGray,Magenta,DarkGray,Cyan,DarkGray
+#     Write-Color "`rThey include:" -Color DarkGray,Magenta,DarkGray,Cyan,DarkGray
+#     Write-Color "The main PowerShell script            : ", "PS-BCDD.ps1" -Color DarkGray,Cyan
+#     Write-Color "ASCII art for death messages          : ", "ASCII.txt" -Color DarkGray,Cyan
+#     Write-Color "A JSON file that stores all game info : ", "PS-BCDD.json ", "(Locations, Mobs, NPCs and Adventurer Stats etc.)" -Color DarkGray,Cyan,DarkGray
+#     Write-Color "`r`nPlayer input options appear in ","Green ", "e.g. ", "[Y/N/E/I] ", "would be ", "yes/no/exit/inventory", "." -Color DarkGray,Green,DarkGray,Green,DarkGray,Green,DarkGray
+#     Write-Color "Enter the single Adventurer then hit `'Enter`' to confirm the choice." -Color DarkGray
+#     Write-Color "`r`nWARNING - Quitting the game unexpectedly may cause lose of data." -Color Cyan
+#     Write-Color "`r`nYou are now ready to play", " PS-BCDD", "." -Color DarkGray,Magenta,DarkGray
+#     do {
+#         do {
+#             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+#             Write-Color -NoNewLine "No save file found. Are you ready to start playing ", "PS-BCDD", "?"," [Y/N/E]" -Color DarkYellow,Magenta,DarkYellow,Green
+#             $Ready_To_Play_PSRPG = Read-Host " "
+#             $Ready_To_Play_PSRPG = $Ready_To_Play_PSRPG.Trim()
+#         } until ($Ready_To_Play_PSRPG -ieq "y" -or $Ready_To_Play_PSRPG -ieq "n" -or $Ready_To_Play_PSRPG -ieq "e")
+#         if ($Ready_To_Play_PSRPG -ieq "n" -or $Ready_To_Play_PSRPG -ieq "e") {
+#             do {
+#                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*105
+#                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+#                 Write-Color -NoNewLine "Do you want to quit ", "PS-BCDD", "?"," [Y/N]" -Color DarkYellow,Magenta,DarkYellow,Green
+#                 $Quit_Game = Read-Host " "
+#                 $Quit_Game = $Quit_Game.Trim()
+#             } until ($Quit_Game -ieq "y" -or $Quit_Game -ieq "n")
+#             if ($Quit_Game -ieq "y") {
+#                 Write-Color -NoNewLine "Exiting ","PS-BCDD","." -Color DarkYellow,Magenta,DarkYellow
+#                 Exit
+#             }
+#         }
+#     } until ($Ready_To_Play_PSRPG -ieq "y")
+# }
 
 
 
@@ -1247,11 +1259,11 @@ do {
     Roll_D6_Dice
     # $Random_Dice_Roll = 1
     $Import_JSON.Character.Wilderness_Journeys_Current_Number += 1
-    $Import_JSON.Character.Wilderness_Journeys_Current_Name = $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name
+    $Import_JSON.Character.Wilderness_Journeys_Current_Name = $Import_JSON.Wilderness_Journeys."$Random_Dice_Roll".Name
     Update_Variables
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
-    Add-Content -Path .\PS-BCDD.json -Value ("Wilderness Journey                : #$($Import_JSON.Character.Wilderness_Journeys_Current_Number) - $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)")
-    Add-Content -Path .\PS-BCDD.json -Value ("Wilderness_Journeys_Current_Number: $Wilderness_Journeys_Current_Number")
+    Add-Content -Path .\error.log -Value ("Wilderness Journey                : $($Import_JSON.Character.Wilderness_Journeys_Current_Number) - $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)")
+    Add-Content -Path .\error.log -Value ("Wilderness_Journeys_Current_Number: $Wilderness_Journeys_Current_Number")
     switch ($Wilderness_Journeys_Current_Number) {
         1 { $Wilderness_Journey_Number_Word = "first" ; break }
         2 { $Wilderness_Journey_Number_Word = "second"; break }
@@ -1286,10 +1298,11 @@ do {
     Write-Color "  After some time traveling, you arrive at a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","." -Color DarkGray,White,DarkGray
     if ($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type -ieq "none") {
         Write-Color "`r`n  You wonder around the ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"," for a while but nothing of interest happens." -Color DarkGray,White,DarkGray
-        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
-        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-        Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
-        $Host.UI.ReadLine() | Out-Null
+        # $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+        # $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+        # Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
+        # $Host.UI.ReadLine() | Out-Null
+        $Test_Pass_Result = "P"
     } else {
         Write-Color "`r`n  The ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name) ","has a difficulty test of ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty) ","against your ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type) ","STAT." -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
         $Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
@@ -1320,14 +1333,17 @@ do {
         Roll_D6_Dice
         # $Random_Dice_Roll = 1
         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
-        if ($Random_Dice_Roll -gt ($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty) - $($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type))) {
+        if ($Random_Dice_Roll -gt $($($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty) - $($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type)))) {
             Write-Color "  You roll a ","$Random_Dice_Roll"," and ","Pass"," the test. You gain ","$($Pass_Properties.Value) $($Pass_Properties.Name)","." -Color DarkGray,White,DarkGray,Green,DarkGray,White,DarkGray
             $Test_Pass_Result = "P"
         } else {
             Write-Color "  You roll a ","$Random_Dice_Roll"," and ","Fail"," the test. You lose ","$($Fail_Properties.Value) $($Fail_Properties.Name)","." -Color DarkGray,White,DarkGray,Red,DarkGray,White,DarkGray
             $Test_Pass_Result = "F"
         }
-        if ($Test_Pass_Result -eq "P") { # Pass
+        Add-Content -Path .\error.log -value "Test_Pass_Result : $Test_Pass_Result"
+        Add-Content -Path .\error.log -value "Pass_Properties : $Pass_Properties"
+        Add-Content -Path .\error.log -value "Fail_Properties : $Fail_Properties"
+        if ($Test_Pass_Result -ieq "P") { # Pass
             switch ($Pass_Properties.Name) {
                 health  { $Import_JSON.Character.Stats.HealthCurrent += $($Pass_Properties.Value); break }
                 gold    { $Import_JSON.Character.Gold                += $($Pass_Properties.Value); break }
@@ -1346,46 +1362,78 @@ do {
                 Default {}
             }
         }
-        Update_Variables
-        Draw_Player_Window_and_Stats
-        Save_JSON
-        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
-        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-        Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
-        $Host.UI.ReadLine() | Out-Null
+        # Update_Variables
+        # Draw_Player_Window_and_Stats
+        # Save_JSON
     }
-    Update_Variables
+    Add-Content -Path .\error.log -value "Wilderness_Journeys_Current_Number: $Wilderness_Journeys_Current_Number"
+    Add-Content -Path .\error.log -value "Test_Pass_Result: $Test_Pass_Result"
+    Add-Content -Path .\error.log -value "Random_Dice_Roll: $Random_Dice_Roll"
     switch ($Wilderness_Journeys_Current_Number) {
         1 {
+            $Import_JSON.Character.Wilderness_Journeys_History_1 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
             $Wilderness_Journey_Complete_1 = $Test_Pass_Result
-            # $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
-            break
+            foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
+                $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
+                if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
+                    $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
+                }
+            }
         }
         2 {
+            $Import_JSON.Character.Wilderness_Journeys_History_2 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
             $Wilderness_Journey_Complete_2 = $Test_Pass_Result
-            # $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
-            break
+            foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
+                $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
+                if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
+                    $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
+                }
+            }
         }
         3 {
+            $Import_JSON.Character.Wilderness_Journeys_History_3 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
             $Wilderness_Journey_Complete_3 = $Test_Pass_Result
-            # $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
-            break
+            foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
+                $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
+                if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
+                    $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
+                }
+            }
         }
         4 {
+            $Import_JSON.Character.Wilderness_Journeys_History_4 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
             $Wilderness_Journey_Complete_4 = $Test_Pass_Result
-            # $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
-            break
+            foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
+                $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
+                if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
+                    $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
+                }
+            }
         }
         5 {
+            $Import_JSON.Character.Wilderness_Journeys_History_5 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
             $Wilderness_Journey_Complete_5 = $Test_Pass_Result
-            # $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
-            break
+            foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
+                $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
+                if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
+                    $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
+                }
+            }
         }
         Default {}
     }
-    $Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Complete = $Test_Pass_Result
-    Save_JSON
+    Add-Content -Path .\error.log -value "Wilderness_Journey_Complete_1 b: $Wilderness_Journey_Complete_1"
+    Add-Content -Path .\error.log -value "Wilderness_Journey_Complete_2 b: $Wilderness_Journey_Complete_2"
+    Add-Content -Path .\error.log -value "Wilderness_Journey_Complete_3 b: $Wilderness_Journey_Complete_3"
+    Add-Content -Path .\error.log -value "Wilderness_Journey_Complete_4 b: $Wilderness_Journey_Complete_4"
+    Add-Content -Path .\error.log -value "Wilderness_Journey_Complete_5 b: $Wilderness_Journey_Complete_5"
+    Update_Variables
     Draw_Player_Window_and_Stats
+    Save_JSON
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+    Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
+    $Host.UI.ReadLine() | Out-Null
 } until ($Wilderness_Journeys_Current_Number -eq $Wilderness_Journeys_Total)
 
 
