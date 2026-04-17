@@ -3,8 +3,6 @@
 #
 #
 # - when listing Wilderness_Journeys, list all details, not just the name
-# - You rolled a 6. You will encounter 3 Wilderness Journeys on your way to the Dungeon.
-#     journey for 1, journeys for 2-3
 # - TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
 # - after spending all gold at the shop during adventurer creation, say you have no gold left before continuing
 # - is there a message when rolling 1 gold that you don't have enough gold to purchase any items?
@@ -909,7 +907,12 @@ Function Create_Adventurer {
     if ($Random_Dice_Roll -eq 5 -or $Random_Dice_Roll -eq 6) { $Wilderness_Journeys_Total = 3 }
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,35;$Host.UI.Write("")
     Write-Color "  You rolled a ","$Random_Dice_Roll","." -Color DarkGray,White,DarkGray
-    Write-Color "  You will encounter ","$Wilderness_Journeys_Total Wilderness Journeys ", "on your way to the Dungeon." -Color DarkGray,White,DarkGray
+    if ($Random_Dice_Roll -lt 2) {
+        $Journeys_Word = "Journey"
+    } else {
+        $Journeys_Word = "Journeys"
+    }
+    Write-Color "  You will encounter ","$Wilderness_Journeys_Total Wilderness $Journeys_Word ", "on your way to the Dungeon." -Color DarkGray,White,DarkGray
     $Import_JSON.Character.Wilderness_Journeys_Total = $Wilderness_Journeys_Total
     $Import_JSON.Character.Wilderness_Journeys_Current_Number = 0
     Update_Variables
@@ -1262,8 +1265,6 @@ do {
     $Import_JSON.Character.Wilderness_Journeys_Current_Name = $Import_JSON.Wilderness_Journeys."$Random_Dice_Roll".Name
     Update_Variables
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
-    Add-Content -Path .\error.log -Value ("Wilderness Journey                : $($Import_JSON.Character.Wilderness_Journeys_Current_Number) - $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)")
-    Add-Content -Path .\error.log -Value ("Wilderness_Journeys_Current_Number: $Wilderness_Journeys_Current_Number")
     switch ($Wilderness_Journeys_Current_Number) {
         1 { $Wilderness_Journey_Number_Word = "first" ; break }
         2 { $Wilderness_Journey_Number_Word = "second"; break }
@@ -1340,9 +1341,6 @@ do {
             Write-Color "  You roll a ","$Random_Dice_Roll"," and ","Fail"," the test. You lose ","$($Fail_Properties.Value) $($Fail_Properties.Name)","." -Color DarkGray,White,DarkGray,Red,DarkGray,White,DarkGray
             $Test_Pass_Result = "F"
         }
-        Add-Content -Path .\error.log -value "Test_Pass_Result : $Test_Pass_Result"
-        Add-Content -Path .\error.log -value "Pass_Properties : $Pass_Properties"
-        Add-Content -Path .\error.log -value "Fail_Properties : $Fail_Properties"
         if ($Test_Pass_Result -ieq "P") { # Pass
             switch ($Pass_Properties.Name) {
                 health  { $Import_JSON.Character.Stats.HealthCurrent += $($Pass_Properties.Value); break }
@@ -1362,71 +1360,36 @@ do {
                 Default {}
             }
         }
-        # Update_Variables
-        # Draw_Player_Window_and_Stats
-        # Save_JSON
     }
-    Add-Content -Path .\error.log -value "Wilderness_Journeys_Current_Number: $Wilderness_Journeys_Current_Number"
-    Add-Content -Path .\error.log -value "Test_Pass_Result: $Test_Pass_Result"
-    Add-Content -Path .\error.log -value "Random_Dice_Roll: $Random_Dice_Roll"
     switch ($Wilderness_Journeys_Current_Number) {
         1 {
             $Import_JSON.Character.Wilderness_Journeys_History_1 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
             $Wilderness_Journey_Complete_1 = $Test_Pass_Result
-            foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
-                $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
-                if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
-                    $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
-                }
-            }
         }
         2 {
             $Import_JSON.Character.Wilderness_Journeys_History_2 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
             $Wilderness_Journey_Complete_2 = $Test_Pass_Result
-            foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
-                $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
-                if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
-                    $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
-                }
-            }
         }
         3 {
             $Import_JSON.Character.Wilderness_Journeys_History_3 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
             $Wilderness_Journey_Complete_3 = $Test_Pass_Result
-            foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
-                $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
-                if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
-                    $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
-                }
-            }
         }
         4 {
             $Import_JSON.Character.Wilderness_Journeys_History_4 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
             $Wilderness_Journey_Complete_4 = $Test_Pass_Result
-            foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
-                $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
-                if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
-                    $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
-                }
-            }
         }
         5 {
             $Import_JSON.Character.Wilderness_Journeys_History_5 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
             $Wilderness_Journey_Complete_5 = $Test_Pass_Result
-            foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
-                $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
-                if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
-                    $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
-                }
-            }
         }
         Default {}
     }
-    Add-Content -Path .\error.log -value "Wilderness_Journey_Complete_1 b: $Wilderness_Journey_Complete_1"
-    Add-Content -Path .\error.log -value "Wilderness_Journey_Complete_2 b: $Wilderness_Journey_Complete_2"
-    Add-Content -Path .\error.log -value "Wilderness_Journey_Complete_3 b: $Wilderness_Journey_Complete_3"
-    Add-Content -Path .\error.log -value "Wilderness_Journey_Complete_4 b: $Wilderness_Journey_Complete_4"
-    Add-Content -Path .\error.log -value "Wilderness_Journey_Complete_5 b: $Wilderness_Journey_Complete_5"
+    foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
+        $Number = $item.Name # gets wilderness journey number which is needed to update correct wilderness journey complete status in JSON file
+        if ($item.Value.Name -eq $Import_JSON.Character.Wilderness_Journeys_Current_Name) {
+            $Import_JSON.Wilderness_Journeys.$Number.Complete = $Test_Pass_Result
+        }
+    }
     Update_Variables
     Draw_Player_Window_and_Stats
     Save_JSON

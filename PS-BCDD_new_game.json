@@ -723,6 +723,12 @@
     "Wilderness_Journeys_Total": "",
     "Wilderness_Journeys_Current_Number": "",
     "Wilderness_Journeys_Current_Name": "",
+    "Wilderness_Journeys_History_1": "",
+    "Wilderness_Journeys_History_2": "",
+    "Wilderness_Journeys_History_3": "",
+    "Wilderness_Journeys_History_4": "",
+    "Wilderness_Journeys_History_5": "",
+    "Wilderness_Journeys_History_6": "",
     "Dungeon_Room_Total": "",
     "Dungeon_Room_Current": "",
     "Current_Location": "",
@@ -867,10 +873,8 @@
       },
       "Reward" : {
         "Fail": {
-          "Rations": 1
         },
         "Pass": {
-          "Rations": 2
         }
       }
     },
