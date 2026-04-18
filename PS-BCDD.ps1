@@ -2,7 +2,6 @@
 # ----
 #
 #
-# - when listing Wilderness_Journeys, list all details, not just the name
 # - TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
 # - after spending all gold at the shop during adventurer creation, say you have no gold left before continuing
 # - is there a message when rolling 1 gold that you don't have enough gold to purchase any items?
@@ -250,16 +249,16 @@ Function Draw_Player_Window_and_Stats {
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 59,5;$Host.UI.Write($Wilderness_Journeys_Total)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 54,5;$Host.UI.Write($Wilderness_Journeys_Current_Number)
     # $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,3;$Host.UI.Write($Wilderness_Journeys_Current_Name)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,3;$Host.UI.Write($Wilderness_Journey_Name_1)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,4;$Host.UI.Write($Wilderness_Journey_Name_2)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,5;$Host.UI.Write($Wilderness_Journey_Name_3)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,6;$Host.UI.Write($Wilderness_Journey_Name_4)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,7;$Host.UI.Write($Wilderness_Journey_Name_5)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,3;$Host.UI.Write($Wilderness_Journey_Complete_1)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,4;$Host.UI.Write($Wilderness_Journey_Complete_2)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,5;$Host.UI.Write($Wilderness_Journey_Complete_3)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,6;$Host.UI.Write($Wilderness_Journey_Complete_4)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,7;$Host.UI.Write($Wilderness_Journey_Complete_5)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,3;$Host.UI.Write($Wilderness_Journeys_History_Name_1)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,4;$Host.UI.Write($Wilderness_Journeys_History_Name_2)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,5;$Host.UI.Write($Wilderness_Journeys_History_Name_3)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,6;$Host.UI.Write($Wilderness_Journeys_History_Name_4)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,7;$Host.UI.Write($Wilderness_Journeys_History_Name_5)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,3;$Host.UI.Write($Wilderness_Journeys_History_Name_Complete_1)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,4;$Host.UI.Write($Wilderness_Journeys_History_Name_Complete_2)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,5;$Host.UI.Write($Wilderness_Journeys_History_Name_Complete_3)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,6;$Host.UI.Write($Wilderness_Journeys_History_Name_Complete_4)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 74,7;$Host.UI.Write($Wilderness_Journeys_History_Name_Complete_5)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 59,11;$Host.UI.Write($Dungeon_Room_Total)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 54,11;$Host.UI.Write($Dungeon_Room_Current)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 65,9;$Host.UI.Write($Dungeon_Room_Name_1)
@@ -939,46 +938,51 @@ Function Create_Adventurer {
 # sets variables
 #
 Function Update_Variables {
-    $Script:Character_Name                     = $Import_JSON.Character.Name
-    $Script:Character_HealthCurrent            = $Import_JSON.Character.Stats.HealthCurrent
-    $Script:Character_HealthMax                = $Import_JSON.Character.Stats.HealthMax
-    $Script:Character_STR                      = $Import_JSON.Character.Stats.STR
-    $Script:Character_DEX                      = $Import_JSON.Character.Stats.DEX
-    $Script:Character_INT                      = $Import_JSON.Character.Stats.INT
-    $Script:Rations                            = $Import_JSON.Character.Rations
-    $Script:Torches                            = $Import_JSON.Character.Torches
-    $Script:SpellsTotal                        = $Import_JSON.Character.SpellsTotal
-    $Script:PotionsTotal                       = $Import_JSON.Character.PotionsTotal
-    $Script:Gold                               = $Import_JSON.Character.Gold
-    $Script:Total_XP                           = $Import_JSON.Character.Total_XP
-    $Script:Current_Location                   = $Import_JSON.Character.Current_Location
-    $Script:Equipment                          = $Import_JSON.Character.Equipment
-    $Script:Weapon                             = $Import_JSON.Character.Weapon
-    $Script:Quest                              = $Import_JSON.Character.Quest
-    $Script:Wilderness_Journeys_Total          = $Import_JSON.Character.Wilderness_Journeys_Total
-    $Script:Wilderness_Journeys_Current_Number = $Import_JSON.Character.Wilderness_Journeys_Current_Number
-    $Script:Wilderness_Journeys_Current_Name   = $Import_JSON.Character.Wilderness_Journeys_Current_Name
-    $Script:Wilderness_Journeys_History_1      = $Import_JSON.Character.Wilderness_Journeys_History_1
-    $Script:Wilderness_Journeys_History_2      = $Import_JSON.Character.Wilderness_Journeys_History_2
-    $Script:Wilderness_Journeys_History_3      = $Import_JSON.Character.Wilderness_Journeys_History_3
-    $Script:Wilderness_Journeys_History_4      = $Import_JSON.Character.Wilderness_Journeys_History_4
-    $Script:Wilderness_Journeys_History_5      = $Import_JSON.Character.Wilderness_Journeys_History_5
-    $Script:Dungeon_Room_Total                 = $Import_JSON.Character.Dungeon_Room_Total
-    $Script:Dungeon_Room_Current               = $Import_JSON.Character.Dungeon_Room_Current
-    $Script:Potions_Total                      = $Import_JSON.Character.PotionsTotal
-    $Script:Potions_Quantity_1                 = $Import_JSON.Potions.'1'.Quantity
-    $Script:Potions_Quantity_2                 = $Import_JSON.Potions.'2'.Quantity
-    $Script:Potions_Quantity_3                 = $Import_JSON.Potions.'3'.Quantity
-    $Script:Potions_Quantity_4                 = $Import_JSON.Potions.'4'.Quantity
-    $Script:Potions_Quantity_5                 = $Import_JSON.Potions.'5'.Quantity
-    $Script:Potions_Quantity_6                 = $Import_JSON.Potions.'6'.Quantity
-    $Script:Spells_Total                       = $Import_JSON.Character.SpellsTotal
-    $Script:Spells_Quantity_1                  = $Import_JSON.Spells.'1'.Quantity
-    $Script:Spells_Quantity_2                  = $Import_JSON.Spells.'2'.Quantity
-    $Script:Spells_Quantity_3                  = $Import_JSON.Spells.'3'.Quantity
-    $Script:Spells_Quantity_4                  = $Import_JSON.Spells.'4'.Quantity
-    $Script:Spells_Quantity_5                  = $Import_JSON.Spells.'5'.Quantity
-    $Script:Spells_Quantity_6                  = $Import_JSON.Spells.'6'.Quantity
+    $Script:Character_Name                              = $Import_JSON.Character.Name
+    $Script:Character_HealthCurrent                     = $Import_JSON.Character.Stats.HealthCurrent
+    $Script:Character_HealthMax                         = $Import_JSON.Character.Stats.HealthMax
+    $Script:Character_STR                               = $Import_JSON.Character.Stats.STR
+    $Script:Character_DEX                               = $Import_JSON.Character.Stats.DEX
+    $Script:Character_INT                               = $Import_JSON.Character.Stats.INT
+    $Script:Rations                                     = $Import_JSON.Character.Rations
+    $Script:Torches                                     = $Import_JSON.Character.Torches
+    $Script:SpellsTotal                                 = $Import_JSON.Character.SpellsTotal
+    $Script:PotionsTotal                                = $Import_JSON.Character.PotionsTotal
+    $Script:Gold                                        = $Import_JSON.Character.Gold
+    $Script:Total_XP                                    = $Import_JSON.Character.Total_XP
+    $Script:Current_Location                            = $Import_JSON.Character.Current_Location
+    $Script:Equipment                                   = $Import_JSON.Character.Equipment
+    $Script:Weapon                                      = $Import_JSON.Character.Weapon
+    $Script:Quest                                       = $Import_JSON.Character.Quest
+    $Script:Wilderness_Journeys_Total                   = $Import_JSON.Character.Wilderness_Journeys_Total
+    $Script:Wilderness_Journeys_Current_Number          = $Import_JSON.Character.Wilderness_Journeys_Current_Number
+    $Script:Wilderness_Journeys_Current_Name            = $Import_JSON.Character.Wilderness_Journeys_Current_Name
+    $Script:Wilderness_Journeys_History_Name_1          = $Import_JSON.Character.Wilderness_Journeys_History_Name_1
+    $Script:Wilderness_Journeys_History_Name_2          = $Import_JSON.Character.Wilderness_Journeys_History_Name_2
+    $Script:Wilderness_Journeys_History_Name_3          = $Import_JSON.Character.Wilderness_Journeys_History_Name_3
+    $Script:Wilderness_Journeys_History_Name_4          = $Import_JSON.Character.Wilderness_Journeys_History_Name_4
+    $Script:Wilderness_Journeys_History_Name_5          = $Import_JSON.Character.Wilderness_Journeys_History_Name_5
+    $Script:Wilderness_Journeys_History_Name_Complete_1 = $Import_JSON.Character.Wilderness_Journeys_History_Name_Complete_1
+    $Script:Wilderness_Journeys_History_Name_Complete_2 = $Import_JSON.Character.Wilderness_Journeys_History_Name_Complete_2
+    $Script:Wilderness_Journeys_History_Name_Complete_3 = $Import_JSON.Character.Wilderness_Journeys_History_Name_Complete_3
+    $Script:Wilderness_Journeys_History_Name_Complete_4 = $Import_JSON.Character.Wilderness_Journeys_History_Name_Complete_4
+    $Script:Wilderness_Journeys_History_Name_Complete_5 = $Import_JSON.Character.Wilderness_Journeys_History_Name_Complete_5
+    $Script:Dungeon_Room_Total                          = $Import_JSON.Character.Dungeon_Room_Total
+    $Script:Dungeon_Room_Current                        = $Import_JSON.Character.Dungeon_Room_Current
+    $Script:Potions_Total                               = $Import_JSON.Character.PotionsTotal
+    $Script:Potions_Quantity_1                          = $Import_JSON.Potions.'1'.Quantity
+    $Script:Potions_Quantity_2                          = $Import_JSON.Potions.'2'.Quantity
+    $Script:Potions_Quantity_3                          = $Import_JSON.Potions.'3'.Quantity
+    $Script:Potions_Quantity_4                          = $Import_JSON.Potions.'4'.Quantity
+    $Script:Potions_Quantity_5                          = $Import_JSON.Potions.'5'.Quantity
+    $Script:Potions_Quantity_6                          = $Import_JSON.Potions.'6'.Quantity
+    $Script:Spells_Total                                = $Import_JSON.Character.SpellsTotal
+    $Script:Spells_Quantity_1                           = $Import_JSON.Spells.'1'.Quantity
+    $Script:Spells_Quantity_2                           = $Import_JSON.Spells.'2'.Quantity
+    $Script:Spells_Quantity_3                           = $Import_JSON.Spells.'3'.Quantity
+    $Script:Spells_Quantity_4                           = $Import_JSON.Spells.'4'.Quantity
+    $Script:Spells_Quantity_5                           = $Import_JSON.Spells.'5'.Quantity
+    $Script:Spells_Quantity_6                           = $Import_JSON.Spells.'6'.Quantity
     # sets current Location
     $All_Locations                      = $Import_JSON.Locations.PSObject.Properties.Name
     foreach ($Single_Location in $All_Locations) {
@@ -1275,11 +1279,11 @@ do {
     }
     Write-Color "  Your $Wilderness_Journey_Number_Word ","Wilderness encounter ","will be a trip to the ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","." -Color DarkGray,White,DarkGray,White,DarkGray
     switch ($Wilderness_Journeys_Current_Number) {
-        1 { $Wilderness_Journey_Name_1 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
-        2 { $Wilderness_Journey_Name_2 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
-        3 { $Wilderness_Journey_Name_3 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
-        4 { $Wilderness_Journey_Name_4 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
-        5 { $Wilderness_Journey_Name_5 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
+        1 { $Wilderness_Journeys_History_Name_1 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
+        2 { $Wilderness_Journeys_History_Name_2 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
+        3 { $Wilderness_Journeys_History_Name_3 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
+        4 { $Wilderness_Journeys_History_Name_4 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
+        5 { $Wilderness_Journeys_History_Name_5 = "$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"; break }
         Default {}
     }
     Draw_Player_Window_and_Stats
@@ -1363,24 +1367,24 @@ do {
     }
     switch ($Wilderness_Journeys_Current_Number) {
         1 {
-            $Import_JSON.Character.Wilderness_Journeys_History_1 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
-            $Wilderness_Journey_Complete_1 = $Test_Pass_Result
+            $Import_JSON.Character.Wilderness_Journeys_History_Name_1          = $Import_JSON.Character.Wilderness_Journeys_Current_Name
+            $Import_JSON.Character.Wilderness_Journeys_History_Name_Complete_1 = $Test_Pass_Result
         }
         2 {
-            $Import_JSON.Character.Wilderness_Journeys_History_2 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
-            $Wilderness_Journey_Complete_2 = $Test_Pass_Result
+            $Import_JSON.Character.Wilderness_Journeys_History_Name_2          = $Import_JSON.Character.Wilderness_Journeys_Current_Name
+            $Import_JSON.Character.Wilderness_Journeys_History_Name_Complete_2 = $Test_Pass_Result
         }
         3 {
-            $Import_JSON.Character.Wilderness_Journeys_History_3 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
-            $Wilderness_Journey_Complete_3 = $Test_Pass_Result
+            $Import_JSON.Character.Wilderness_Journeys_History_Name_3          = $Import_JSON.Character.Wilderness_Journeys_Current_Name
+            $Import_JSON.Character.Wilderness_Journeys_History_Name_Complete_3 = $Test_Pass_Result
         }
         4 {
-            $Import_JSON.Character.Wilderness_Journeys_History_4 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
-            $Wilderness_Journey_Complete_4 = $Test_Pass_Result
+            $Import_JSON.Character.Wilderness_Journeys_History_Name_4          = $Import_JSON.Character.Wilderness_Journeys_Current_Name
+            $Import_JSON.Character.Wilderness_Journeys_History_Name_Complete_4 = $Test_Pass_Result
         }
         5 {
-            $Import_JSON.Character.Wilderness_Journeys_History_5 = $Import_JSON.Character.Wilderness_Journeys_Current_Name
-            $Wilderness_Journey_Complete_5 = $Test_Pass_Result
+            $Import_JSON.Character.Wilderness_Journeys_History_Name_5          = $Import_JSON.Character.Wilderness_Journeys_Current_Name
+            $Import_JSON.Character.Wilderness_Journeys_History_Name_Complete_5 = $Test_Pass_Result
         }
         Default {}
     }
