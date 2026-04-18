@@ -1,11 +1,9 @@
 # ToDo
 # ----
 #
-#
 # - TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
 # - after spending all gold at the shop during adventurer creation, say you have no gold left before continuing
 # - is there a message when rolling 1 gold that you don't have enough gold to purchase any items?
-# - save wilderness journey history to JSON or on re-load, they won't be listed
 #
 # BUGS
 # ----
