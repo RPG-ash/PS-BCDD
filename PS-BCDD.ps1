@@ -7,7 +7,21 @@
 #
 # BUGS
 # ----
-#
+# +---------------------------+---------------------+-------------------------+-------------------+
+# | Wilderness Encounter #3 - Swamp                                                               |
+# +-----------------------------------------------------------------------------------------------+
+#   After some time traveling, you arrive at a Swamp.
+#   The Swamp has a difficulty test of 5 against your STR STAT.
+#   TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
+#   If you Pass, you will gain 5 Gold and if you Fail, you will lose 2 Health.
+#   Your STR STAT is 0. Roll a 6 or higher to Pass (5 - your STR 0 STAT + 1).
+#                                                   +-------+
+#                                                   | o   o |
+#                                                   |       |
+#                                                   | o   o |
+#                                                   +-------+
+#   You roll a 4 and Pass the test. You gain 5 Gold. <------------------------------ rolled a 4 and passed. should have failed
+#   Press Enter to continue...
 # - 
 
 
@@ -295,10 +309,10 @@ Function Draw_Player_Window_and_Stats {
 # draw info banner
 #
 Function Draw_Info_Banner {
-    $Info_Banner_Padding = " "*(105-3-($Info_Banner | Measure-Object -Character).Characters)
+    $Info_Banner_Padding = " "*(97-3-($Info_Banner | Measure-Object -Character).Characters)
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,17;$Host.UI.Write("")
     Write-Color "| ","$Info_Banner","$Info_Banner_Padding|" -Color DarkGray,White,DarkGray
-    Write-Color "+-------------------------------------------------------------------------------------------------------+" -Color DarkGray
+    Write-Color "+-----------------------------------------------------------------------------------------------+" -Color DarkGray
 }
 
 
@@ -566,10 +580,26 @@ Function Create_Adventurer {
     Clear_Bottom_Half_of_Screen
     $Info_Banner = "Free Potion"
     Draw_Info_Banner
-    Write-Color ""
-    foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
-        Write-Color "  $($item.Name)"," - ","$($item.Value.Name)"," ($($item.Value.Info))" -Color White,DarkGray,Blue,DarkGray
+    $Free_Potion_PSCustomObject  = [System.Collections.Generic.List[PSCustomObject]]::New()
+    $Free_Potion_PSCustomObject += [PSCustomObject]@{
+        "D6"            = "  D6"
+        Potion          = " Potion"
+        "Potion Affect" = " Potion Affect"
     }
+    $Free_Potion_PSCustomObject += [PSCustomObject]@{
+        "D6"            = "  --"
+        Potion          = " ------"
+        "Potion Affect" = " -------------"
+    }
+    foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
+        $Free_Potion_PSCustomObject += [PSCustomObject]@{
+            "D6"                     = "  $($item.Name)"
+            Potion                   = " $($item.Value.Name)"
+            "Potion Affect"          = " $($item.Value.Info)"
+        }
+        # Write-Color "  $($item.Name)"," - ","$($item.Value.Name)"," ($($item.Value.Info))" -Color White,DarkGray,Blue,DarkGray
+    }
+    $Free_Potion_PSCustomObject | Format-Table -AutoSize -HideTableHeaders
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Roll a D6 to determine which Potion you receive. Press Enter to continue..." -Color DarkYellow
@@ -592,10 +622,26 @@ Function Create_Adventurer {
     Clear_Bottom_Half_of_Screen
     $Info_Banner = "Free Spell"
     Draw_Info_Banner
-    Write-Color ""
-    foreach ($item in $Import_JSON.Spells.PSObject.Properties) {
-        Write-Color "  $($item.Name)"," - ","$($item.Value.Name)"," ($($item.Value.Info))" -Color White,DarkGray,Blue,DarkGray
+    $Free_Spell_PSCustomObject  = [System.Collections.Generic.List[PSCustomObject]]::New()
+    $Free_Spell_PSCustomObject += [PSCustomObject]@{
+        "D6"           = "  D6"
+        Spell          = " Spell"
+        "Spell Affect" = " Spell Affect"
     }
+    $Free_Spell_PSCustomObject += [PSCustomObject]@{
+        "D6"           = "  --"
+        Spell          = " ------"
+        "Spell Affect" = " -------------"
+    }
+    foreach ($item in $Import_JSON.Spells.PSObject.Properties) {
+        $Free_Spell_PSCustomObject += [PSCustomObject]@{
+            "D6"                    = "  $($item.Name)"
+            Spell                   = " $($item.Value.Name)"
+            "Spell Affect"          = " $($item.Value.Info)"
+        }
+        # Write-Color "  $($item.Name)"," - ","$($item.Value.Name)"," ($($item.Value.Info))" -Color White,DarkGray,Blue,DarkGray
+    }
+    $Free_Spell_PSCustomObject | Format-Table -AutoSize -HideTableHeaders
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Now roll another D6 to determine which Spell you receive. Press Enter to continue..." -Color DarkYellow
@@ -649,12 +695,36 @@ Function Create_Adventurer {
         Clear_Bottom_Half_of_Screen
         $Info_Banner = "Shop"
         Draw_Info_Banner
-        Write-Color ""
-        $All_Settlement_Items_Array = New-Object System.Collections.Generic.List[System.Object]
-        foreach ($item in $Import_JSON.Settlement.PSObject.Properties) {
-            $All_Settlement_Items_Array.Add("$($item.Name)")
-            Write-Color "  $($item.Name)"," - ","$($item.Value.Description)"," (","$($item.Value.Cost) Gold",")" -Color White,DarkGray,Blue,DarkGray,DarkYellow,DarkGray
+    $Shop_PSCustomObject  = [System.Collections.Generic.List[PSCustomObject]]::New()
+    $Shop_PSCustomObject += [PSCustomObject]@{
+        "No."             = "  No."
+        "Item"            = " Item"
+        "Gold"            = " Gold Cost"
+    }
+    $Shop_PSCustomObject += [PSCustomObject]@{
+        "No."             = "  ---"
+        "Item"            = " ----"
+        "Gold"            = " ---------"
+    }
+    $All_Settlement_Items_Array = New-Object System.Collections.Generic.List[System.Object]
+    foreach ($item in $Import_JSON.Settlement.PSObject.Properties) {
+        $Shop_PSCustomObject += [PSCustomObject]@{
+            "No."             = "  $($item.Name)"
+            "Item"            = " $($item.Value.Description)"
+            "Gold"            = " $($item.Value.Cost)"
         }
+        $All_Settlement_Items_Array.Add("$($item.Name)")
+        # Write-Color "  $($item.Name)"," - ","$($item.Value.Description)"," (","$($item.Value.Cost) Gold",")" -Color White,DarkGray,Blue,DarkGray,DarkYellow,DarkGray
+    }
+    $Shop_PSCustomObject | Format-Table -AutoSize -HideTableHeaders
+
+
+
+    # $All_Settlement_Items_Array = New-Object System.Collections.Generic.List[System.Object]
+    #     foreach ($item in $Import_JSON.Settlement.PSObject.Properties) {
+    #         $All_Settlement_Items_Array.Add("$($item.Name)")
+    #         Write-Color "  $($item.Name)"," - ","$($item.Value.Description)"," (","$($item.Value.Cost) Gold",")" -Color White,DarkGray,Blue,DarkGray,DarkYellow,DarkGray
+    #     }
         # if only 1 gold, unable to buy any items
         if ($Import_JSON.Character.Gold -eq 1) {
             $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
@@ -829,11 +899,33 @@ Function Create_Adventurer {
     Clear_Bottom_Half_of_Screen
     $Info_Banner = "Quests"
     Draw_Info_Banner
-    Write-Color ""
-    foreach ($item in $Import_JSON.Quests.PSObject.Properties) {
-        $All_Settlement_Items_Array.Add("$($item.Name)")
-        Write-Color "  $($item.Name) ","- ","$($item.Value.Name) ","- ","($($item.Value.Short_Description)) ","(","$($item.Value.Gold_Reward) Gold ","& ","$($item.Value.XP_Reward) XP",")" -Color White,DarkGray,Blue,DarkGray,Blue,DarkGray,DarkYellow,DarkGray,White,DarkGray
+    $Quests_PSCustomObject  = [System.Collections.Generic.List[PSCustomObject]]::New()
+    $Quests_PSCustomObject += [PSCustomObject]@{
+        "D6"                = "  D6"
+        "Quest"             = " Quest"
+        "Objective"         = " Objective"
+        "Reward"            = " Reward"
     }
+    $Quests_PSCustomObject += [PSCustomObject]@{
+        "D6"                = "  --"
+        "Quest"             = " ------"
+        "Objective"         = " --------"
+        "Reward"            = " ------"
+    }
+    foreach ($item in $Import_JSON.Quests.PSObject.Properties) {
+        $Quests_PSCustomObject += [PSCustomObject]@{
+            "D6"                = "  $($item.Name)"
+            "Quest"             = " $($item.Value.Name)"
+            "Objective"         = " $($item.Value.Short_Description)"
+            "Reward"            = " $($item.Value.Gold_Reward) Gold & $($item.Value.XP_Reward) XP"
+        }
+        # Write-Color "  $($item.Name) ","- ","$($item.Value.Name) ","- ","($($item.Value.Short_Description)) ","(","$($item.Value.Gold_Reward) Gold ","& ","$($item.Value.XP_Reward) XP",")" -Color White,DarkGray,Blue,DarkGray,Blue,DarkGray,DarkYellow,DarkGray,White,DarkGray
+    }
+    $Quests_PSCustomObject | Format-Table -AutoSize -HideTableHeaders
+    # foreach ($item in $Import_JSON.Quests.PSObject.Properties) {
+    #     $All_Settlement_Items_Array.Add("$($item.Name)")
+    #     Write-Color "  $($item.Name) ","- ","$($item.Value.Name) ","- ","($($item.Value.Short_Description)) ","(","$($item.Value.Gold_Reward) Gold ","& ","$($item.Value.XP_Reward) XP",")" -Color White,DarkGray,Blue,DarkGray,Blue,DarkGray,DarkYellow,DarkGray,White,DarkGray
+    # }
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
     Write-Color "  Now roll a D6 to determine which ","Quest ","you will embark on." -Color DarkGray,White,DarkGray
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
