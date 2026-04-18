@@ -474,6 +474,7 @@ Function Create_Adventurer {
         }
     } until ($Character_Name_Confirm -eq $true)
     $Import_JSON.Character.Name = $Character_Name
+    $Import_JSON.Character.Current_Location = "Settlement"
     Update_Variables
     Draw_Player_Window_and_Stats
     #
@@ -981,13 +982,6 @@ Function Update_Variables {
     $Script:Spells_Quantity_4                           = $Import_JSON.Spells.'4'.Quantity
     $Script:Spells_Quantity_5                           = $Import_JSON.Spells.'5'.Quantity
     $Script:Spells_Quantity_6                           = $Import_JSON.Spells.'6'.Quantity
-    # sets current Location
-    $All_Locations                      = $Import_JSON.Locations.PSObject.Properties.Name
-    foreach ($Single_Location in $All_Locations) {
-        if ($Import_JSON.Locations.$Single_Location.Current_Location -ieq "true") {
-            $Script:Current_Location = $Single_Location
-        }
-    }
 }
 
 
@@ -1293,6 +1287,7 @@ do {
     #
     # wilderness encounter
     #
+    $Import_JSON.Character.Current_Location = "Settlement"
     Clear_Bottom_Half_of_Screen
     $Info_Banner = "Wilderness Encounter #$Wilderness_Journeys_Current_Number - $Wilderness_Journeys_Current_Name"
     # $Info_Banner = "Wilderness Encounter #$Wilderness_Journeys_Current_Number - $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"
