@@ -3,25 +3,10 @@
 #
 # - TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
 # - after spending all gold at the shop during adventurer creation, say you have no gold left before continuing
-# - is there a message when rolling 1 gold that you don't have enough gold to purchase any items?
 #
 # BUGS
 # ----
-# +---------------------------+---------------------+-------------------------+-------------------+
-# | Wilderness Encounter #3 - Swamp                                                               |
-# +-----------------------------------------------------------------------------------------------+
-#   After some time traveling, you arrive at a Swamp.
-#   The Swamp has a difficulty test of 5 against your STR STAT.
-#   TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
-#   If you Pass, you will gain 5 Gold and if you Fail, you will lose 2 Health.
-#   Your STR STAT is 0. Roll a 6 or higher to Pass (5 - your STR 0 STAT + 1).
-#                                                   +-------+
-#                                                   | o   o |
-#                                                   |       |
-#                                                   | o   o |
-#                                                   +-------+
-#   You roll a 4 and Pass the test. You gain 5 Gold. <------------------------------ rolled a 4 and passed. should have failed
-#   Press Enter to continue...
+# - 
 # - 
 
 
@@ -1351,6 +1336,7 @@ do {
     # $Random_Dice_Roll = 1
     $Import_JSON.Character.Wilderness_Journeys_Current_Number += 1
     $Import_JSON.Character.Wilderness_Journeys_Current_Name = $Import_JSON.Wilderness_Journeys."$Random_Dice_Roll".Name
+    $Current_Wilderness_Journey_JSON_Number = $Random_Dice_Roll
     Update_Variables
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
     switch ($Wilderness_Journeys_Current_Number) {
@@ -1385,7 +1371,7 @@ do {
     # $Info_Banner = "Wilderness Encounter #$Wilderness_Journeys_Current_Number - $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"
     Draw_Info_Banner
     Write-Color ""
-    Write-Color "  After some time traveling, you arrive at a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","." -Color DarkGray,White,DarkGray
+    Write-Color "  After some time travelling, you arrive at a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","." -Color DarkGray,White,DarkGray
     if ($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type -ieq "none") {
         Write-Color "`r`n  You wonder around the ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"," for a while but nothing of interest happens." -Color DarkGray,White,DarkGray
         # $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
@@ -1403,11 +1389,11 @@ do {
             }
             if ($item.Name -ieq "Pass") {
                 $Pass_Properties = $($item.Value.PSObject.Properties)
-                if ($Random_Dice_Roll -eq 4) {# TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
+                if ($Random_Dice_Roll -eq 4) {# TODO : Campsite test has a choice of two rewards which is not taken into account
                     # PSCustomObject
                     $Pass_Properties = New-Object PSObject -Property @{
-                        Name  = "ToDo: Fix me"
-                        Value = "ToDo: Fix me"
+                        Name  = "ToDo: Campsite name Fix me"
+                        Value = "ToDo: Campsite value Fix me"
                     }
                 }
             }
@@ -1423,7 +1409,7 @@ do {
         Roll_D6_Dice
         # $Random_Dice_Roll = 1
         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
-        if ($Random_Dice_Roll -gt $($($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Difficulty) - $($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test.Type)))) {
+        if ($Random_Dice_Roll -gt $($($Import_JSON.Wilderness_Journeys.$Current_Wilderness_Journey_JSON_Number.Test.Difficulty) - $($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Current_Wilderness_Journey_JSON_Number.Test.Type)))) {
             Write-Color "  You roll a ","$Random_Dice_Roll"," and ","Pass"," the test. You gain ","$($Pass_Properties.Value) $($Pass_Properties.Name)","." -Color DarkGray,White,DarkGray,Green,DarkGray,White,DarkGray
             $Test_Pass_Result = "P"
         } else {
