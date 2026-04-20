@@ -565,26 +565,7 @@ Function Create_Adventurer {
     Clear_Bottom_Half_of_Screen
     $Info_Banner = "Free Potion"
     Draw_Info_Banner
-    $Free_Potion_PSCustomObject  = [System.Collections.Generic.List[PSCustomObject]]::New()
-    $Free_Potion_PSCustomObject += [PSCustomObject]@{
-        "D6"            = "  D6"
-        Potion          = " Potion"
-        "Potion Affect" = " Potion Affect"
-    }
-    $Free_Potion_PSCustomObject += [PSCustomObject]@{
-        "D6"            = "  --"
-        Potion          = " ------"
-        "Potion Affect" = " -------------"
-    }
-    foreach ($item in $Import_JSON.Potions.PSObject.Properties) {
-        $Free_Potion_PSCustomObject += [PSCustomObject]@{
-            "D6"                     = "  $($item.Name)"
-            Potion                   = " $($item.Value.Name)"
-            "Potion Affect"          = " $($item.Value.Info)"
-        }
-        # Write-Color "  $($item.Name)"," - ","$($item.Value.Name)"," ($($item.Value.Info))" -Color White,DarkGray,Blue,DarkGray
-    }
-    $Free_Potion_PSCustomObject | Format-Table -AutoSize -HideTableHeaders
+    Display_Potion_Spells_Shop_Table -Value "Potions"
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Roll a D6 to determine which Potion you receive. Press Enter to continue..." -Color DarkYellow
@@ -607,26 +588,28 @@ Function Create_Adventurer {
     Clear_Bottom_Half_of_Screen
     $Info_Banner = "Free Spell"
     Draw_Info_Banner
-    $Free_Spell_PSCustomObject  = [System.Collections.Generic.List[PSCustomObject]]::New()
-    $Free_Spell_PSCustomObject += [PSCustomObject]@{
-        "D6"           = "  D6"
-        Spell          = " Spell"
-        "Spell Affect" = " Spell Affect"
-    }
-    $Free_Spell_PSCustomObject += [PSCustomObject]@{
-        "D6"           = "  --"
-        Spell          = " ------"
-        "Spell Affect" = " -------------"
-    }
-    foreach ($item in $Import_JSON.Spells.PSObject.Properties) {
-        $Free_Spell_PSCustomObject += [PSCustomObject]@{
-            "D6"                    = "  $($item.Name)"
-            Spell                   = " $($item.Value.Name)"
-            "Spell Affect"          = " $($item.Value.Info)"
-        }
-        # Write-Color "  $($item.Name)"," - ","$($item.Value.Name)"," ($($item.Value.Info))" -Color White,DarkGray,Blue,DarkGray
-    }
-    $Free_Spell_PSCustomObject | Format-Table -AutoSize -HideTableHeaders
+    Display_Potion_Spells_Shop_Table -Value "Spells"
+
+    # $Free_Spell_PSCustomObject  = [System.Collections.Generic.List[PSCustomObject]]::New()
+    # $Free_Spell_PSCustomObject += [PSCustomObject]@{
+    #     "D6"           = "  D6"
+    #     Spell          = " Spell"
+    #     "Spell Affect" = " Spell Affect"
+    # }
+    # $Free_Spell_PSCustomObject += [PSCustomObject]@{
+    #     "D6"           = "  --"
+    #     Spell          = " ------"
+    #     "Spell Affect" = " -------------"
+    # }
+    # foreach ($item in $Import_JSON.Spells.PSObject.Properties) {
+    #     $Free_Spell_PSCustomObject += [PSCustomObject]@{
+    #         "D6"                    = "  $($item.Name)"
+    #         Spell                   = " $($item.Value.Name)"
+    #         "Spell Affect"          = " $($item.Value.Info)"
+    #     }
+    #     # Write-Color "  $($item.Name)"," - ","$($item.Value.Name)"," ($($item.Value.Info))" -Color White,DarkGray,Blue,DarkGray
+    # }
+    # $Free_Spell_PSCustomObject | Format-Table -AutoSize -HideTableHeaders
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Now roll another D6 to determine which Spell you receive. Press Enter to continue..." -Color DarkYellow
@@ -674,12 +657,14 @@ Function Create_Adventurer {
     Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
     $Host.UI.ReadLine() | Out-Null
     #
-    # purchase items from shop
+    # purchase items from settlement shop
     #
     do {
         Clear_Bottom_Half_of_Screen
         $Info_Banner = "Shop"
         Draw_Info_Banner
+        # Display_Potion_Spells_Shop_Table -Value "Settlement"
+
     $Shop_PSCustomObject  = [System.Collections.Generic.List[PSCustomObject]]::New()
     $Shop_PSCustomObject += [PSCustomObject]@{
         "No."             = "  No."
@@ -884,6 +869,7 @@ Function Create_Adventurer {
     Clear_Bottom_Half_of_Screen
     $Info_Banner = "Quests"
     Draw_Info_Banner
+    # Display_Potion_Spells_Shop_Table -Value "Quests"
     $Quests_PSCustomObject  = [System.Collections.Generic.List[PSCustomObject]]::New()
     $Quests_PSCustomObject += [PSCustomObject]@{
         "D6"                = "  D6"
@@ -907,6 +893,7 @@ Function Create_Adventurer {
         # Write-Color "  $($item.Name) ","- ","$($item.Value.Name) ","- ","($($item.Value.Short_Description)) ","(","$($item.Value.Gold_Reward) Gold ","& ","$($item.Value.XP_Reward) XP",")" -Color White,DarkGray,Blue,DarkGray,Blue,DarkGray,DarkYellow,DarkGray,White,DarkGray
     }
     $Quests_PSCustomObject | Format-Table -AutoSize -HideTableHeaders
+
     # foreach ($item in $Import_JSON.Quests.PSObject.Properties) {
     #     $All_Settlement_Items_Array.Add("$($item.Name)")
     #     Write-Color "  $($item.Name) ","- ","$($item.Value.Name) ","- ","($($item.Value.Short_Description)) ","(","$($item.Value.Gold_Reward) Gold ","& ","$($item.Value.XP_Reward) XP",")" -Color White,DarkGray,Blue,DarkGray,Blue,DarkGray,DarkYellow,DarkGray,White,DarkGray
@@ -949,6 +936,7 @@ Function Create_Adventurer {
     Write-Color "  You will receive a reward if you ","Pass ","a test, and a penalty if you ","Fail","." -Color DarkGray,Green,DarkGray,Red
     Press_Continue
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,28;$Host.UI.Write("")
+    # Display_Potion_Spells_Shop_Table -Value "Wilderness_Journeys"
     $All_Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
     foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
         $All_Wilderness_Journeys_Array.Add("$($item.Name)")
@@ -963,6 +951,7 @@ Function Create_Adventurer {
     $Info_Banner = "Wilderness Journeys"
     Draw_Info_Banner
     Write-Color ""
+    # Display_Potion_Spells_Shop_Table -Value "Wilderness_Journeys"
     foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
         $All_Wilderness_Journeys_Array.Add("$($item.Name)")
         $Fail_Properties = $($item.Value.Reward.Fail.PSObject.Properties)
@@ -1006,6 +995,60 @@ Function Create_Adventurer {
     Save_JSON
     Import_JSON
     Update_Variables
+}
+
+
+
+#
+# draw table info
+#
+function Display_Potion_Spells_Shop_Table {
+    param (
+        [string]$Value
+    )
+    # potions and spells  = name,        description                                    : 
+    # settlement / shop   = name,        gold cost                                      : 
+    # quests              = name,        Objective,                Reward (gold + XP)   : 
+    # wilderness journeys = name,        test (type + difficulty), reward (pass + fail) :
+    if ($Value -eq "potions") {
+        $Info_Header = "Settlement Shop Items"
+    } elseif ($Value -eq "spells") {
+        $Info_Header = "Available Quests"
+    }
+    $Table_Items_Name_Array = New-Object System.Collections.Generic.List[System.Object]
+    $Table_Items_Description_Array = New-Object System.Collections.Generic.List[System.Object]
+    $Script:Table_Item_Numbers = $Import_JSON.$Value.PSObject.Properties.Name | Sort-Object
+    foreach ($Table_Item_Number in $Table_Item_Numbers) {
+        $Table_Items_Name_Array.Add(($Import_JSON.$Value.$Table_Item_Number.Name | Measure-Object -Character).Characters)
+        $Table_Items_Description_Array.Add(($Import_JSON.$Value.$Table_Item_Number.Info | Measure-Object -Character).Characters)
+    }
+    $Table_Items_Name_Array_Max_Length = ($Table_Items_Name_Array | Measure-Object -Maximum).Maximum
+    $Table_Box_Name_Width_Top_Bottom = "-"*($Table_Items_Name_Array_Max_Length + 2)
+    $Table_Box_Name_Width_Padding = " "*($Table_Items_Name_Array_Max_Length - 3)
+    $Table_Items_Description_Array_Max_Length = ($Table_Items_Description_Array | Measure-Object -Maximum).Maximum
+    $Table_Box_Info_Width_Top_Bottom = "-"*($Table_Items_Description_Array_Max_Length + 2)
+    $Table_Box_Description_Width_Padding = " "*($Table_Items_Description_Array_Max_Length - 10) # 10 = "description"
+    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
+    Write-Color "  |"," D6 ","| ","Name$Table_Box_Name_Width_Padding","|"," Description$Table_Box_Description_Width_Padding","|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
+    foreach ($Table_Item_Number in $Table_Item_Numbers) {
+        if ($Import_JSON.$Value.$Table_Item_Number.Name.Length -le 9) {
+            if ($Table_Items_Name_Array_Max_Length -ge 9) {
+                $Name_Right_Padding = " "*($Table_Items_Name_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.Name.Length)
+            } else {
+                $Name_Right_Padding = " "*(9 - $Import_JSON.$Value.$Table_Item_Number.Name.Length)
+            }
+        } elseif ($Import_JSON.$Value.$Table_Item_Number.Name.Length -gt 9 -and $Import_JSON.$Value.$Table_Item_Number.Name.Length -le $Table_Items_Name_Array_Max_Length) {
+            $Name_Right_Padding = " "*($Table_Items_Name_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.Name.Length)
+        }
+        if ($Import_JSON.$Value.$Table_Item_Number.Info.Length -lt $Table_Items_Description_Array_Max_Length) {
+            $Info_Right_Padding = " "*($Table_Items_Description_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.Info.Length)
+        } else {
+            $Info_Right_Padding = ""
+        }
+        Write-Color "  |  $Table_Item_Number | ","$($Import_JSON.$Value.$Table_Item_Number.Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.Info)$Info_Right_Padding |" -Color DarkGray,DarkGray,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+    }
+    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
 }
 
 
@@ -1060,6 +1103,79 @@ Function Update_Variables {
     $Script:Spells_Quantity_5                           = $Import_JSON.Spells.'5'.Quantity
     $Script:Spells_Quantity_6                           = $Import_JSON.Spells.'6'.Quantity
 }
+
+
+
+#
+# display tables
+#
+# D6  Potion     Potion Affect
+# D6  Spell      Spell Affect
+# No.  Item      Gold Cost
+# D6  Quest      Objective        Reward
+# 2 - Forest     (Test INT 3)     (Fail -Rations 1)     (Pass +Rations 2)
+# others
+Function Draw_Table {
+    $Table_Items_Name_Array = New-Object System.Collections.Generic.List[System.Object]
+    $Table_Items_Description_Array = New-Object System.Collections.Generic.List[System.Object]
+    $Script:Table_Item_Numbers = $Import_JSON.Potions.PSObject.Properties.Name | Sort-Object
+    foreach ($Table_Item_Number in $Table_Item_Numbers) {
+            $Table_Items_Name_Array.Add(($Import_JSON.Potions.$Table_Item_Number.Info | Measure-Object -Character).Characters)
+            $Table_Items_Description_Array.Add(($Import_JSON.Potions.$Table_Item_Number.Info | Measure-Object -Character).Characters)
+    }
+    $Table_Items_Name_Array
+    $Table_Items_Description_Array
+
+    # get max item name length
+    $Table_Items_Name_Array_Max_Length = ($Table_Items_Name_Array | Measure-Object -Maximum).Maximum
+    # calculate top and bottom name width
+    # get max item info length
+    $Table_Items_Description_Array_Max_Length = ($Table_Items_Description_Array | Measure-Object -Maximum).Maximum
+    # calculate top and bottom info width
+    $Table_Box_Info_Width_Top_Bottom = "-"*($Table_Items_Description_Array_Max_Length + 2)
+    # calculate middle info width
+    $Table_Box_Info_Width_Middle = " "*($Table_Items_Description_Array_Max_Length - 3)
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,0;$Host.UI.Write("")
+    Write-Color "+--+$Table_Box_Name_Width_Top_Bottom+-----++$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,1;$Host.UI.Write("")
+    Write-Color "|","D6","| ","Name$Table_Box_Name_Width_Middle","|"," Description ","| ","$Table_Box_Info_Width_Middle|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,2;$Host.UI.Write("")
+    Write-Color "+--+$Table_Box_Name_Width_Top_Bottom+-----++$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
+    $Position = 2
+    foreach ($Table_Item_Number in $Table_Item_Numbers) {
+        $Position += 1
+        # padding for name length
+        if ($Import_JSON.Items.$Table_Item_Number.Name.Length -le 9) { # 9 = "inventory"
+            if ($Table_Items_Name_Array_Max_Length -ge 9) {
+                $Name_Right_Padding = " "*($Table_Items_Name_Array_Max_Length - $Import_JSON.Items.$Table_Item_Number.Name.Length)
+            } else {
+                $Name_Right_Padding = " "*(9 - $Import_JSON.Items.$Table_Item_Number.Name.Length) # 9 = "inventory"
+            }
+        } elseif ($Import_JSON.Items.$Table_Item_Number.Name.Length -gt 9 -and $Import_JSON.Items.$Table_Item_Number.Name.Length -le $Table_Items_Name_Array_Max_Length) {
+            $Name_Right_Padding = " "*($Table_Items_Name_Array_Max_Length - $Import_JSON.Items.$Table_Item_Number.Name.Length)
+        } else {
+            $Name_Right_Padding = " "
+        }
+        #ID padding
+        $ID_Number = " $($Import_JSON.Potions.$Table_Item_Number.ID)" # if ID is a single digit (1 extra padding)
+
+        # info padding
+        if ($Import_JSON.Items.$Table_Item_Number.Info.Length -lt $Table_Items_Description_Array_Max_Length) {
+            $Info_Right_Padding = " "*($Table_Items_Description_Array_Max_Length - $Import_JSON.Items.$Table_Item_Number.Info.Length)
+        } else {
+            $Info_Right_Padding = ""
+        }
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,$Position;$Host.UI.Write("")
+
+        Write-Color "|","$ID_Number","| ","$($Import_JSON.Items.$Table_Item_Number.Name)$Name_Right_Padding ","|", "$Quantity_Left_Padding$($Import_JSON.Items.$Table_Item_Number.Quantity) ","| ","$($Import_JSON.Items.$Table_Item_Number.GoldValue)$Gold_Value_Right_Padding","| $($Import_JSON.Items.$Table_Item_Number.Info)$Info_Right_Padding |" -Color DarkGray,$Selectable_ID_Highlight,DarkGray,$Selectable_Name_Highlight,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+    }
+    $Position += 1
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,$Position;$Host.UI.Write("")
+    Write-Color "+--+$Table_Box_Name_Width_Top_Bottom+-----+$Table_Box_Gold_Value_Width_Top_Bottom+$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
+}
+
+
+
 
 
 
