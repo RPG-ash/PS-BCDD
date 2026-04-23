@@ -1006,51 +1006,65 @@ function Display_Potion_Spells_Shop_Table {
     param (
         [string]$Value
     )
-    # potions and spells  = name,        description                                    : 
-    # settlement / shop   = name,        gold cost                                      : 
-    # quests              = name,        Objective,                Reward (gold + XP)   : 
+    # potions and spells  = name,        description                                    : working
+    # settlement / shop   = name,        gold cost                                      : working
+    # quests              = name,        Objective,                Reward (gold + XP)   :
     # wilderness journeys = name,        test (type + difficulty), reward (pass + fail) :
     if ($Value -ieq "potions" -or $Value -ieq "spells") {
-        $Name = "Name"
-        $Info = "Info"
+        $Name_or_Description = "Name"
+        $Info_or_Cost        = "Info"
     } elseif ($Value -ieq "settlement") {
-        $Name = "description"
-        $Info = "cost"
+        $Name_or_Description = "Description"
+        $Info_or_Cost        = "Cost"
     }
-    $Table_Items_Name_Array = New-Object System.Collections.Generic.List[System.Object]
-    $Table_Items_Description_Array = New-Object System.Collections.Generic.List[System.Object]
-    $Script:Table_Item_Numbers = $Import_JSON.$Value.PSObject.Properties.Name | Sort-Object # .Name gets the property
+    $Table_Items_Name_or_Description_Array        = New-Object System.Collections.Generic.List[System.Object]
+    $Table_Items_Info_or_Cost_Array = New-Object System.Collections.Generic.List[System.Object]
+    $Script:Table_Item_Numbers     = $Import_JSON.$Value.PSObject.Properties.Name | Sort-Object # .Name gets the property
     foreach ($Table_Item_Number in $Table_Item_Numbers) {
-        $Table_Items_Name_Array.Add(($Import_JSON.$Value.$Table_Item_Number.$Name | Measure-Object -Character).Characters)
-        $Table_Items_Description_Array.Add(($Import_JSON.$Value.$Table_Item_Number.$Info | Measure-Object -Character).Characters)
+        $Table_Items_Name_or_Description_Array.Add(($Import_JSON.$Value.$Table_Item_Number.$Name_or_Description | Measure-Object -Character).Characters)
+        $Table_Items_Info_or_Cost_Array.Add(($Import_JSON.$Value.$Table_Item_Number.$Info_or_Cost | Measure-Object -Character).Characters)
     }
-    $Table_Items_Name_Array_Max_Length = ($Table_Items_Name_Array | Measure-Object -Maximum).Maximum
-    $Table_Box_Name_Width_Top_Bottom = "-"*($Table_Items_Name_Array_Max_Length + 2)
-    $Table_Box_Name_Width_Padding = " "*($Table_Items_Name_Array_Max_Length - 3)
-    $Table_Items_Description_Array_Max_Length = ($Table_Items_Description_Array | Measure-Object -Maximum).Maximum
-    $Table_Box_Info_Width_Top_Bottom = "-"*($Table_Items_Description_Array_Max_Length + 2)
-    $Table_Box_Description_Width_Padding = " "*($Table_Items_Description_Array_Max_Length - 10) # 10 = "description"
-    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
-    Write-Color "  |"," D6 ","| ","Name$Table_Box_Name_Width_Padding","|"," Description$Table_Box_Description_Width_Padding","|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
-    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
+    $Table_Items_Name_or_Description_Array_Max_Length        = ($Table_Items_Name_or_Description_Array | Measure-Object -Maximum).Maximum
+    $Table_Box_Name_or_Description_Width_Top_Bottom          = "-"*($Table_Items_Name_or_Description_Array_Max_Length + 2)
+    $Table_Box_Name_or_Description_Width_Padding             = " "*($Table_Items_Name_or_Description_Array_Max_Length - 3)
+    $Table_Items_Info_or_Cost_Array_Max_Length = ($Table_Items_Info_or_Cost_Array | Measure-Object -Maximum).Maximum
+    if ($Table_Items_Info_or_Cost_Array_Max_Length - $Info_or_Cost.Length + 1 -lt 0) {
+        $Table_Box_Item_or_Cost_Width_Padding = " "
+        $Table_Box_Info_or_Cost_Width_Top_Bottom     = "------"
+    } else {
+        $Table_Box_Info_or_Cost_Width_Top_Bottom     = "-"*($Table_Items_Info_or_Cost_Array_Max_Length + 2)
+        $Table_Box_Item_or_Cost_Width_Padding = " "*($Table_Items_Info_or_Cost_Array_Max_Length - $Info_or_Cost.Length + 1)
+    }
+    Write-Color "  +----+$Table_Box_Name_or_Description_Width_Top_Bottom+$Table_Box_Info_or_Cost_Width_Top_Bottom+" -Color DarkGray
+    Write-Color "  |"," D6 ","| ","Name$Table_Box_Name_or_Description_Width_Padding","|"," $Info_or_Cost$Table_Box_Item_or_Cost_Width_Padding","|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+    Write-Color "  +----+$Table_Box_Name_or_Description_Width_Top_Bottom+$Table_Box_Info_or_Cost_Width_Top_Bottom+" -Color DarkGray
+    $counter = 0
     foreach ($Table_Item_Number in $Table_Item_Numbers) {
-        if ($Import_JSON.$Value.$Table_Item_Number.$Name.Length -le 9) {
-            if ($Table_Items_Name_Array_Max_Length -ge 9) {
-                $Name_Right_Padding = " "*($Table_Items_Name_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.$Name.Length)
+        $counter++
+        if ($Import_JSON.$Value.$Table_Item_Number.$Name_or_Description.Length -le 9) {
+            if ($Table_Items_Name_or_Description_Array_Max_Length -ge 9) {
+                $Name_or_Description_Right_Padding = " "*($Table_Items_Name_or_Description_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.$Name_or_Description.Length)
             } else {
-                $Name_Right_Padding = " "*(9 - $Import_JSON.$Value.$Table_Item_Number.$Name.Length)
+                $Name_or_Description_Right_Padding = " "*(9 - $Import_JSON.$Value.$Table_Item_Number.$Name_or_Description.Length)
             }
-        } elseif ($Import_JSON.$Value.$Table_Item_Number.$Name.Length -gt 9 -and $Import_JSON.$Value.$Table_Item_Number.$Name.Length -le $Table_Items_Name_Array_Max_Length) {
-            $Name_Right_Padding = " "*($Table_Items_Name_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.$Name.Length)
+        } elseif ($Import_JSON.$Value.$Table_Item_Number.$Name_or_Description.Length -gt 9 -and $Import_JSON.$Value.$Table_Item_Number.$Name_or_Description.Length -le $Table_Items_Name_or_Description_Array_Max_Length) {
+            $Name_or_Description_Right_Padding = " "*($Table_Items_Name_or_Description_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.$Name_or_Description.Length)
         }
-        if ($Import_JSON.$Value.$Table_Item_Number.$Info.Length -lt $Table_Items_Description_Array_Max_Length) {
-            $Info_Right_Padding = " "*($Table_Items_Description_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.$Info.Length)
+        if ($Import_JSON.$Value.$Table_Item_Number.$Info_or_Cost.Length -le $Table_Items_Info_or_Cost_Array_Max_Length) {
+            $Info_or_Cost_Right_Padding = " "*($Table_Items_Info_or_Cost_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.$Info_or_Cost.Length)
+            if ($Table_Items_Info_or_Cost_Array_Max_Length -le $Info_or_Cost.Length) {
+                if (($Import_JSON.$Value.$Table_Item_Number.$Info_or_Cost | Measure-Object -Character).Characters -eq 1) {
+                    $Info_or_Cost_Right_Padding = "   "
+                } else {
+                    $Info_or_Cost_Right_Padding = "  "
+                }
+            }
         } else {
-            $Info_Right_Padding = ""
+            $Info_or_Cost_Right_Padding = ""
         }
-        Write-Color "  |  $Table_Item_Number | ","$($Import_JSON.$Value.$Table_Item_Number.$Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.$Info)$Info_Right_Padding |" -Color DarkGray,DarkGray,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+        Write-Color "  |  $Table_Item_Number | ","$($Import_JSON.$Value.$Table_Item_Number.$Name_or_Description)$Name_or_Description_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.$Info_or_Cost)$Info_or_Cost_Right_Padding |" -Color DarkGray,DarkGray,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
     }
-    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
+    Write-Color "  +----+$Table_Box_Name_or_Description_Width_Top_Bottom+$Table_Box_Info_or_Cost_Width_Top_Bottom+" -Color DarkGray
 }
 
 
@@ -1117,64 +1131,64 @@ Function Update_Variables {
 # D6  Quest      Objective        Reward
 # 2 - Forest     (Test INT 3)     (Fail -Rations 1)     (Pass +Rations 2)
 # others
-Function Draw_Table {
-    $Table_Items_Name_Array = New-Object System.Collections.Generic.List[System.Object]
-    $Table_Items_Description_Array = New-Object System.Collections.Generic.List[System.Object]
-    $Script:Table_Item_Numbers = $Import_JSON.Potions.PSObject.Properties.Name | Sort-Object
-    foreach ($Table_Item_Number in $Table_Item_Numbers) {
-            $Table_Items_Name_Array.Add(($Import_JSON.Potions.$Table_Item_Number.Info | Measure-Object -Character).Characters)
-            $Table_Items_Description_Array.Add(($Import_JSON.Potions.$Table_Item_Number.Info | Measure-Object -Character).Characters)
-    }
-    $Table_Items_Name_Array
-    $Table_Items_Description_Array
+# Function Draw_Table {
+#     $Table_Items_Name_or_Description_Array = New-Object System.Collections.Generic.List[System.Object]
+#     $Table_Items_Info_or_Cost_Array = New-Object System.Collections.Generic.List[System.Object]
+#     $Script:Table_Item_Numbers = $Import_JSON.Potions.PSObject.Properties.Name | Sort-Object
+#     foreach ($Table_Item_Number in $Table_Item_Numbers) {
+#             $Table_Items_Name_or_Description_Array.Add(($Import_JSON.Potions.$Table_Item_Number.Info | Measure-Object -Character).Characters)
+#             $Table_Items_Info_or_Cost_Array.Add(($Import_JSON.Potions.$Table_Item_Number.Info | Measure-Object -Character).Characters)
+#     }
+#     $Table_Items_Name_or_Description_Array
+#     $Table_Items_Info_or_Cost_Array
 
-    # get max item name length
-    $Table_Items_Name_Array_Max_Length = ($Table_Items_Name_Array | Measure-Object -Maximum).Maximum
-    # calculate top and bottom name width
-    # get max item info length
-    $Table_Items_Description_Array_Max_Length = ($Table_Items_Description_Array | Measure-Object -Maximum).Maximum
-    # calculate top and bottom info width
-    $Table_Box_Info_Width_Top_Bottom = "-"*($Table_Items_Description_Array_Max_Length + 2)
-    # calculate middle info width
-    $Table_Box_Info_Width_Middle = " "*($Table_Items_Description_Array_Max_Length - 3)
-    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,0;$Host.UI.Write("")
-    Write-Color "+--+$Table_Box_Name_Width_Top_Bottom+-----++$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
-    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,1;$Host.UI.Write("")
-    Write-Color "|","D6","| ","Name$Table_Box_Name_Width_Middle","|"," Description ","| ","$Table_Box_Info_Width_Middle|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
-    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,2;$Host.UI.Write("")
-    Write-Color "+--+$Table_Box_Name_Width_Top_Bottom+-----++$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
-    $Position = 2
-    foreach ($Table_Item_Number in $Table_Item_Numbers) {
-        $Position += 1
-        # padding for name length
-        if ($Import_JSON.Items.$Table_Item_Number.Name.Length -le 9) { # 9 = "inventory"
-            if ($Table_Items_Name_Array_Max_Length -ge 9) {
-                $Name_Right_Padding = " "*($Table_Items_Name_Array_Max_Length - $Import_JSON.Items.$Table_Item_Number.Name.Length)
-            } else {
-                $Name_Right_Padding = " "*(9 - $Import_JSON.Items.$Table_Item_Number.Name.Length) # 9 = "inventory"
-            }
-        } elseif ($Import_JSON.Items.$Table_Item_Number.Name.Length -gt 9 -and $Import_JSON.Items.$Table_Item_Number.Name.Length -le $Table_Items_Name_Array_Max_Length) {
-            $Name_Right_Padding = " "*($Table_Items_Name_Array_Max_Length - $Import_JSON.Items.$Table_Item_Number.Name.Length)
-        } else {
-            $Name_Right_Padding = " "
-        }
-        #ID padding
-        $ID_Number = " $($Import_JSON.Potions.$Table_Item_Number.ID)" # if ID is a single digit (1 extra padding)
+#     # get max item name length
+#     $Table_Items_Name_or_Description_Array_Max_Length = ($Table_Items_Name_or_Description_Array | Measure-Object -Maximum).Maximum
+#     # calculate top and bottom name width
+#     # get max item info length
+#     $Table_Items_Info_or_Cost_Array_Max_Length = ($Table_Items_Info_or_Cost_Array | Measure-Object -Maximum).Maximum
+#     # calculate top and bottom info width
+#     $Table_Box_Info_or_Cost_Width_Top_Bottom = "-"*($Table_Items_Info_or_Cost_Array_Max_Length + 2)
+#     # calculate middle info width
+#     $Table_Box_Info_Width_Middle = " "*($Table_Items_Info_or_Cost_Array_Max_Length - 3)
+#     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,0;$Host.UI.Write("")
+#     Write-Color "+--+$Table_Box_Name_or_Description_Width_Top_Bottom+-----++$Table_Box_Info_or_Cost_Width_Top_Bottom+" -Color DarkGray
+#     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,1;$Host.UI.Write("")
+#     Write-Color "|","D6","| ","Name$Table_Box_Name_Width_Middle","|"," Description ","| ","$Table_Box_Info_Width_Middle|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+#     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,2;$Host.UI.Write("")
+#     Write-Color "+--+$Table_Box_Name_or_Description_Width_Top_Bottom+-----++$Table_Box_Info_or_Cost_Width_Top_Bottom+" -Color DarkGray
+#     $Position = 2
+#     foreach ($Table_Item_Number in $Table_Item_Numbers) {
+#         $Position += 1
+#         # padding for name length
+#         if ($Import_JSON.Items.$Table_Item_Number.Name.Length -le 9) { # 9 = "inventory"
+#             if ($Table_Items_Name_or_Description_Array_Max_Length -ge 9) {
+#                 $Name_Right_Padding = " "*($Table_Items_Name_or_Description_Array_Max_Length - $Import_JSON.Items.$Table_Item_Number.Name.Length)
+#             } else {
+#                 $Name_Right_Padding = " "*(9 - $Import_JSON.Items.$Table_Item_Number.Name.Length) # 9 = "inventory"
+#             }
+#         } elseif ($Import_JSON.Items.$Table_Item_Number.Name.Length -gt 9 -and $Import_JSON.Items.$Table_Item_Number.Name.Length -le $Table_Items_Name_or_Description_Array_Max_Length) {
+#             $Name_Right_Padding = " "*($Table_Items_Name_or_Description_Array_Max_Length - $Import_JSON.Items.$Table_Item_Number.Name.Length)
+#         } else {
+#             $Name_Right_Padding = " "
+#         }
+#         #ID padding
+#         $ID_Number = " $($Import_JSON.Potions.$Table_Item_Number.ID)" # if ID is a single digit (1 extra padding)
 
-        # info padding
-        if ($Import_JSON.Items.$Table_Item_Number.Info.Length -lt $Table_Items_Description_Array_Max_Length) {
-            $Info_Right_Padding = " "*($Table_Items_Description_Array_Max_Length - $Import_JSON.Items.$Table_Item_Number.Info.Length)
-        } else {
-            $Info_Right_Padding = ""
-        }
-        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,$Position;$Host.UI.Write("")
+#         # info padding
+#         if ($Import_JSON.Items.$Table_Item_Number.Info.Length -lt $Table_Items_Info_or_Cost_Array_Max_Length) {
+#             $Info_or_Cost_Right_Padding = " "*($Table_Items_Info_or_Cost_Array_Max_Length - $Import_JSON.Items.$Table_Item_Number.Info.Length)
+#         } else {
+#             $Info_or_Cost_Right_Padding = ""
+#         }
+#         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,$Position;$Host.UI.Write("")
 
-        Write-Color "|","$ID_Number","| ","$($Import_JSON.Items.$Table_Item_Number.Name)$Name_Right_Padding ","|", "$Quantity_Left_Padding$($Import_JSON.Items.$Table_Item_Number.Quantity) ","| ","$($Import_JSON.Items.$Table_Item_Number.GoldValue)$Gold_Value_Right_Padding","| $($Import_JSON.Items.$Table_Item_Number.Info)$Info_Right_Padding |" -Color DarkGray,$Selectable_ID_Highlight,DarkGray,$Selectable_Name_Highlight,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
-    }
-    $Position += 1
-    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,$Position;$Host.UI.Write("")
-    Write-Color "+--+$Table_Box_Name_Width_Top_Bottom+-----+$Table_Box_Gold_Value_Width_Top_Bottom+$Table_Box_Info_Width_Top_Bottom+" -Color DarkGray
-}
+#         Write-Color "|","$ID_Number","| ","$($Import_JSON.Items.$Table_Item_Number.Name)$Name_Right_Padding ","|", "$Quantity_Left_Padding$($Import_JSON.Items.$Table_Item_Number.Quantity) ","| ","$($Import_JSON.Items.$Table_Item_Number.GoldValue)$Gold_Value_Right_Padding","| $($Import_JSON.Items.$Table_Item_Number.Info)$Info_or_Cost_Right_Padding |" -Color DarkGray,$Selectable_ID_Highlight,DarkGray,$Selectable_Name_Highlight,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+#     }
+#     $Position += 1
+#     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 10,$Position;$Host.UI.Write("")
+#     Write-Color "+--+$Table_Box_Name_or_Description_Width_Top_Bottom+-----+$Table_Box_Gold_Value_Width_Top_Bottom+$Table_Box_Info_or_Cost_Width_Top_Bottom+" -Color DarkGray
+# }
 
 
 
