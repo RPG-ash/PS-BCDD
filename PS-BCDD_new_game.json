@@ -967,51 +967,57 @@
   "Quests": {
     "1": {
       "Name": "Hunt",
-      "Short_Description": "Return 4 rations",
-      "Long_Description": "return with 4 rations",
+      "Short_Objective": "Return 4 rations",
+      "Long_Objective": "return with 4 rations",
       "Gold_Reward": "2d6",
       "XP_Reward": 3,
-      "Active": false
+      "Active": false,
+      "blank" : ""
     },
     "2": {
       "Name": "Deliver",
-      "Short_Description": "Pass 3 NPC tests",
-      "Long_Description": "Pass 3 NPC tests",
+      "Short_Objective": "Pass 3 NPC tests",
+      "Long_Objective": "Pass 3 NPC tests",
       "Gold_Reward": 10,
       "XP_Reward": 3,
-      "Active": false
+      "Active": false,
+      "blank" : ""
     },
     "3": {
       "Name": "Scout",
-      "Short_Description": "Explore 5 rooms",
-      "Long_Description": "explore 5 Dungeon or Wilderness rooms",
+      "Short_Objective": "Explore 5 Dungeon or Wilderness rooms",
+      "Long_Objective": "explore 5 Dungeon or Wilderness rooms",
       "Gold_Reward": 15,
       "XP_Reward": 3,
-      "Active": false
+      "Active": false,
+      "blank" : ""
     },
     "4": {
       "Name": "Destroy",
-      "Short_Description": "Destroy D6 + 3 Dungeon or Wilderness",
-      "Long_Description": "destroy D6 + 3 Dungeon or Wilderness enemies",
+      "Short_Objective": "Destroy D6 + 3 Dungeon or Wilderness",
+      "Long_Objective": "destroy D6 + 3 Dungeon or Wilderness enemies",
       "Gold_Reward": 25,
       "XP_Reward": 3,
-      "Active": false
+      "Active": false,
+      "blank" : ""
     },
     "5": {
       "Name": "Map",
-      "Short_Description": "Journey through 3 Swamps",
-      "Long_Description": "journey through 3 Wilderness Swamps",
+      "Short_Objective": "Journey through 3 Swamps",
+      "Long_Objective": "journey through 3 Wilderness Swamps",
       "Gold_Reward": 35,
       "XP_Reward": 6,
-      "Active": false
+      "Active": false,
+      "blank" : ""
     },
     "6": {
       "Name": "Retrieve",
-      "Short_Description": "Retrieve 3 Tomes",
-      "Long_Description": "find and retrieve 3 Tomes",
+      "Short_Objective": "Retrieve 3 Tomes",
+      "Long_Objective": "find and retrieve 3 Tomes",
       "Gold_Reward": 50,
       "XP_Reward": 6,
-      "Active": false
+      "Active": false,
+      "blank" : ""
     }
   },
   "Game_Information": {
