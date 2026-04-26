@@ -1116,6 +1116,7 @@ function Display_Quests_Wilderness_Journeys_Table {
     if ($Value -eq "Quests") {
         $Table_Box_Objective_or_Test_Difficulty_Width_Top_Bottom = ""
         $Table_Box_Objective_or_Test_Difficulty_Width_Padding    = ""
+        $Buffer = "-"*9
     } else {
         $Table_Box_Objective_or_Test_Difficulty_Width_Top_Bottom = "-"*($Table_Items_Objective_or_Test_Difficulty_Array_Max_Length + 2)
         $Table_Box_Objective_or_Test_Difficulty_Width_Padding    = " "*($Table_Items_Objective_or_Test_Difficulty_Array_Max_Length - $Objective_or_Test_Name.Length + 1)
@@ -1128,9 +1129,9 @@ function Display_Quests_Wilderness_Journeys_Table {
     
     # quests              = name,        Objective,                Reward (gold + XP)   :
     # wilderness journeys = name,        test (type + difficulty), reward (pass + fail) :
-    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Objective_or_Test_Type_Width_Top_Bottom+$Table_Box_Objective_or_Test_Difficulty_Width_Top_Bottom+$Table_Box_Reward_Gold_or_Pass_Width_Top_Bottom+$Table_Box_Reward_XP_or_Fail_Width_Top_Bottom+" -Color DarkGray
-    Write-Color "  |"," D6 ","| ","Name$Table_Box_Name_Width_Padding","|"," $Objective_or_Test_Name$Table_Box_Objective_or_Test_Type_Width_Padding$Table_Box_Objective_or_Test_Difficulty_Width_Padding","|"," $Reward_Gold_or_Pass_Name$Table_Box_Reward_Gold_or_Pass_Width_Padding$Table_Box_Reward_XP_or_Fail_Width_Padding"," |" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
-    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Objective_or_Test_Type_Width_Top_Bottom$Table_Box_Objective_or_Test_Difficulty_Width_Top_Bottom+$Table_Box_Reward_Gold_or_Pass_Width_Top_Bottom$Table_Box_Reward_XP_or_Fail_Width_Top_Bottom+" -Color DarkGray
+    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Objective_or_Test_Type_Width_Top_Bottom$Table_Box_Objective_or_Test_Difficulty_Width_Top_Bottom+$Table_Box_Reward_Gold_or_Pass_Width_Top_Bottom$Table_Box_Reward_XP_or_Fail_Width_Top_Bottom$Buffer+" -Color DarkGray
+    Write-Color "  |"," D6 ","| ","Name$Table_Box_Name_Width_Padding","|"," $Objective_or_Test_Name$Table_Box_Objective_or_Test_Type_Width_Padding$Table_Box_Objective_or_Test_Difficulty_Width_Padding","|"," $Reward_Gold_or_Pass_Name$Table_Box_Reward_Gold_or_Pass_Width_Padding$Table_Box_Reward_XP_or_Fail_Width_Padding","|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Objective_or_Test_Type_Width_Top_Bottom$Table_Box_Objective_or_Test_Difficulty_Width_Top_Bottom+$Table_Box_Reward_Gold_or_Pass_Width_Top_Bottom$Table_Box_Reward_XP_or_Fail_Width_Top_Bottom$Buffer+" -Color DarkGray
     foreach ($Table_Item_Number in $Table_Item_Numbers) {
         # name
         $Name_Right_Padding = " "*($Table_Items_Name_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.$Name.Length)
@@ -1151,10 +1152,10 @@ function Display_Quests_Wilderness_Journeys_Table {
             $Reward_XP_or_Fail_Right_Padding = " "*($Reward_Gold_or_Pass_Name.Length - ($Import_JSON.$Value.$Table_Item_Number.$Reward_XP_or_Fail | Measure-Object -Character).Characters + 1)
         }
         
-        Write-Color "  |  $Table_Item_Number | ","$($Import_JSON.$Value.$Table_Item_Number.$Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.$Objective_or_Test_Type)$Objective_or_Test_Type_Right_Padding$($Import_JSON.$Value.$Table_Item_Number.$Objective_or_Test_Difficulty)$Objective_or_Test_Difficulty_Right_Padding | $($Import_JSON.$Value.$Table_Item_Number.$Reward_Gold_or_Pass)$Reward_Gold_or_Pass_Right_Padding`Gold + $($Import_JSON.$Value.$Table_Item_Number.$Reward_XP_or_Fail)$Reward_XP_or_Fail_Right_Padding`XP" -Color DarkGray,DarkGray,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+        Write-Color "  |  ","$Table_Item_Number"," | ","$($Import_JSON.$Value.$Table_Item_Number.$Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.$Objective_or_Test_Type)$Objective_or_Test_Type_Right_Padding$($Import_JSON.$Value.$Table_Item_Number.$Objective_or_Test_Difficulty)$Objective_or_Test_Difficulty_Right_Padding | ","$($Import_JSON.$Value.$Table_Item_Number.$Reward_Gold_or_Pass)$Reward_Gold_or_Pass_Right_Padding`Gold ","+ ","$($Import_JSON.$Value.$Table_Item_Number.$Reward_XP_or_Fail)$Reward_XP_or_Fail_Right_Padding`XP ","|" -Color DarkGray,White,DarkGray,Blue,DarkGray,DarkYellow,DarkGray,Cyan,DarkGray
         Start-Sleep -Seconds 3
     }
-    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Objective_or_Test_Type_Width_Top_Bottom+" -Color DarkGray
+    Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Objective_or_Test_Type_Width_Top_Bottom$Table_Box_Objective_or_Test_Difficulty_Width_Top_Bottom+$Table_Box_Reward_Gold_or_Pass_Width_Top_Bottom$Table_Box_Reward_XP_or_Fail_Width_Top_Bottom$Buffer+" -Color DarkGray
 }
 
 
