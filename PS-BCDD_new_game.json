@@ -871,10 +871,8 @@
     "1": {
       "Name": "Plains",
       "Complete": "",
-      "Test": {
-        "Type": "none",
-        "Difficulty": ""
-      },
+      "Test_Type": "n/a",
+      "Test_Difficulty": " ",
       "Reward" : {
         "Fail": {
         },
@@ -885,10 +883,8 @@
     "2": {
       "Name": "Forest",
       "Complete": "",
-      "Test": {
-        "Type": "INT",
-        "Difficulty": 3
-      },
+      "Test_Type": "INT",
+      "Test_Difficulty": 3,
       "Reward" : {
         "Fail": {
           "Rations": 1
@@ -901,10 +897,8 @@
     "3": {
       "Name": "River",
       "Complete": "",
-      "Test": {
-        "Type": "DEX",
-        "Difficulty": 3
-      },
+      "Test_Type": "DEX",
+      "Test_Difficulty": 3,
       "Reward" : {
         "Fail": {
           "Health": 1
@@ -917,10 +911,8 @@
     "4": {
       "Name": "Campsite",
       "Complete": "",
-      "Test": {
-        "Type": "STR",
-        "Difficulty": 3
-      },
+      "Test_Type": "STR",
+      "Test_Difficulty": 3,
       "Reward" : {
         "Fail": {
           "Gold": 2
@@ -934,10 +926,8 @@
     "5": {
       "Name": "Hill",
       "Complete": "",
-      "Test": {
-        "Type": "DEX",
-        "Difficulty": 4
-      },
+      "Test_Type": "DEX",
+      "Test_Difficulty": 4,
       "Reward" : {
         "Fail": {
           "Rations": 2
@@ -950,10 +940,8 @@
     "6": {
       "Name": "Swamp",
       "Complete": "",
-      "Test": {
-        "Type": "STR",
-        "Difficulty": 5
-      },
+      "Test_Type": "STR",
+      "Test_Difficulty": 5,
       "Reward" : {
         "Fail": {
           "Health": 2
@@ -967,7 +955,7 @@
   "Quests": {
     "1": {
       "Name": "Hunt",
-      "Short_Objective": "Return 4 rations",
+      "Short_Objective": "Return with 4 rations",
       "Long_Objective": "return with 4 rations",
       "Gold_Reward": "2d6",
       "XP_Reward": 3,
@@ -985,8 +973,8 @@
     },
     "3": {
       "Name": "Scout",
-      "Short_Objective": "Explore 5 Dungeon or Wilderness rooms",
-      "Long_Objective": "explore 5 Dungeon or Wilderness rooms",
+      "Short_Objective": "Explore 5 Dungeon or Wilderness areas",
+      "Long_Objective": "explore 5 Dungeon or Wilderness areas",
       "Gold_Reward": 15,
       "XP_Reward": 3,
       "Active": false,
@@ -994,7 +982,7 @@
     },
     "4": {
       "Name": "Destroy",
-      "Short_Objective": "Destroy D6 + 3 Dungeon or Wilderness",
+      "Short_Objective": "Destroy D6 + 3 Dungeon or Wilderness enemies",
       "Long_Objective": "destroy D6 + 3 Dungeon or Wilderness enemies",
       "Gold_Reward": 25,
       "XP_Reward": 3,
@@ -1003,7 +991,7 @@
     },
     "5": {
       "Name": "Map",
-      "Short_Objective": "Journey through 3 Swamps",
+      "Short_Objective": "Journey through 3 Wilderness Swamps",
       "Long_Objective": "journey through 3 Wilderness Swamps",
       "Gold_Reward": 35,
       "XP_Reward": 6,
