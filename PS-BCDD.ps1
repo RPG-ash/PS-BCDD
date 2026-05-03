@@ -1107,18 +1107,22 @@ function Draw_Wilderness_Journeys_Table {
         $Table_Items_Name_Array.Add(($Import_JSON.$Value.$Table_Item_Number.Name | Measure-Object -Character).Characters)
         $Table_Items_Test_Type_Array.Add(($Import_JSON.$Value.$Table_Item_Number.Test_Type | Measure-Object -Character).Characters)
         $Table_Items_Test_Difficulty_Array.Add(($Import_JSON.$Value.$Table_Item_Number.Test_Difficulty | Measure-Object -Character).Characters)
-        $Table_Items_Reward_Pass_Array.Add(($Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name | Measure-Object -Character).Characters)
+        if ($Table_Item_Number -eq "4") { # this wilderness journey has two rewards for passing the test so they have to be added separately
+            foreach ($Pass_Name in $Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name) {
+                $Table_Items_Reward_Pass_Array.Add(($Pass_Name | Measure-Object -Character).Characters)
+            }
+        }
         $Table_Items_Reward_Fail_Array.Add(($Import_JSON.$Value.$Table_Item_Number.Reward.Fail.PSObject.Properties.Name | Measure-Object -Character).Characters)
     }
-    Add-Content -Path .\error.log -value "Table_Items_Reward_Pass_Array : $Table_Items_Reward_Pass_Array"
-    Add-Content -Path .\error.log -value "Table_Items_Reward_Fail_Array : $Table_Items_Reward_Fail_Array"
+    # Add-Content -Path .\error.log -Value "Table_Items_Reward_Pass_Array : $Table_Items_Reward_Pass_Array"
+    # Add-Content -Path .\error.log -Value "Table_Items_Reward_Fail_Array : $Table_Items_Reward_Fail_Array"
     $Table_Items_Name_Array_Max_Length            = ($Table_Items_Name_Array | Measure-Object -Maximum).Maximum
     $Table_Items_Test_Type_Array_Max_Length       = ($Table_Items_Test_Type_Array | Measure-Object -Maximum).Maximum
     $Table_Items_Test_Difficulty_Array_Max_Length = ($Table_Items_Test_Difficulty_Array | Measure-Object -Maximum).Maximum
     $Table_Items_Reward_Pass_Array_Max_Length     = ($Table_Items_Reward_Pass_Array | Measure-Object -Maximum).Maximum
     $Table_Items_Reward_Fail_Array_Max_Length     = ($Table_Items_Reward_Fail_Array | Measure-Object -Maximum).Maximum
-    Add-Content -Path .\error.log -value "Table_Items_Reward_Pass_Array_Max_Length : $Table_Items_Reward_Pass_Array_Max_Length"
-    Add-Content -Path .\error.log -value "Table_Items_Reward_Fail_Array_Max_Length : $Table_Items_Reward_Fail_Array_Max_Length"
+    Add-Content -Path "C:\Users\rpg_ash\My Drive\GitHub\PS-BCDD\error.log" -value "Table_Items_Reward_Pass_Array_Max_Length : $Table_Items_Reward_Pass_Array_Max_Length"
+    Add-Content -Path "C:\Users\rpg_ash\My Drive\GitHub\PS-BCDD\error.log" -value "Table_Items_Reward_Fail_Array_Max_Length : $Table_Items_Reward_Fail_Array_Max_Length"
 
     $Table_Box_Name_Width_Top_Bottom              = "-"*($Table_Items_Name_Array_Max_Length + 2)
     $Table_Box_Name_Width_Padding                 = " "*($Table_Items_Name_Array_Max_Length - 3)
@@ -1130,31 +1134,58 @@ function Draw_Wilderness_Journeys_Table {
     $Table_Box_Test_Difficulty_Width_Padding      = " "
 
     $Table_Box_Reward_Pass_Width_Top_Bottom       = "-"*($Table_Items_Reward_Pass_Array_Max_Length)
-    $Table_Box_Reward_Pass_Width_Padding          = " "*($Table_Items_Reward_Pass_Array_Max_Length - "Reward".Length + 1)
-    $Table_Box_Reward_Fail_Width_Top_Bottom       = "-"*($Table_Items_Reward_Fail_Array_Max_Length + 11)
-    $Table_Box_Reward_Fail_Width_Padding          = " "*("Reward".Length - $Table_Items_Reward_Fail_Array_Max_Length + 1)
+    $Table_Box_Reward_Penalty_Width_Padding       = " "*(($Table_Items_Reward_Pass_Array_Max_Length + $Table_Items_Reward_Fail_Array_Max_Length + 8) - "Reward / Penalty".Length)
+    $Table_Box_Reward_Fail_Width_Top_Bottom       = "-"*($Table_Items_Reward_Fail_Array_Max_Length + 9)
 
     Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Test_Type_Width_Top_Bottom$Table_Box_Test_Difficulty_Width_Top_Bottom+$Table_Box_Reward_Pass_Width_Top_Bottom$Table_Box_Reward_Fail_Width_Top_Bottom+" -Color DarkGray
-    Write-Color "  |"," D6 ","| ","Name$Table_Box_Name_Width_Padding","|"," Test$Table_Box_Test_Type_Width_Padding$Table_Box_Test_Difficulty_Width_Padding","|"," Reward / Penalty$Table_Box_Reward_Pass_Width_Padding$Table_Box_Reward_Fail_Width_Padding","|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+    Write-Color "  |"," D6 ","| ","Name$Table_Box_Name_Width_Padding","|"," Test$Table_Box_Test_Type_Width_Padding$Table_Box_Test_Difficulty_Width_Padding","|"," Reward / Penalty$Table_Box_Reward_Penalty_Width_Padding","|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
     Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Test_Type_Width_Top_Bottom$Table_Box_Test_Difficulty_Width_Top_Bottom+$Table_Box_Reward_Pass_Width_Top_Bottom$Table_Box_Reward_Fail_Width_Top_Bottom+" -Color DarkGray
     foreach ($Table_Item_Number in $Table_Item_Numbers) {
         $Name_Right_Padding = " "*($Table_Items_Name_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.Name.Length)
         $Test_Type_Right_Padding = " "*($Table_Items_Test_Type_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.Test_Type.Length + 1)
+        $Reward_Right_Padding = " "*($Table_Items_Reward_Pass_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name).Length)
+        $Penalty_Right_Padding = " "*($Table_Items_Reward_Fail_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Fail.PSObject.Properties.Name).Length)
         if ($Import_JSON.$Value.$Table_Item_Number.Name -ieq "Plains") { # no reward or penalty for plains (no output)
-            $Test_Difficulty_Right_Padding = " "*6
+            Write-Color "  |  ","$Table_Item_Number"," | ","$($Import_JSON.$Value.$Table_Item_Number.Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.Test_Type)$Test_Type_Right_Padding$($Import_JSON.$Value.$Table_Item_Number.Test_Difficulty) | No ","reward ","or ","penalty  ","|" -Color DarkGray,White,DarkGray,Blue,DarkGray,Green,DarkGray,Red,DarkGray
         } elseif ($Import_JSON.$Value.$Table_Item_Number.Name -eq "Campsite") { # deals with two rewards
-            $Test_Difficulty_Right_Padding = ""
+            $Reward_Right_Padding = " "*($Table_Items_Reward_Pass_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name).Length)
+            $Penalty_Right_Padding = " "*($Table_Items_Reward_Fail_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Fail.PSObject.Properties.Name).Length)
+            # foreach ($item in $Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name) {
+            foreach ($item in $Import_JSON."wilderness_journeys"."4".Reward.Pass.PSObject.Properties.Name) {
+                $Pass_Name_Array = New-Object System.Collections.Generic.List[System.Object]
+                $Pass_Names = $Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name
+                foreach ($Pass_Name in $Pass_Names) {
+                    Add-Content -Path .\error.log -Value "Pass_Name : $Pass_Name"
+                    Add-Content -Path .\error.log -Value "Import_JSON.Value.Table_Item_Number.Reward.Pass.Pass_Name : $($Import_JSON.$Value.$Table_Item_Number.Reward.Pass.$Pass_Name)"
+                    $Pass_Name_Array.Add($Pass_Name)
+                    $Pass_Name_Array.Add(" "*($Table_Items_Reward_Pass_Array_Max_Length - ($Pass_Name).Length + 1))
+                }
+                $Pass_Value_Array = New-Object System.Collections.Generic.List[System.Object]
+                $Pass_Values = $Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Value
+                foreach ($Pass_Value in $Pass_Values) {
+                    $Pass_Value_Array.Add($Pass_Value)
+                }
+                # $Pass_Name_Array.Add(" "*($Table_Items_Reward_Pass_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Pass.$Pass_Name).Length))
+            }
+            Add-Content -Path .\error.log -Value "Pass_Value_Array : $Pass_Value_Array"
+            Add-Content -Path .\error.log -Value "Pass_Name_Array  : $Pass_Name_Array"
+            $Fail_Name  = $Import_JSON.$Value.$Table_Item_Number.Reward.Fail.PSObject.Properties.Name
+            $Fail_Value = $Import_JSON.$Value.$Table_Item_Number.Reward.Fail.PSObject.Properties.Value
+            Write-Color "  |  ","$Table_Item_Number"," | ","$($Import_JSON.$Value.$Table_Item_Number.Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.Test_Type)$Test_Type_Right_Padding$($Import_JSON.$Value.$Table_Item_Number.Test_Difficulty) | ","$($Pass_Value_Array[0]) $($Pass_Name_Array[0])$($Pass_Name_Array[1])","+ ","$Fail_Value $Fail_Name $Penalty_Right_Padding","|" -Color DarkGray,White,DarkGray,Blue,DarkGray,Green,DarkGray,Red,DarkGray
+            Write-Color "  |  ","$Table_Item_Number"," |          | or... | ","$($Pass_Value_Array[1]) $($Pass_Name_Array[2])$($Pass_Name_Array[3])","+ ","$Fail_Value $Fail_Name $Penalty_Right_Padding","|" -Color DarkGray,White,DarkGray,Green,DarkGray,Red,DarkGray
         } else { # any other reward or penalty (all single rewards or penalties)
             $Pass_Name  = $Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name
             $Pass_Value = $Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Value
             $Fail_Name  = $Import_JSON.$Value.$Table_Item_Number.Reward.Fail.PSObject.Properties.Name
             $Fail_Value = $Import_JSON.$Value.$Table_Item_Number.Reward.Fail.PSObject.Properties.Value
+            Write-Color "  |  ","$Table_Item_Number"," | ","$($Import_JSON.$Value.$Table_Item_Number.Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.Test_Type)$Test_Type_Right_Padding$($Import_JSON.$Value.$Table_Item_Number.Test_Difficulty) | ","$Pass_Value $Pass_Name $Reward_Right_Padding","+ ","$Fail_Value $Fail_Name $Penalty_Right_Padding","|" -Color DarkGray,White,DarkGray,Blue,DarkGray,Green,DarkGray,Red,DarkGray
         }
-        $Reward_Right_Padding = " "*($Table_Items_Reward_Pass_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name).Length + 1)
-        $Penalty_Right_Padding = " "*($Table_Items_Reward_Fail_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Fail.PSObject.Properties.Name).Length + 1)
-        Add-Content -Path .\error.log -value "Reward_Right_Padding  : $Reward_Right_Padding"
-        Add-Content -Path .\error.log -value "Penalty_Right_Padding : $Penalty_Right_Padding"
-        Write-Color "  |  ","$Table_Item_Number"," | ","$($Import_JSON.$Value.$Table_Item_Number.Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.Test_Type)$Test_Type_Right_Padding$($Import_JSON.$Value.$Table_Item_Number.Test_Difficulty) | ","$Pass_Name $Pass_Value $Reward_Right_Padding","+ ","$Fail_Name $Fail_Value $Penalty_Right_Padding","|" -Color DarkGray,White,DarkGray,Blue,DarkGray,DarkYellow,DarkGray,Cyan,DarkGray
+        # Add-Content -Path .\error.log -Value "Table_Items_Reward_Pass_Array_Max_Length  : $Table_Items_Reward_Pass_Array_Max_Length"
+        # Add-Content -Path .\error.log -Value "Reward_Right_Padding                      : $Reward_Right_Padding"
+        # Add-Content -Path .\error.log -Value "Penalty_Right_Padding                     : $Penalty_Right_Padding"
+        # | Reward / Penalty |
+        # | 2 Rations        + 1 Rations |
+        # | 2 Rations + 1 Rations |
         # Start-Sleep -Seconds 3
     }
     Write-Color "  +----+$Table_Box_Name_Width_Top_Bottom+$Table_Box_Test_Type_Width_Top_Bottom$Table_Box_Test_Difficulty_Width_Top_Bottom+$Table_Box_Reward_Pass_Width_Top_Bottom$Table_Box_Reward_Fail_Width_Top_Bottom+" -Color DarkGray
@@ -1231,9 +1262,9 @@ Clear-Host
 #
 Trap {
     $Time = Get-Date -Format "HH:mm:ss"
-    Add-Content -Path .\error.log -value "-Trap Error $Time ----------------------------------" # leave in
-    Add-Content -Path .\error.log -value "$PSItem" # leave in
-    Add-Content -Path .\error.log -value "------------------------------------------------------" # leave in
+    Add-Content -Path .\error.log -Value "-Trap Error $Time ----------------------------------" # leave in
+    Add-Content -Path .\error.log -Value "$PSItem" # leave in
+    Add-Content -Path .\error.log -Value "------------------------------------------------------" # leave in
 }
 
 
