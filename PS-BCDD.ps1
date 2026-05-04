@@ -2,11 +2,19 @@
 # ----
 #
 # - TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
-#          updated displaying table but still need to work on when reward is actually granted at the end of the quest.
+#          updated displaying table correctly, but still need to work on when reward is actually granted at the end of the quest.
 # - add <this> in...
-#     You rolled a 6 and obtain the Retrieve Quest.
-#     Your objective is to find and retrieve 3 Tomes. <"you will gain x XP and x Gold">
-# - You roll a 2 and Fail the test. You lose 2 Gold. - gold can currently go into negative
+#       You rolled a 6 and obtain the Retrieve Quest.
+#       Your objective is to find and retrieve 3 Tomes. <"you will gain x XP and x Gold">
+# - You roll a 2 and Fail the test. You lose 2 Gold --> gold can currently go into negative
+# - Write-Color "  After some time travelling, you arrive at a ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","."
+#       After some time travelling, you arrive at a Plains. --> "a" planes --> change to "the" planes
+#       if ($Random_Dice_Roll -eq "1") { # "Planes" - so it's "the Planes"", not "a Planes"."
+#           $A_Trip_To = "the"
+#       } else { # "a" fits all other cases
+#           $A_Trip_To = "a"
+#       }
+
 #
 # BUGS
 # ----
@@ -864,7 +872,7 @@ Function Create_Adventurer {
     # }
 
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-    Write-Color -NoNewLine "  Now roll a D6 to determine which ","Quest ","you will embark on. Press Enter to continue..." -Color DarkYellow,White,DarkYellow
+    Write-Color -NoNewLine "  Now Roll a D6 to determine which ","Quest ","you will embark on. Press Enter to continue..." -Color DarkYellow,White,DarkYellow
     $Host.UI.ReadLine() | Out-Null
     Roll_D6_Dice
     # $Random_Dice_Roll = 1
@@ -899,18 +907,9 @@ Function Create_Adventurer {
     Write-Color "  Most ","Wilderness Journeys ","require a ","STAT ","test to be completed." -Color DarkGray,White,DarkGray,White,DarkGray
     Write-Color "  You must roll higher than the value of that ","STAT ","test to ","Pass." -Color DarkGray,White,DarkGray,Green
     Write-Color "  You will receive a reward if you ","Pass ","a test, and a penalty if you ","Fail","." -Color DarkGray,Green,DarkGray,Red
-    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,27;$Host.UI.Write("")
-    Draw_Wilderness_Journeys_Table -Value "Wilderness_Journeys"
-
-    # basic items table (not being used. instead using overengineered auto adjusting table window read from JSON data)
-    # $All_Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
-    # foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
-    #     $All_Wilderness_Journeys_Array.Add("$($item.Name)")
-    #     $Fail_Properties = $($item.Value.Reward.Fail.PSObject.Properties)
-    #     $Pass_Properties = $($item.Value.Reward.Pass.PSObject.Properties)
-    #     Write-Color "  $($item.Name) ","- ","$($item.Value.Name) (Test $($item.Value.Test_Type) $($item.Value.Test_Difficulty)) (Fail -$($Fail_Properties.Name) $($Fail_Properties.Value)) (Pass +$($Pass_Properties.Name) $($Pass_Properties.Value))" -Color White,DarkGray,Blue
-    # }
-
+    Press_Continue
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,28;$Host.UI.Write("")
+    Write-Color "  After each ","Wilderness Journey ","there will also be a ","Wilderness Encounter","." -Color DarkGray,White,DarkGray,White,DarkGray
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Roll a D6 to determine how many ","Wilderness Journeys ","you will encounter. Press Enter to continue..." -Color DarkYellow,White,DarkYellow
     $Host.UI.ReadLine() | Out-Null
@@ -919,7 +918,7 @@ Function Create_Adventurer {
     Draw_Info_Banner
 
     # basic items table (not being used. instead using overengineered auto adjusting table window read from JSON data)
-    # Draw_Potion_Spells_Shop_Table -Value "Wilderness_Journeys"
+    # $All_Wilderness_Journeys_Array = New-Object System.Collections.Generic.List[System.Object]
     # foreach ($item in $Import_JSON.Wilderness_Journeys.PSObject.Properties) {
     #     $All_Wilderness_Journeys_Array.Add("$($item.Name)")
     #     $Fail_Properties = $($item.Value.Reward.Fail.PSObject.Properties)
@@ -953,7 +952,7 @@ Function Create_Adventurer {
     Save_JSON
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-    Write-Color -NoNewLine "  Roll a d6 to find out which ","Wilderness Journey ","you will encounter. Press Enter to continue..." -Color DarkYellow,White,DarkYellow
+    Write-Color -NoNewLine "  Roll a D6 to find out which ","Wilderness Journey ","you will encounter. Press Enter to continue..." -Color DarkYellow,White,DarkYellow
     $Host.UI.ReadLine() | Out-Null
     Clear_Bottom_Half_of_Screen
     $Info_Banner = "Wilderness Journeys"
@@ -1466,7 +1465,7 @@ if ($Load_Save_Data_Choice -ieq "e" -or $Start_A_New_Game -ieq "e") {
 #
 # first thing after Adventurer creation / loading saved data
 #
-# main wilderness loop
+# main wilderness loop (1x wilderness journey + 1x Wilderness Encounter)
 do {
     #
     # wilderness journey roll
@@ -1504,7 +1503,7 @@ do {
     Write-Color -NoNewLine "  Press Enter to travel to $A_Trip_To ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)","..." -Color DarkYellow,White,DarkYellow
     $Host.UI.ReadLine() | Out-Null
     #
-    # wilderness encounter
+    # wilderness journey
     #
     $Test_Result = ""
     $Import_JSON.Character.Wilderness_Journeys_Current_Number += 1
@@ -1544,7 +1543,7 @@ do {
             }
             if ($item.Name -ieq "Pass") {
                 $Pass_Properties = $($item.Value.PSObject.Properties)
-                if ($Random_Dice_Roll -eq 4) {# TODO : Campsite test has a choice of two rewards which is not taken into account
+                if ($Random_Dice_Roll -eq 4) {# TODO : Campsite test has a choice of two rewards which is not taken into account yet
                     # PSCustomObject
                     $Pass_Properties = New-Object PSObject -Property @{
                         Name  = "ToDo: Campsite name Fix me"
@@ -1555,13 +1554,15 @@ do {
         }
         Draw_Player_Window_and_Stats
         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,23;$Host.UI.Write("")
-        Write-Color "`r`n  TODO : one of the Pass tests has a choice of two rewards which is not taken into account." -Color Red
+        if ($Random_Dice_Roll -eq 4) {
+            Write-Color "`r`n  TODO : Campsite test has a choice of two rewards which is not taken into account yet." -Color Red
+        }
         Write-Color "`r`n  If you ","Pass",", you will gain ","$($Pass_Properties.Value) $($Pass_Properties.Name) ", "and if you ","Fail",", you will lose ","$($Fail_Properties.Value) $($Fail_Properties.Name)","." -Color DarkGray,Green,DarkGray,White,DarkGray,Red,DarkGray,White,DarkGray
         Write-Color "`r`n  Your ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test_Type) ","STAT is ","$($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test_Type))",". Roll a ","$($($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test_Difficulty) - $($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test_Type)) + 1) ","or higher to ","Pass"," ($($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test_Difficulty) - your $($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test_Type) $($Import_JSON.Character.Stats.$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Test_Type)) STAT + 1)." -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,Green,DarkGray
         # roll higher to pass test
         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
         $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-        Write-Color -NoNewLine "  Roll a d6..." -Color DarkYellow
+        Write-Color -NoNewLine "  Roll a D6..." -Color DarkYellow
         $Host.UI.ReadLine() | Out-Null
         Roll_D6_Dice
         # $Random_Dice_Roll = 1
@@ -1631,6 +1632,12 @@ do {
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
     $Host.UI.ReadLine() | Out-Null
+    #
+    # wilderness encounter
+    #
+    $Info_Banner = "Wilderness Encounter"
+    Draw_Info_Banner
+    Write-Color ""
 } until ($Wilderness_Journeys_Current_Number -eq $Wilderness_Journeys_Total)
 
 
