@@ -223,8 +223,8 @@ Function Draw_Player_Window_and_Stats {
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,8;$Host.UI.Write( "| Location  :               +-----------------------+                          +-------------------+")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,9;$Host.UI.Write( "| Gold      :               | Tests                 |                          | Spells     0 of 3 |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,10;$Host.UI.Write("| Total XP  :               | -----                 +--------------------------+ Healing Hands : 0 |")
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,11;$Host.UI.Write("| Equipment :               | Type   : Wilderness   | Dungeon    : Passage     | Fire Ball     : 0 |")
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,12;$Host.UI.Write("| Weapon    :               | Test   : Poison Darts | Rooms                    | Light         : 0 |")
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,11;$Host.UI.Write("| Equipment :               | Type   :              | Dungeon    : Passage     | Fire Ball     : 0 |")
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,12;$Host.UI.Write("| Weapon    :               | Test   :              | Rooms                    | Light         : 0 |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,13;$Host.UI.Write("| Rations   :               | Stat   :              |   0 of ?                 | Lightning     : 0 |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,14;$Host.UI.Write("| Torches   :               | Diff   :              |                          | Morphing      : 0 |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,15;$Host.UI.Write("|           : v             | Result :              |                          | Teleport      : 0 |")
@@ -250,12 +250,12 @@ Function Draw_Player_Window_and_Stats {
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 40,5;$Host.UI.Write($Mob_Attack)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 40,6;$Host.UI.Write($Mob_Loot)
 
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 37,11;$Host.UI.Write($Test_Type)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 37,12;$Host.UI.Write($Test_Name)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 37,13;$Host.UI.Write($Test_Stat)
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 37,14;$Host.UI.Write($Test_Diff)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 39,11;$Host.UI.Write($Test_Type)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 39,12;$Host.UI.Write($Test_Name)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 39,13;$Host.UI.Write($Test_Stat)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 39,14;$Host.UI.Write($Test_Diff)
     if ($Test_Result -eq "Pass") { $host.UI.RawUI.ForegroundColor = "Green" } else { $host.UI.RawUI.ForegroundColor = "Red" }
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 37,15;$Host.UI.Write($Test_Result)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 39,15;$Host.UI.Write($Test_Result)
 
     $host.UI.RawUI.ForegroundColor = "White"
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 62,1;$Host.UI.Write($Quest)
@@ -933,7 +933,7 @@ Function Create_Adventurer {
     Write-Color "     3-4   ","|"," 2 Journeys" -Color DarkGray,White,DarkGray
     Write-Color "     5-6   ","|"," 3 Journeys" -Color DarkGray,White,DarkGray
     Roll_D6_Dice
-    # $Random_Dice_Roll = 5
+    $Random_Dice_Roll = 6
     if ($Random_Dice_Roll -eq 1 -or $Random_Dice_Roll -eq 2) { $Wilderness_Journeys_Total = 1 }
     if ($Random_Dice_Roll -eq 3 -or $Random_Dice_Roll -eq 4) { $Wilderness_Journeys_Total = 2 }
     if ($Random_Dice_Roll -eq 5 -or $Random_Dice_Roll -eq 6) { $Wilderness_Journeys_Total = 3 }
@@ -1477,7 +1477,7 @@ do {
     Write-Color ""
     Draw_Wilderness_Journeys_Table -Value "Wilderness_Journeys"
     Roll_D6_Dice
-    # $Random_Dice_Roll = 1
+    # $Random_Dice_Roll = 6
     $Import_JSON.Character.Wilderness_Journeys_Current_Name = $Import_JSON.Wilderness_Journeys."$Random_Dice_Roll".Name
     $Current_Wilderness_Journey_JSON_Number = $Random_Dice_Roll
     Update_Variables
