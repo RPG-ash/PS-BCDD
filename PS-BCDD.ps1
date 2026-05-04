@@ -203,6 +203,7 @@ Function Roll_D6_Dice {
     }
     $host.UI.RawUI.ForegroundColor = "DarkGray" # set the foreground color back to original colour
     Write-Output "`e[?25h" # shows blinking cursor
+    $HOST.UI.RawUI.FlushInputBuffer()
 }
 
 
@@ -1505,6 +1506,7 @@ do {
     #
     # wilderness encounter
     #
+    $Test_Result = ""
     $Import_JSON.Character.Wilderness_Journeys_Current_Number += 1
     $Import_JSON.Character.Current_Location = "Wilderness"
     Update_Variables
