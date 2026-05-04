@@ -316,10 +316,10 @@ Function Draw_Player_Window_and_Stats {
 # draw info banner
 #
 Function Draw_Info_Banner {
-    $Info_Banner_Padding = " "*(97-3-($Info_Banner | Measure-Object -Character).Characters)
+    $Info_Banner_Padding = " "*(97-($Info_Banner | Measure-Object -Character).Characters)
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,17;$Host.UI.Write("")
     Write-Color "| ","$Info_Banner","$Info_Banner_Padding|" -Color DarkGray,White,DarkGray
-    Write-Color "+-----------------------------------------------------------------------------------------------+" -Color DarkGray
+    Write-Color "+--------------------------------------------------------------------------------------------------+" -Color DarkGray
 }
 
 
