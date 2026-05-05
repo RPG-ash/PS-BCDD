@@ -27,6 +27,8 @@
 # - none???
 
 
+
+
 # Business Card Dungeon Delve designed by Melv Lee - PowerShell edition
 # https://melvinli.itch.io/business-card-dungeon-delve
 
@@ -241,11 +243,11 @@ Function Draw_Player_Window_and_Stats {
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,12;$Host.UI.Write("| Weapon    :               | Test   :              | Rooms                    | Light         : 0 |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,13;$Host.UI.Write("| Rations   :               | Stat   :              |   0 of ?                 | Lightning     : 0 |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,14;$Host.UI.Write("| Torches   :               | Diff   :              |                          | Morphing      : 0 |")
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,15;$Host.UI.Write("|           : v             | Result :              |                          | Teleport      : 0 |")
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,15;$Host.UI.Write("|           :               | Result :              |                          | Teleport      : 0 |")
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 0,16;$Host.UI.Write("+---------------------------+-----------------------+--------------------------+-------------------+")
     $host.UI.RawUI.ForegroundColor = "Magenta"
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 2,15;$Host.UI.Write("PS-BCDD")
-    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 16,15;$Host.UI.Write($PSBCDD_Version)
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 2,15;$Host.UI.Write("PS-BCDD v.")
+    $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 14,15;$Host.UI.Write($PSBCDD_Version)
     $host.UI.RawUI.ForegroundColor = "White"
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 14,3;$Host.UI.Write($Character_Name)
     $Host.UI.RawUI.CursorPosition  = New-Object System.Management.Automation.Host.Coordinates 14,5;$Host.UI.Write($Character_STR)
@@ -1242,6 +1244,15 @@ Trap {
     Add-Content -Path .\error.log -Value "$PSItem" # leave in
     Add-Content -Path .\error.log -Value "------------------------------------------------------" # leave in
 }
+
+
+# get version of PS-BCDD from PS-BCDD_version.txt (updated via GitHub commits)
+if (Test-Path ".\PS-BCDD_version.txt") {
+    $PSBCDD_Version = Get-Content ".\PS-BCDD_version.txt" -Raw
+} else {
+    $PSBCDD_Version = "<version file`r`n           missing>"
+}
+
 
 
 #
