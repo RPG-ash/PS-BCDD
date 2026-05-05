@@ -14,12 +14,17 @@
 #       } else { # "a" fits all other cases
 #           $A_Trip_To = "a"
 #       }
+# - Use square brackets instead of curly brackets in JSON
+# - Add -Encoding utf8 when saving to JSON
+#
+#
+#
 
 #
 # BUGS
 # ----
 # - 
-# - 
+# - none???
 
 
 # Business Card Dungeon Delve designed by Melv Lee - PowerShell edition
