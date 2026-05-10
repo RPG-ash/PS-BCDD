@@ -952,6 +952,79 @@
       }
     }
   },
+  "Wilderness_Encounter": {
+    "1": {
+      "Name": "Enemy",
+      "Test_Type": "Fight",
+      "Test_Difficulty": " ",
+      "Reward" : {
+        "Fail": {
+        },
+        "Pass": {
+        }
+      }
+    },
+    "2": {
+      "Name": "Enemy x2",
+      "Test_Type": "Fight",
+      "Test_Difficulty": " ",
+      "Reward" : {
+        "Fail": {
+        },
+        "Pass": {
+        }
+      }
+    },
+    "3": {
+      "Name": "Lost",
+      "Test_Type": "DEX",
+      "Test_Difficulty": 3,
+      "Reward" : {
+        "Fail": {
+          "Health": 1
+        },
+        "Pass": {
+          "Gold": 1
+        }
+      }
+    },
+    "4": {
+      "Name": "Hunting",
+      "Test_Type": "STR",
+      "Test_Difficulty": 3,
+      "Reward" : {
+        "Fail": {
+          "Health": 2
+        },
+        "Pass": {
+          "Torches": 2,
+          "Rations": 2
+        }
+      }
+    },
+    "5": {
+      "Name": "NPC",
+      "Test_Type": "NPC Test",
+      "Test_Difficulty": " ",
+      "Reward" : {
+        "Fail": {
+        },
+        "Pass": {
+        }
+      }
+    },
+    "6": {
+      "Name": "Settlement",
+      "Test_Type": "n/a",
+      "Test_Difficulty": " ",
+      "Reward" : {
+        "Fail": {
+        },
+        "Pass": {
+        }
+      }
+    }
+  },
   "Quests": {
     "1": {
       "Name": "Hunt",
