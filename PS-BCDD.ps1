@@ -1220,16 +1220,16 @@ function Draw_Wilderness_Encounters_Table {
         $Test_Type_Right_Padding = " "*($Table_Items_Test_Type_Array_Max_Length - $Import_JSON.$Value.$Table_Item_Number.Test_Type.Length + 1)
         $Reward_Right_Padding = " "*($Table_Items_Reward_Pass_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name).Length)
         $Penalty_Right_Padding = " "*($Table_Items_Reward_Fail_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Fail.PSObject.Properties.Name).Length)
-        if ($Import_JSON.$Value.$Table_Item_Number.Name -imatch "enemy") { # no reward or penalty for plains (no output)
+        if ($Import_JSON.$Value.$Table_Item_Number.Name -imatch "enem") { # matches "enemy" and "enemies" (no output)
             Write-Color "  |  ","$Table_Item_Number"," | ","$($Import_JSON.$Value.$Table_Item_Number.Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.Test_Type)$Test_Type_Right_Padding$($Import_JSON.$Value.$Table_Item_Number.Test_Difficulty) | Enemy loot           |" -Color DarkGray,White,DarkGray,Blue,DarkGray
         } elseif ($Import_JSON.$Value.$Table_Item_Number.Name -ieq "npc") {
             Write-Color "  |  ","$Table_Item_Number"," | ","$($Import_JSON.$Value.$Table_Item_Number.Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.Test_Type)$Test_Type_Right_Padding$($Import_JSON.$Value.$Table_Item_Number.Test_Difficulty) | See NPC Table        |" -Color DarkGray,White,DarkGray,Blue,DarkGray
         } elseif ($Import_JSON.$Value.$Table_Item_Number.Name -ieq "settlement") {
-            Write-Color "  |  ","$Table_Item_Number"," | ","$($Import_JSON.$Value.$Table_Item_Number.Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.Test_Type)$Test_Type_Right_Padding$($Import_JSON.$Value.$Table_Item_Number.Test_Difficulty) | See Shop Table       |" -Color DarkGray,White,DarkGray,Blue,DarkGray
+            Write-Color "  |  ","$Table_Item_Number"," | ","$($Import_JSON.$Value.$Table_Item_Number.Name)$Name_Right_Padding ","| $($Import_JSON.$Value.$Table_Item_Number.Test_Type)$Test_Type_Right_Padding$($Import_JSON.$Value.$Table_Item_Number.Test_Difficulty) | See Settlement Table |" -Color DarkGray,White,DarkGray,Blue,DarkGray
         } elseif ($Import_JSON.$Value.$Table_Item_Number.Name -ieq "hunting") { # deals with two rewards
             $Reward_Right_Padding = " "*($Table_Items_Reward_Pass_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name).Length)
             $Penalty_Right_Padding = " "*($Table_Items_Reward_Fail_Array_Max_Length - ($Import_JSON.$Value.$Table_Item_Number.Reward.Fail.PSObject.Properties.Name).Length)
-            foreach ($item in $Import_JSON."wilderness_encounter"."4".Reward.Pass.PSObject.Properties.Name) {
+            foreach ($item in $Import_JSON."Wilderness_Encounter"."4".Reward.Pass.PSObject.Properties.Name) {
                 $Pass_Name_Array = New-Object System.Collections.Generic.List[System.Object]
                 $Pass_Names = $Import_JSON.$Value.$Table_Item_Number.Reward.Pass.PSObject.Properties.Name
                 foreach ($Pass_Name in $Pass_Names) {
@@ -1737,7 +1737,7 @@ do {
     Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
     $Host.UI.ReadLine() | Out-Null
     #
-    # wilderness encounter
+    # wilderness encounter roll
     #
     Clear_Bottom_Half_of_Screen
     $Info_Banner = "Wilderness Encounter"
@@ -1756,11 +1756,52 @@ do {
     $Host.UI.ReadLine() | Out-Null
     Roll_D6_Dice
     # $Random_Dice_Roll = 6
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+    switch ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name)) {
+        "1x Enemy" {
+            $Encounter_Description = "and encounter an"
+            $Encounter_Type = "Enemy (fight)"
+        }
+        "2x Enemies" {
+            $Encounter_Description = "and encounter"
+            $Encounter_Type = "2x Enemys (fight)"
+        }
+        lost {
+            $Encounter_Description = "and become"
+            $Encounter_Type = "lost (+1 Wilderness Journey)"
+        }
+        npc {
+            $Encounter_Description = "and encounter an"
+            $Encounter_Type = "NPC (Test)"
+        }
+        settlement {
+            $Encounter_Description = "and end up back at the"
+            $Encounter_Type = "Settlement (shop)"
+        }
+        Default {}
+    }
+    Write-Color -NoNewLine "  You roll a ","$Random_Dice_Roll ","$Encounter_Description ","$Encounter_Type","." -Color DarkGray,White,DarkGray,Blue,DarkGray
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+    Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
+    $Host.UI.ReadLine() | Out-Null
     #
+    # wilderness encounter outcome
     #
-    # you roll an x encounter
-    #
-    #
+    Clear_Bottom_Half_of_Screen
+    $Info_Banner = "Wilderness Encounter - $($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name)"
+    Draw_Info_Banner
+    Write-Color ""
+    if ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "enem") { # fight (one or two enemys)
+        Write-Color "  You have a fight encounter." -Color Red
+    } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -ieq "lost") { # lost (add one to wilderness journey count and roll on wilderness journeys table again)
+        Write-Color "  You become lost. +1 Wilderness Journey." -Color Red
+    } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "npc") { # NPC (test encounter)
+        Write-Color "  You have an NPC encounter." -Color Red
+    } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "settlement") { # settlement (shop encounter)
+        Write-Color "  You travel back to the settlement where you can buy items from the shop." -Color Red
+    }
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow

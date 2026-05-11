@@ -954,7 +954,7 @@
   },
   "Wilderness_Encounter": {
     "1": {
-      "Name": "Enemy",
+      "Name": "1x Enemy",
       "Test_Type": "Fight",
       "Test_Difficulty": " ",
       "Reward" : {
@@ -965,7 +965,7 @@
       }
     },
     "2": {
-      "Name": "Enemy x2",
+      "Name": "2x Enemies",
       "Test_Type": "Fight",
       "Test_Difficulty": " ",
       "Reward" : {
