@@ -1800,6 +1800,15 @@ do {
     Write-Color ""
     if ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "enem") { # fight (one or two enemys)
         Write-Color "  You have a fight encounter." -Color Red
+        # player acts first
+        # player attack > 1D6 + player ATK - if greater than Enemy ATK, deal 1 damage
+        # if ATK roll = 1, then deal no damage regardless of ATK roll
+        # player defend > 1D6 + player DEF - if higher than Enemy ATK, take no damage
+        # if DEF roll = 1, then take 1 damage regardless of DEF roll
+        # when enemy HP = 0, gain 1 XP + loot
+        #
+        # flee chance = success if 1D6 + player DEX is higher than Enemy ATK - 1 (minimum 1)
+        # failed chance = Enemy attacks again
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -ieq "lost") { # lost (add one to wilderness journey count and roll on wilderness journeys table again)
         Write-Color "  You become lost. +1 Wilderness Journey." -Color Red
         # ToDo: update JSON file to add 1 to Wilderness_Journeys_Current_Number and roll on Wilderness_Journeys table again
