@@ -1797,11 +1797,15 @@ do {
         Write-Color "  You have a fight encounter." -Color Red
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -ieq "lost") { # lost (add one to wilderness journey count and roll on wilderness journeys table again)
         Write-Color "  You become lost. +1 Wilderness Journey." -Color Red
+        $Import_JSON.Character.Wilderness_Journeys_Current_Number += 1
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "npc") { # NPC (test encounter)
         Write-Color "  You have an NPC encounter." -Color Red
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "settlement") { # settlement (shop encounter)
         Write-Color "  You travel back to the settlement where you can buy items from the shop." -Color Red
     }
+    Update_Variables
+    Draw_Player_Window_and_Stats
+    Save_JSON
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
     Write-Color -NoNewLine "  Press Enter to continue..." -Color DarkYellow
