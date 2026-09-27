@@ -15,12 +15,12 @@
 #           $A_Trip_To = "a"
 #       }
 # - Use square brackets instead of curly brackets in JSON
-# - Add -Encoding utf8 when saving to JSON
+# - Add -Encoding utf8 when saving to JSON?
 # - reward / penalty shows a +
 #       +----+----------+-------+-----------------------+
 #       | D6 | Name     | Test  | Reward / Penalty      |
 #       +----+----------+-------+-----------------------+
-#       |  2 | Forest   | INT 3 | 2 Rations + 1 Rations | <-- should this show a - and not a +? = yes +this or -that
+#       |  2 | Forest   | INT 3 | 2 Rations + 1 Rations | <-- should this show a - and not a +? = yes, change to > +this or -that
 #
 #
 
@@ -28,7 +28,7 @@
 # BUGS
 # ----
 # - 
-# - none???
+# - none that i've noticed yet
 
 
 
@@ -1591,7 +1591,6 @@ do {
     $Current_Wilderness_Journey_JSON_Number = $Random_Dice_Roll
     Update_Variables
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
-    Add-Content -Path .\error.log -value "Wilderness_Journeys_Current_Number: $Wilderness_Journeys_Current_Number"
     $Wilderness_Journeys_Current_Number += 1
     switch ($Wilderness_Journeys_Current_Number) {
         1 { $Wilderness_Journey_Number_Word = "first" ; break }
@@ -1749,7 +1748,6 @@ do {
     $Info_Banner = "Wilderness Encounter"
     Draw_Info_Banner
     Write-Color ""
-    Add-Content -Path .\error.log -value "Wilderness_Journeys_Current_Number: $Wilderness_Journeys_Current_Number"
     if ($Wilderness_Journeys_Current_Number -eq 1) {
         Write-Color "  Each time you finish a ","Wilderness Journey"," there will be a ","Wilderness Encounter","." -Color DarkGray,White,DarkGray,White,DarkGray
     } else {
@@ -1831,17 +1829,21 @@ do {
 #   wilderness journey 2
 #       wilderness encounter
 #           enemy / test / NPC / shop
+#   wilderness journey etc.
+#       repeat...
 #   dungeon
 #       dungeon room 1
 #           enemy / test / NPC / hazard / treasure
 #       dungeon room 2
 #           enemy / test / NPC / hazard / treasure
+#       dungeon room etc.
+#           repeat...
 #   Settlement
 #       quest reward
 #       shop
 #       obtain new quest
 #       roll on new wilderness journeys table
-#   repeat loop
+# repeat loop
 #
 # stat level up when?
 

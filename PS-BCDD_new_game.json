@@ -557,157 +557,108 @@
     },
     "Wilderness": {
       "Current_Location": false,
-      "Linked_Locations": {
-        "Home Town": "T",
-        "The River": "R"
-      },
-      "Location_Options": {
-        "Hunt": true,
-        "Travel": true,
-        "Visit": false,
-        "Quests": true,
-        "Inventory": true
-      },
-      "Mobs": {
-        "Worm": {
-          "Name": "Worm",
-          "Level": 5,
-          "Health": 40,
-          "Stamina": 50,
-          "Mana": 50,
-          "Attack": 5,
-          "Damage": 5,
-          "Armour": 10,
-          "Dodge": 5,
-          "Quickness": 5,
-          "Spells": 50,
-          "Healing": 50,
-          "Killed": 6,
-          "Rare": "No",
-          "Boss": "No",
-          "XP": 160,
+      "Enemy": {
+        "1": {
+          "Name": "Boar",
+          "Attack": 1,
+          "HP": 3,
           "Loot": {
-            "Gold": 2
+            "Rations": 2
           }
         },
-        "Mouse": {
-          "Name": "Mouse",
-          "Level": 6,
-          "Health": 40,
-          "Stamina": 50,
-          "Mana": 50,
-          "Attack": 5,
-          "Damage": 5,
-          "Armour": 10,
-          "Dodge": 5,
-          "Quickness": 5,
-          "Spells": 50,
-          "Healing": 50,
-          "Killed": 1,
-          "Rare": "Yes",
-          "Boss": "No",
-          "XP": 160,
+        "2": {
+          "Name": "Vagabond",
+          "Attack": 2,
+          "HP": 2,
           "Loot": {
-            "Gold": 3,
-            "Mouse Tails": 1
+            "Gold": 1
           }
-        }
-      },
-      "NPC": [
-        {
-          "Name": "Bob"
-        }
-      ],
-      "Buildings": {
-        "Hut": {
-          "Building_Letter": "H",
-          "Owner": "Hut Owner?????"
         },
-        "Tree House": {
-          "Building_Letter": "T",
-          "Owner": "Tree House Owner???"
+        "3": {
+          "Name": "Thug",
+          "Attack": 3,
+          "HP": 2,
+          "Loot": {
+            "Gold": 3
+          }
         },
-        "Secret Location": {
-          "Building_Letter": "S",
-          "Owner": "Unknown"
+        "4": {
+          "Name": "Bear",
+          "Attack": 4,
+          "HP": 6,
+          "Loot": {
+            "Rations": 4
+          }
+        },
+        "5": {
+          "Name": "Raider",
+          "Attack": 4,
+          "HP": "2D3",
+          "Loot": {
+            "Gold": 4
+          }
+        },
+        "6": {
+          "Name": "Wyvern",
+          "Attack": 5,
+          "HP": "3D3",
+          "Loot": {
+            "XP": 4
+          }
         }
       }
     },
     "Dungeon": {
       "Current_Location": false,
-      "Linked_Locations": {
-        "Home Town": "T",
-        "The River": "R"
-      },
-      "Location_Options": {
-        "Hunt": true,
-        "Travel": true,
-        "Visit": false,
-        "Quests": true,
-        "Inventory": true
-      },
-      "Mobs": {
-        "Worm": {
-          "Name": "Worm",
-          "Level": 5,
-          "Health": 40,
-          "Stamina": 50,
-          "Mana": 50,
-          "Attack": 5,
-          "Damage": 5,
-          "Armour": 10,
-          "Dodge": 5,
-          "Quickness": 5,
-          "Spells": 50,
-          "Healing": 50,
-          "Killed": 6,
-          "Rare": "No",
-          "Boss": "No",
-          "XP": 160,
+      "Enemy": {
+        "1": {
+          "Name": "Spider",
+          "Attack": 1,
+          "HP": 3,
+          "Loot": {
+            "Gold": 1
+          }
+        },
+        "2": {
+          "Name": "Globin",
+          "Attack": 2,
+          "HP": 2,
           "Loot": {
             "Gold": 2
           }
         },
-        "Mouse": {
-          "Name": "Mouse",
-          "Level": 6,
-          "Health": 40,
-          "Stamina": 50,
-          "Mana": 50,
-          "Attack": 5,
-          "Damage": 5,
-          "Armour": 10,
-          "Dodge": 5,
-          "Quickness": 5,
-          "Spells": 50,
-          "Healing": 50,
-          "Killed": 1,
-          "Rare": "Yes",
-          "Boss": "No",
-          "XP": 160,
+        "3": {
+          "Name": "Orc",
+          "Attack": 3,
+          "HP": 2,
+          "Loot": {
+            "Gold": 3
+          }
+        },
+        "4": {
+          "Name": "Skeleton",
+          "Attack": 4,
+          "HP": 1,
+          "Loot": {
+            "Gold": 2
+          }
+        },
+        "5": {
+          "Name": "Shaman",
+          "Attack": 4,
+          "HP": "2D3",
           "Loot": {
             "Gold": 3,
-            "Mouse Tails": 1
+            "XP": 1
           }
-        }
-      },
-      "NPC": [
-        {
-          "Name": "Bob"
-        }
-      ],
-      "Buildings": {
-        "Hut": {
-          "Building_Letter": "H",
-          "Owner": "Hut Owner?????"
         },
-        "Tree House": {
-          "Building_Letter": "T",
-          "Owner": "Tree House Owner???"
-        },
-        "Secret Location": {
-          "Building_Letter": "S",
-          "Owner": "Unknown"
+        "6": {
+          "Name": "Guardian",
+          "Attack": 5,
+          "HP": "2D6",
+          "Loot": {
+            "Treasure": "Treasure"
+          }
         }
       }
     }
