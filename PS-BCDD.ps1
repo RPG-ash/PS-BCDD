@@ -1774,15 +1774,15 @@ do {
             $Encounter_Description = "and encounter"
             $Encounter_Type = "2x Enemys (fight)"
         }
-        lost {
+        "Lost" {
             $Encounter_Description = "and become"
             $Encounter_Type = "lost (+1 Wilderness Journey)"
         }
-        npc {
+        "NPC" {
             $Encounter_Description = "and encounter an"
             $Encounter_Type = "NPC (Test)"
         }
-        settlement {
+        "Settlement" {
             $Encounter_Description = "and end up back at the"
             $Encounter_Type = "Settlement (shop)"
         }
@@ -1806,6 +1806,8 @@ do {
         Write-Color "  You become lost. +1 Wilderness Journey." -Color Red
         # ToDo: update JSON file to add 1 to Wilderness_Journeys_Current_Number and roll on Wilderness_Journeys table again
         $Import_JSON.Character.Wilderness_Journeys_Current_Number += 1
+    } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "hunting") { # Hunting (STR test)
+        Write-Color "  You have a hunting encounter." -Color Red
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "npc") { # NPC (test encounter)
         Write-Color "  You have an NPC encounter." -Color Red
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "settlement") { # settlement (shop encounter)
