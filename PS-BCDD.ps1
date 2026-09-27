@@ -3,7 +3,7 @@
 #
 # - TODO : one of the Pass tests has a choice of two rewards which is not taken into account.
 #          updated displaying table correctly, but still need to work on when reward is actually granted at the end of the quest.
-# - add <this> in...
+# - add <this below> in...
 #       You rolled a 6 and obtain the Retrieve Quest.
 #       Your objective is to find and retrieve 3 Tomes. <"you will gain x XP and x Gold">
 # - You roll a 2 and Fail the test. You lose 2 Gold --> gold can currently go into negative
@@ -16,7 +16,11 @@
 #       }
 # - Use square brackets instead of curly brackets in JSON
 # - Add -Encoding utf8 when saving to JSON
-#
+# - reward / penalty shows a +
+#       +----+----------+-------+-----------------------+
+#       | D6 | Name     | Test  | Reward / Penalty      |
+#       +----+----------+-------+-----------------------+
+#       |  2 | Forest   | INT 3 | 2 Rations + 1 Rations | <-- should this show a - and not a +? = yes +this or -that
 #
 #
 
@@ -1574,6 +1578,7 @@ do {
     #
     # wilderness journey roll
     #
+    Add-Content -Path .\error.log -value "wilderness journey roll..."
     Clear-Host
     Draw_Player_Window_and_Stats
     $Info_Banner = "Wilderness Journey"
@@ -1586,6 +1591,7 @@ do {
     $Current_Wilderness_Journey_JSON_Number = $Random_Dice_Roll
     Update_Variables
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
+    Add-Content -Path .\error.log -value "Wilderness_Journeys_Current_Number: $Wilderness_Journeys_Current_Number"
     $Wilderness_Journeys_Current_Number += 1
     switch ($Wilderness_Journeys_Current_Number) {
         1 { $Wilderness_Journey_Number_Word = "first" ; break }
@@ -1743,10 +1749,11 @@ do {
     $Info_Banner = "Wilderness Encounter"
     Draw_Info_Banner
     Write-Color ""
+    Add-Content -Path .\error.log -value "Wilderness_Journeys_Current_Number: $Wilderness_Journeys_Current_Number"
     if ($Wilderness_Journeys_Current_Number -eq 1) {
         Write-Color "  Each time you finish a ","Wilderness Journey"," there will be a ","Wilderness Encounter","." -Color DarkGray,White,DarkGray,White,DarkGray
     } else {
-        Write-Color "  After you finish exploring the ","$($Import_JSON.Wilderness_Journeys.$Random_Dice_Roll.Name)"," you face a ","Wilderness Encounter","." -Color DarkGray,White,DarkGray,White,DarkGray
+        Write-Color "  After you finish exploring the ","$($Import_JSON.Wilderness_Journeys.$Current_Wilderness_Journey_JSON_Number.Name)"," you face a ","Wilderness Encounter","." -Color DarkGray,White,DarkGray,White,DarkGray
     }
     Write-Color ""
     Draw_Wilderness_Encounters_Table -Value "Wilderness_Encounter"
@@ -1797,6 +1804,7 @@ do {
         Write-Color "  You have a fight encounter." -Color Red
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -ieq "lost") { # lost (add one to wilderness journey count and roll on wilderness journeys table again)
         Write-Color "  You become lost. +1 Wilderness Journey." -Color Red
+        # ToDo: update JSON file to add 1 to Wilderness_Journeys_Current_Number and roll on Wilderness_Journeys table again
         $Import_JSON.Character.Wilderness_Journeys_Current_Number += 1
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "npc") { # NPC (test encounter)
         Write-Color "  You have an NPC encounter." -Color Red
