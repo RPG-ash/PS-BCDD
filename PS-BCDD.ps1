@@ -1798,8 +1798,37 @@ do {
     $Info_Banner = "Wilderness Encounter - $($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name)"
     Draw_Info_Banner
     Write-Color ""
+    
     if ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "enem") { # fight (one or two enemys)
-        Write-Color "  You have a fight encounter." -Color Red
+        # display rules for fight encounter once in bulk, or once as you fight?
+        if ($Random_Dice_Roll -eq 1) {
+            $Enemy_Text = "enemy"
+        } else {
+            $Enemy_Text = "enemies"
+        }
+        Write-Color "  You have a fight encounter with $Random_Dice_Roll $Enemy_Text." -Color Red
+        do {
+            $Random_Enemy = Get-Random -Minimum 1 -Maximum ($Import_JSON.Locations.Wilderness.Enemy.PSObject.Properties.Name.count + 1)
+            Write-Color "  You encounter a $($Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy.Name)." -Color Red
+            Write-Color "  $($Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy.Name)" -Color Red
+
+                $Pass_Properties = $($Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy.PSObject.Properties.Value)
+                # PSCustomObject
+                $Pass_Properties = New-Object PSObject -Property @{
+                    Name  = $Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy.PSObject.Properties.Name
+                    Value = $Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy.PSObject.Properties.Value
+                }
+                $Pass_Properties = $Pass_Properties | Select-Object -Property Name,Value
+
+            do {
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+                Write-Color -NoNewLine "  You have ","$Gold Gold",". Select the ","item number ","you would like to purchase, or ","L","eave." -Color DarkYellow,White,DarkYellow,White,DarkYellow,Green,DarkYellow
+                $Purchase_Item_Choice = Read-Host " "
+                $Purchase_Item_Choice = $Purchase_Item_Choice.Trim()
+            } until ($Purchase_Item_Choice -ieq "l" -or $Purchase_Item_Choice -in $All_Settlement_Items_Array)
+        } until ($Random_Dice_Roll -eq 0)
+
         # player acts first
         # player attack > 1D6 + player ATK - if greater than Enemy ATK, deal 1 damage
         # if ATK roll = 1, then deal no damage regardless of ATK roll
@@ -1810,15 +1839,15 @@ do {
         # flee chance = success if 1D6 + player DEX is higher than Enemy ATK - 1 (minimum 1)
         # failed chance = Enemy attacks again
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -ieq "lost") { # lost (add one to wilderness journey count and roll on wilderness journeys table again)
-        Write-Color "  You become lost. +1 Wilderness Journey." -Color Red
+        Write-Color "  ToDo: You become lost. +1 Wilderness Journey." -Color Red
         # ToDo: update JSON file to add 1 to Wilderness_Journeys_Current_Number and roll on Wilderness_Journeys table again
         $Import_JSON.Character.Wilderness_Journeys_Current_Number += 1
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "hunting") { # Hunting (STR test)
-        Write-Color "  You have a hunting encounter." -Color Red
+        Write-Color "  ToDo: You have a hunting encounter." -Color Red
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "npc") { # NPC (test encounter)
-        Write-Color "  You have an NPC encounter." -Color Red
+        Write-Color "  ToDo: You have an NPC encounter." -Color Red
     } elseif ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name) -imatch "settlement") { # settlement (shop encounter)
-        Write-Color "  You travel back to the settlement where you can buy items from the shop." -Color Red
+        Write-Color "  ToDo: You travel back to the settlement where you can buy items from the shop." -Color Red
     }
     Update_Variables
     Draw_Player_Window_and_Stats
