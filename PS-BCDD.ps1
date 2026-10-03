@@ -1048,13 +1048,16 @@ function Draw_Potion_Spells_Shop_Table {
 # draw enemy table info
 #
 function Draw_Enemy_Info_Table {
-    foreach ($Enemy in $Import_JSON.Locations.Wilderness.Enemy."5") {
+    foreach ($Enemy in $Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy) {
         if ($Enemy.HP -ilike "*D*") {
             if (($Enemy.HP).Substring(0,1) -eq 2) {
                 $Dice_1 = (Get-Random -Minimum 1 -Maximum 4)
                 $Dice_2 = (Get-Random -Minimum 1 -Maximum 4)
                 $HP = $Dice_1 + $Dice_2
                 $HP_Display = "$HP ($Dice_1+$Dice_2)"
+                $Table_Box_HP_Width_Top_Bottom = "-"*(10)
+                $Table_Box_HP_Number_Padding = " "
+                $Table_Box_HP_Padding = "  "
             }
             if (($Enemy.HP).Substring(0,1) -eq 3) {
                 $Dice_1 = (Get-Random -Minimum 1 -Maximum 4)
@@ -1062,7 +1065,14 @@ function Draw_Enemy_Info_Table {
                 $Dice_3 = (Get-Random -Minimum 1 -Maximum 4)
                 $HP = $Dice_1 + $Dice_2 + $Dice_3
                 $HP_Display = "$HP ($Dice_1+$Dice_2+$Dice_3)"
+                $Table_Box_HP_Width_Top_Bottom = "-"*(11)
+                $Table_Box_HP_Number_Padding = "  "
+                $Table_Box_HP_Padding = " "
             }
+        } else {
+            $Table_Box_HP_Width_Top_Bottom = "-"*(9)
+            $Table_Box_HP_Number_Padding = "  "
+            $Table_Box_HP_Padding = " "
         }
         $Pass_Properties = New-Object PSObject -Property @{
             Name   = $Enemy.Name
@@ -1075,14 +1085,13 @@ function Draw_Enemy_Info_Table {
     $Table_Loot_Max_Length             = ($Pass_Properties.Loot).length
     $Table_Box_Name_Width_Top_Bottom   = "-"*($Table_Name_Max_Length + 2)
     $Table_Box_Attack_Width_Top_Bottom = "-"*("Attack".Length + 2)
-    $Table_Box_HP_Width_Top_Bottom     = "-"*(11)
     $Table_Box_Loot_Width_Top_Bottom   = "-"*($Table_Loot_Max_Length + 2)
     $Table_Box_Name_Padding            = " "*($Table_Name_Max_Length - "Name".Length)
     $Table_Box_Loot_Padding            = " "*($Table_Loot_Max_Length - "Loot".Length)
     Write-Color "  +$Table_Box_Name_Width_Top_Bottom+$Table_Box_Attack_Width_Top_Bottom+$Table_Box_HP_Width_Top_Bottom+$Table_Box_Loot_Width_Top_Bottom+" -Color DarkGray
-    Write-Color "  |"," Name $Table_Box_Name_Padding","| ","Attack ","|"," HP ($($Enemy.HP))  ","|"," Loot $Table_Box_Loot_Padding","|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
+    Write-Color "  |"," Name $Table_Box_Name_Padding","| ","Attack ","|"," HP ($($Enemy.HP))$Table_Box_HP_Number_Padding","|"," Loot $Table_Box_Loot_Padding","|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
     Write-Color "  +$Table_Box_Name_Width_Top_Bottom+$Table_Box_Attack_Width_Top_Bottom+$Table_Box_HP_Width_Top_Bottom+$Table_Box_Loot_Width_Top_Bottom+" -Color DarkGray
-    Write-Color "  | ","$($Pass_Properties.Name)"," | ","   $($Pass_Properties.Attack)   ","| $($Pass_Properties.HP) | ","$($Enemy.Loot.PSObject.Properties.Value) $($Enemy.Loot.PSObject.Properties.Name) ","|" -Color DarkGray,White,DarkGray,Blue,DarkGray,DarkYellow,DarkGray,Cyan,DarkGray
+    Write-Color "  | ","$($Pass_Properties.Name)"," | ","   $($Pass_Properties.Attack)   ","| $($Pass_Properties.HP)$Table_Box_HP_Padding| ","$($Enemy.Loot.PSObject.Properties.Value) $($Enemy.Loot.PSObject.Properties.Name) ","|" -Color DarkGray,White,DarkGray,Blue,DarkGray,DarkYellow,DarkGray,Cyan,DarkGray
     Write-Color "  +$Table_Box_Name_Width_Top_Bottom+$Table_Box_Attack_Width_Top_Bottom+$Table_Box_HP_Width_Top_Bottom+$Table_Box_Loot_Width_Top_Bottom+" -Color DarkGray
 }
 
@@ -1851,31 +1860,15 @@ do {
         } else {
             $Enemy_Text = "enemies"
         }
-        Write-Color "  You have a fight encounter with $Random_Dice_Roll $Enemy_Text." -Color Red
+        Write-Color "  You have a fight encounter with ","$Random_Dice_Roll "," $Enemy_Text." -Color DarkGray,White,Red,White,Red
+        Write-Color ""
         do {
-            $Random_Enemy = Get-Random -Minimum 1 -Maximum ($Import_JSON.Locations.Wilderness.Enemy.PSObject.Properties.Name.count + 1)
-            Write-Color "  You encounter a $($Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy.Name)." -Color Red
-            Write-Color "  $($Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy.Name)" -Color Red
-
-            foreach ($item in $Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy) {
-                $item.Name
-                $item.attack
-                $Pass_Properties = New-Object PSObject -Property @{
-                    Name  = $item.Name
-                    Attack = $item.attack
-                    HP = $item.HP
-                    Loot = if ($item.loot) { "$($item.loot.PSObject.Properties.Value) $($item.loot.PSObject.Properties.Name)" }
-                }
-            }
-            $Pass_Properties | select-object -Property Name,Attack,HP,Loot | format-table -AutoSize -Wrap
-
-            # CHANGE TO CUSTOM TABLE
-
-
+            $Script:Random_Enemy = Get-Random -Minimum 1 -Maximum ($Import_JSON.Locations.Wilderness.Enemy.PSObject.Properties.Name.count + 1)
+            Draw_Enemy_Info_Table
             do {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
-                Write-Color -NoNewLine "  You have ","$Gold Gold",". Select the ","item number ","you would like to purchase, or ","L","eave." -Color DarkYellow,White,DarkYellow,White,DarkYellow,Green,DarkYellow
+                Write-Color -NoNewLine "  CHANGE ME - You have ","$Gold Gold",". Select the ","item number ","you would like to purchase, or ","L","eave." -Color DarkYellow,White,DarkYellow,White,DarkYellow,Green,DarkYellow
                 $Purchase_Item_Choice = Read-Host " "
                 $Purchase_Item_Choice = $Purchase_Item_Choice.Trim()
             } until ($Purchase_Item_Choice -ieq "l" -or $Purchase_Item_Choice -in $All_Settlement_Items_Array)
