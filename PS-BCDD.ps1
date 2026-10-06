@@ -228,6 +228,96 @@ Function Roll_D6_Dice {
 
 
 #
+# roll random 2D3 3D3
+#
+Function Roll_2D3_3D3_Dice {
+    param ([string]$Value)
+    if ($Value -ieq "potions" -or $Value -ieq "spells") {
+        $Name_or_Description = "Name"
+        $Info_or_Cost        = "Info"
+    } elseif ($Value -ieq "settlement") {
+        $Name_or_Description = "Description"
+        $Info_or_Cost        = "Cost"
+    }
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("")
+    Write-Color "  Rolling a D6 dice." -Color DarkYellow
+    $Random_Dice_Roll_Random_Seconds = Get-Random -Minimum 4 -Maximum 10 # display rolling of dice for 5-10 seconds
+    for ($i = 0; $i -lt $Random_Dice_Roll_Random_Seconds; $i++) {
+        do {
+            $Script:Random_Dice_Roll = Get-Random -Minimum 1 -Maximum 7
+        } until ($Random_Dice_Roll -ne $Last_Dice_Roll) # do this to not roll the same number twice in a row, otherwise the dice doesn't update on screen
+        for ($Position = 35; $Position -lt 36; $Position++) {
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,$Position;$Host.UI.Write("");" "*140
+        }
+        $Script:Last_Dice_Roll = $Random_Dice_Roll
+        $host.UI.RawUI.ForegroundColor = "White"
+        switch ($Random_Dice_Roll) {
+            1 {
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,31;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,32;$Host.UI.Write("|   o   |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,33;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,34;$Host.UI.Write("+-------+")
+                break
+            }
+            2 {
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,31;$Host.UI.Write("| o     |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,32;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,33;$Host.UI.Write("|     o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,34;$Host.UI.Write("+-------+")
+                break
+            }
+            3 {
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,31;$Host.UI.Write("| o     |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,32;$Host.UI.Write("|   o   |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,33;$Host.UI.Write("|     o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,34;$Host.UI.Write("+-------+")
+                break
+            }
+            4 {
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,31;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,32;$Host.UI.Write("|       |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,33;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,34;$Host.UI.Write("+-------+")
+                break
+            }
+            5 {
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,31;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,32;$Host.UI.Write("|   o   |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,33;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,34;$Host.UI.Write("+-------+")
+                break
+            }
+            6 {
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,30;$Host.UI.Write("+-------+")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,31;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,32;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,33;$Host.UI.Write("| o   o |")
+                $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 58,34;$Host.UI.Write("+-------+")
+                break
+            }
+            Default {
+            }
+        }
+        # $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38
+        Write-Output "`e[?25l" # hides blinking cursor
+        # Start-Sleep -Seconds 2
+        $Random_Milliseconds = Get-Random -Minimum 200 -Maximum 1000
+        # Start-Sleep -Milliseconds $Random_Milliseconds
+    }
+    $host.UI.RawUI.ForegroundColor = "DarkGray" # set the foreground color back to original colour
+    Write-Output "`e[?25h" # shows blinking cursor
+    $HOST.UI.RawUI.FlushInputBuffer()
+}
+
+
+
+#
 # player window and stats
 #
 Function Draw_Player_Window_and_Stats {
@@ -1001,10 +1091,10 @@ function Draw_Potion_Spells_Shop_Table {
         $Table_Items_Name_or_Description_Array.Add(($Import_JSON.$Value.$Table_Item_Number.$Name_or_Description | Measure-Object -Character).Characters)
         $Table_Items_Info_or_Cost_Array.Add(($Import_JSON.$Value.$Table_Item_Number.$Info_or_Cost | Measure-Object -Character).Characters)
     }
-    $Table_Items_Name_or_Description_Array_Max_Length        = ($Table_Items_Name_or_Description_Array | Measure-Object -Maximum).Maximum
-    $Table_Box_Name_or_Description_Width_Top_Bottom          = "-"*($Table_Items_Name_or_Description_Array_Max_Length + 2)
-    $Table_Box_Name_or_Description_Width_Padding             = " "*($Table_Items_Name_or_Description_Array_Max_Length - 3)
-    $Table_Items_Info_or_Cost_Array_Max_Length = ($Table_Items_Info_or_Cost_Array | Measure-Object -Maximum).Maximum
+    $Table_Items_Name_or_Description_Array_Max_Length = ($Table_Items_Name_or_Description_Array | Measure-Object -Maximum).Maximum
+    $Table_Box_Name_or_Description_Width_Top_Bottom   = "-"*($Table_Items_Name_or_Description_Array_Max_Length + 2)
+    $Table_Box_Name_or_Description_Width_Padding      = " "*($Table_Items_Name_or_Description_Array_Max_Length - 3)
+    $Table_Items_Info_or_Cost_Array_Max_Length        = ($Table_Items_Info_or_Cost_Array | Measure-Object -Maximum).Maximum
     if ($Table_Items_Info_or_Cost_Array_Max_Length - $Info_or_Cost.Length + 1 -lt 0) {
         $Table_Box_Item_or_Cost_Width_Padding = " "
         $Table_Box_Info_or_Cost_Width_Top_Bottom     = "------"
@@ -1048,7 +1138,11 @@ function Draw_Potion_Spells_Shop_Table {
 # draw enemy table info
 #
 function Draw_Enemy_Info_Table {
-    foreach ($Enemy in $Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy) {
+    # foreach ($Enemy in $Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy) {
+        Add-Content -Path .\error.log -value "Random_Enemy Draw_Enemy_Info_Table: $Random_Enemy"
+        Add-Content -Path .\error.log -value "Random_Enemy Draw_Enemy_Info_Table: $($IMPORT_JSON.Locations.Wilderness.Enemy.$Random_Enemy)"
+        $Enemy = $IMPORT_JSON.Locations.Wilderness.Enemy.$Random_Enemy
+        Write-Color "  Rolling for the ","$($Enemy.Name)","'s"," Health","..." -Color DarkGray,White,DarkGray,Green,DarkGray
         if ($Enemy.HP -ilike "*D*") {
             if (($Enemy.HP).Substring(0,1) -eq 2) {
                 $Dice_1 = (Get-Random -Minimum 1 -Maximum 4)
@@ -1058,6 +1152,7 @@ function Draw_Enemy_Info_Table {
                 $Table_Box_HP_Width_Top_Bottom = "-"*(10)
                 $Table_Box_HP_Number_Padding = " "
                 $Table_Box_HP_Padding = "  "
+                # Roll_2D3_3D3_Dice -Value "2D3"
             }
             if (($Enemy.HP).Substring(0,1) -eq 3) {
                 $Dice_1 = (Get-Random -Minimum 1 -Maximum 4)
@@ -1068,25 +1163,27 @@ function Draw_Enemy_Info_Table {
                 $Table_Box_HP_Width_Top_Bottom = "-"*(11)
                 $Table_Box_HP_Number_Padding = "  "
                 $Table_Box_HP_Padding = " "
+                # Roll_2D3_3D3_Dice -Value "3D3"
             }
         } else {
             $Table_Box_HP_Width_Top_Bottom = "-"*(9)
             $Table_Box_HP_Number_Padding = "  "
-            $Table_Box_HP_Padding = " "
+            $Table_Box_HP_Padding = "       "
         }
         $Pass_Properties = New-Object PSObject -Property @{
             Name   = $Enemy.Name
             Attack = $Enemy.Attack
-            HP     = $HP_Display
+            HP     = if ($HP_Display) { $HP_Display } else { $($Enemy.HP) }
             Loot   = if ($Enemy.Loot) { "$($Enemy.Loot.PSObject.Properties.Value) $($Enemy.Loot.PSObject.Properties.Name)" }
         }
-    }
+    # }
+    Add-Content -Path .\error.log -value "Pass_Properties: $Pass_Properties"
     $Table_Name_Max_Length             = ($Pass_Properties.Name).length
     $Table_Loot_Max_Length             = ($Pass_Properties.Loot).length
     $Table_Box_Name_Width_Top_Bottom   = "-"*($Table_Name_Max_Length + 2)
     $Table_Box_Attack_Width_Top_Bottom = "-"*("Attack".Length + 2)
     $Table_Box_Loot_Width_Top_Bottom   = "-"*($Table_Loot_Max_Length + 2)
-    $Table_Box_Name_Padding            = " "*($Table_Name_Max_Length - "Name".Length)
+    $Table_Box_Name_Padding            = if ($Table_Name_Max_Length - "Name".Length -eq 0) { " " } else { " "*($Table_Name_Max_Length - "Name".Length) }
     $Table_Box_Loot_Padding            = " "*($Table_Loot_Max_Length - "Loot".Length)
     Write-Color "  +$Table_Box_Name_Width_Top_Bottom+$Table_Box_Attack_Width_Top_Bottom+$Table_Box_HP_Width_Top_Bottom+$Table_Box_Loot_Width_Top_Bottom+" -Color DarkGray
     Write-Color "  |"," Name $Table_Box_Name_Padding","| ","Attack ","|"," HP ($($Enemy.HP))$Table_Box_HP_Number_Padding","|"," Loot $Table_Box_Loot_Padding","|" -Color DarkGray,White,DarkGray,White,DarkGray,White,DarkGray,White,DarkGray
@@ -1632,7 +1729,6 @@ do {
     #
     # wilderness journey roll
     #
-    Add-Content -Path .\error.log -value "wilderness journey roll..."
     Clear-Host
     Draw_Player_Window_and_Stats
     $Info_Banner = "Wilderness Journey"
@@ -1814,7 +1910,7 @@ do {
     Write-Color -NoNewLine "  Press Enter to roll a ","D6"," to see which ","Wilderness Encounter"," you face..." -Color DarkYellow,White,DarkYellow,White,DarkYellow
     $Host.UI.ReadLine() | Out-Null
     Roll_D6_Dice
-    # $Random_Dice_Roll = 6
+    $Random_Dice_Roll = 2
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("");" "*140
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,36;$Host.UI.Write("")
     switch ($($Import_JSON."Wilderness_Encounter".$Random_Dice_Roll.Name)) {
@@ -1860,10 +1956,11 @@ do {
         } else {
             $Enemy_Text = "enemies"
         }
-        Write-Color "  You have a fight encounter with ","$Random_Dice_Roll "," $Enemy_Text." -Color DarkGray,White,Red,White,Red
+        Write-Color "  You have a fight encounter with ","$Random_Dice_Roll ","$Enemy_Text","." -Color DarkGray,White,Red,DarkGray
         Write-Color ""
         do {
             $Script:Random_Enemy = Get-Random -Minimum 1 -Maximum ($Import_JSON.Locations.Wilderness.Enemy.PSObject.Properties.Name.count + 1)
+            Write-Color "  You encounter a ","$($Import_JSON.Locations.Wilderness.Enemy.$Random_Enemy.Name)","." -Color DarkGray,White,DarkGray
             Draw_Enemy_Info_Table
             do {
                 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0,38;$Host.UI.Write("");" "*140
@@ -1872,6 +1969,7 @@ do {
                 $Purchase_Item_Choice = Read-Host " "
                 $Purchase_Item_Choice = $Purchase_Item_Choice.Trim()
             } until ($Purchase_Item_Choice -ieq "l" -or $Purchase_Item_Choice -in $All_Settlement_Items_Array)
+            $Random_Dice_Roll -= 1
         } until ($Random_Dice_Roll -eq 0)
 
         # player acts first
